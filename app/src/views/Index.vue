@@ -27,7 +27,7 @@ let client = ref(null),
 
 onMounted(() => {
     if (route.query.code) {
-        console.log(route.query.code);
+        fetch(`/api/v1/user/login/${btoa(route.query.code)}`, { method: 'POST' })
     } else {
         client.value = google.accounts.oauth2.initCodeClient({
             client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,

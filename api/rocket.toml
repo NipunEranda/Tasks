@@ -1,5 +1,5 @@
 [debug]
 port = 5000
 
-[default.databases.todo] 
+[default.databases.tasks] 
 url = "mongodb://localhost:27017"
