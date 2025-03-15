@@ -1,5 +1,6 @@
 import type { RouteRecordRaw } from "vue-router";
 import Index from "../views/Index.vue";
+import Dashboard from "../views/Dashboard.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -7,6 +8,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "index",
         component: Index,
     },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: Dashboard,
+    }
 ];
 
 export default routes;
