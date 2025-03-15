@@ -5,11 +5,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Workspace {
-    _id: ObjectId,
-    name: String,
-    deleted: bool,
-    is_active: bool,
-    created: DateTime,
+    pub _id: ObjectId,
+    pub owner: ObjectId,
+    pub name: String,
+    pub deleted: bool,
+    pub is_active: bool,
+    pub created: DateTime,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -20,6 +21,7 @@ pub struct WorkspaceRequest {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WorkspaceResponse {
     pub id: String,
+    pub owner: String,
     pub name: String,
     pub deleted: bool,
     pub is_active: bool,
@@ -34,6 +36,7 @@ impl TryFrom<WorkspaceRequest> for Workspace {
 
         Ok(Self {
             _id: ObjectId::new(),
+            owner: ObjectId::new(),
             name: item.name,
             deleted: false,
             is_active: true,
@@ -45,6 +48,7 @@ impl TryFrom<WorkspaceRequest> for Workspace {
 impl WorkspaceResponse {
     pub fn new(
         id: String,
+        owner: String,
         name: String,
         deleted: bool,
         is_active: bool,
@@ -52,6 +56,7 @@ impl WorkspaceResponse {
     ) -> Self {
         WorkspaceResponse {
             id,
+            owner,
             name,
             deleted,
             is_active,

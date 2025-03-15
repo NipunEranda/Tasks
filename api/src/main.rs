@@ -33,7 +33,8 @@ async fn rocket() -> _ {
             "/api/v1/",
             routes![
                 routes::user::login,
-                routes::workspace::index
+                routes::workspace::get_workspaces,
+                routes::workspace::create_workspace
             ],
         )
 }

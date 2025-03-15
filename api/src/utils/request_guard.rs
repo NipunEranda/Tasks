@@ -15,6 +15,10 @@ pub struct HeaderGuard {
 }
 
 impl HeaderGuard {
+    pub fn _get_id(&self) -> String {
+        return String::from(&self._id);
+    }
+
     pub fn _get_username(&self) -> String {
         return String::from(&self._username);
     }
