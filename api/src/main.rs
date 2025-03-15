@@ -3,6 +3,7 @@ use std::sync::Arc;
 mod models;
 mod services;
 mod routes;
+mod utils;
 
 use dotenv::dotenv;
 use mongodb::Client;
@@ -31,7 +32,8 @@ async fn rocket() -> _ {
         .mount(
             "/api/v1/",
             routes![
-                routes::user::login
+                routes::user::login,
+                routes::workspace::index
             ],
         )
 }
