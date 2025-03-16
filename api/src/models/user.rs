@@ -33,6 +33,14 @@ pub struct GoogleUser {
     pub picture: String
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct GoogleResponse {
+    pub sid: String,
+    pub name: String,
+    pub email: String,
+    pub picture: String
+}
+
 impl User {
     pub fn new(google_user: &GoogleUser) -> Self {
         let chrono_datetime: SystemTime = chrono::Utc::now().into();

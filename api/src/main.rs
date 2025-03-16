@@ -32,6 +32,7 @@ async fn rocket() -> _ {
         .mount(
             "/api/v1/",
             routes![
+                routes::user::get_user,
                 routes::user::login,
                 routes::workspace::get_workspaces,
                 routes::workspace::create_workspace

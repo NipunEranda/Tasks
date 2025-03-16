@@ -59,15 +59,7 @@ pub async fn login<'a>(
         let user_response = user_response.unwrap();
 
         if user_response.status() == StatusCode::OK {
-            let user_response_body: serde_json::Value = user_response.json().await.ok().unwrap();
-            let user_response_body = user_response_body.as_object().unwrap();
-
-            let mut google_user = GoogleUser::new(
-                user_response_body.get("id").unwrap().to_string(),
-                user_response_body.get("name").unwrap().to_string(),
-                user_response_body.get("email").unwrap().to_string(),
-                user_response_body.get("picture").unwrap().to_string(),
-            );
+            let mut google_user = user_response.json::<GoogleUser>().await.ok().unwrap();
 
             let user_id = create_user(state, &google_user).await;
 
