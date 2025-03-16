@@ -1,5 +1,7 @@
 // use std::time::SystemTime;
 
+use std::time::SystemTime;
+
 use mongodb::bson::{oid::ObjectId, DateTime};
 use serde::{Deserialize, Serialize};
 
@@ -23,16 +25,35 @@ pub struct LoginResponse {
     pub id_token: String,
 }
 
-// impl User {
-//     pub fn new(name: String, email: String, picture: String) -> Self {
-//         let chrono_datetime: SystemTime = chrono::Utc::now().into();
-//         User {
-//             _id: ObjectId::new(),
-//             name,
-//             email,
-//             picture,
-//             created: DateTime::from(chrono_datetime),
-//             is_active: true,
-//         }
-//     }
-// }
+#[derive(Debug, Serialize, Deserialize)]
+pub struct GoogleUser {
+    pub id: String,
+    pub name: String,
+    pub email: String,
+    pub picture: String
+}
+
+impl User {
+    pub fn new(google_user: &GoogleUser) -> Self {
+        let chrono_datetime: SystemTime = chrono::Utc::now().into();
+        User {
+            _id: ObjectId::new(),
+            name: String::from(&google_user.name),
+            email: String::from(&google_user.email),
+            picture:String::from(& google_user.picture),
+            created: DateTime::from(chrono_datetime),
+            is_active: true,
+        }
+    }
+}
+
+impl GoogleUser {
+    pub fn new(id: String, name: String, email: String, picture: String) -> Self {
+        GoogleUser {
+            id,
+            name,
+            email,
+            picture,
+        }
+    }
+}

@@ -1,13 +1,21 @@
 use std::env;
 
-use rocket::time::Duration;
 use jsonwebtoken::{EncodingKey, Header, encode};
 use reqwest::StatusCode;
+use rocket::time::Duration;
 use rocket::{
-    http::{Cookie, CookieJar, Status}, serde::json::Json, time::OffsetDateTime, State
+    State,
+    http::{Cookie, CookieJar, Status},
+    serde::json::Json,
+    time::OffsetDateTime,
 };
 
-use crate::{models::claims::Claims, AppState};
+use crate::{
+    AppState,
+    models::{claims::Claims, user::GoogleUser},
+};
+
+use super::db::user::create_user;
 
 pub async fn login<'a>(
     state: &State<AppState>,
@@ -54,12 +62,25 @@ pub async fn login<'a>(
             let user_response_body: serde_json::Value = user_response.json().await.ok().unwrap();
             let user_response_body = user_response_body.as_object().unwrap();
 
-            let claims = Claims::new(
+            let mut google_user = GoogleUser::new(
                 user_response_body.get("id").unwrap().to_string(),
                 user_response_body.get("name").unwrap().to_string(),
                 user_response_body.get("email").unwrap().to_string(),
-                user_response_body.get("picture").unwrap().to_string()
+                user_response_body.get("picture").unwrap().to_string(),
             );
+
+            let user_id = create_user(state, &google_user).await;
+
+            if user_id == "0" {
+                return (
+                    Status::InternalServerError,
+                    Json("User creation failed".to_string()),
+                );
+            }
+
+            google_user.id = user_id;
+
+            let claims = Claims::new(google_user);
 
             let token = encode(
                 &Header::default(),

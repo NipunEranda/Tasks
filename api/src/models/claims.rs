@@ -1,28 +1,31 @@
 use chrono::Utc;
+use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
+
+use super::user::GoogleUser;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
     exp: usize,
     iat: usize,
-    sub: String,
+    id: String,
     name: String,
     username: String,
     picture: String,
 }
 
 impl Claims {
-    pub fn new(sub: String, name: String, username: String, picture: String) -> Self {
+    pub fn new(google_user: GoogleUser) -> Self {
         Claims {
             exp: Utc::now()
                 .checked_add_signed(chrono::Duration::seconds(86400))
                 .expect("Valid timestamp")
                 .timestamp() as usize,
             iat: Utc::now().timestamp() as usize,
-            sub,
-            name,
-            username,
-            picture
+            id: google_user.id,
+            name: google_user.name,
+            username: google_user.email,
+            picture: google_user.picture
         }
     }
 
@@ -39,6 +42,6 @@ impl Claims {
     }
 
     pub fn _get_id(&self) -> String {
-        return String::from(&self.sub);
+        return String::from(&self.id);
     }
 }
