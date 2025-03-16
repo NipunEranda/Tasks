@@ -12,6 +12,7 @@ pub struct HeaderGuard {
     username: String,
     name: String,
     picture: String,
+    role: String,
     authorized: bool,
 }
 
@@ -57,6 +58,7 @@ impl<'r> FromRequest<'r> for HeaderGuard {
                     username: claims_data._get_username(),
                     name: claims_data._get_name(),
                     picture: claims_data._get_picture(),
+                    role: claims_data._get_role(),
                     authorized: true,
                 });
             }

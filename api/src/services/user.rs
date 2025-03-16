@@ -59,20 +59,12 @@ pub async fn login<'a>(
         let user_response = user_response.unwrap();
 
         if user_response.status() == StatusCode::OK {
-            let mut google_user = user_response.json::<GoogleUser>().await.ok().unwrap();
+            let google_user = user_response.json::<GoogleUser>().await.ok().unwrap();
 
-            let user_id = create_user(state, &google_user).await;
+            let user = create_user(state, &google_user).await;
 
-            if user_id == "0" {
-                return (
-                    Status::InternalServerError,
-                    Json("User creation failed".to_string()),
-                );
-            }
-
-            google_user.id = user_id;
-
-            let claims = Claims::new(google_user);
+            let mut claims = Claims::new(google_user);
+            claims._set_role(user.role);
 
             let token = encode(
                 &Header::default(),

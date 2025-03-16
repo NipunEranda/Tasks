@@ -11,6 +11,7 @@ pub struct User {
     pub name: String,
     pub email: String,
     pub picture: String,
+    pub role: String,
     pub created: DateTime,
     pub is_active: bool,
 }
@@ -42,13 +43,14 @@ pub struct GoogleResponse {
 }
 
 impl User {
-    pub fn new(google_user: &GoogleUser) -> Self {
+    pub fn new(google_user: &GoogleUser, role: String) -> Self {
         let chrono_datetime: SystemTime = chrono::Utc::now().into();
         User {
             _id: ObjectId::new(),
             name: String::from(&google_user.name),
             email: String::from(&google_user.email),
             picture:String::from(& google_user.picture),
+            role,
             created: DateTime::from(chrono_datetime),
             is_active: true,
         }

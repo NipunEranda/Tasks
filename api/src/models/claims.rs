@@ -1,5 +1,4 @@
 use chrono::Utc;
-use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 
 use super::user::GoogleUser;
@@ -12,6 +11,7 @@ pub struct Claims {
     name: String,
     username: String,
     picture: String,
+    role: String,
 }
 
 impl Claims {
@@ -25,7 +25,8 @@ impl Claims {
             id: google_user.id,
             name: google_user.name,
             username: google_user.email,
-            picture: google_user.picture
+            picture: google_user.picture,
+            role: String::from("user"),
         }
     }
 
@@ -43,5 +44,13 @@ impl Claims {
 
     pub fn _get_id(&self) -> String {
         return String::from(&self.id);
+    }
+
+    pub fn _get_role(&self) -> String {
+        return String::from(&self.role);
+    }
+
+    pub fn _set_role(&mut self, role: String) {
+        self.role = role;
     }
 }
