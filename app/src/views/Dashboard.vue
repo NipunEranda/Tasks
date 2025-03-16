@@ -5,11 +5,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
+import { useIndexStore } from '../store';
 
-onMounted(async () => {
-    fetch("/api/v1/user", { credentials: 'include' }).then(async response => {
-        console.log(await response.json());
-    });
-});
+const indexStore = useIndexStore(),
+    user = computed(() => { return indexStore.currentUser });
 </script>

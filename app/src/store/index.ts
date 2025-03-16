@@ -1,44 +1,32 @@
-// store.ts
-// store.ts
-import type { InjectionKey } from "vue";
-import { createStore, Store, ActionContext } from 'vuex';
-
-import AuthModule, { type AuthState } from "./Auth";
-
-// define your typings for the store state
-export interface State {
-    auth: AuthState;
-    loggedIn: boolean;
-}
-
-// define injection key
-export const key: InjectionKey<Store<State>> = Symbol();
-
-export const store = createStore<State>({
-    state: { loggedIn: false } as State,
-    modules: {
-      auth: AuthModule,
-    },
-    mutations: {
-      setLoggedIn(state: State, data: boolean) {
-        state.loggedIn = data;
-      },
+import { defineStore } from "pinia"
+import router from "../router";
+export const useIndexStore = defineStore('index', {
+    state: () => ({
+        currentUser: null,
+        loggedIn: false
+    }),
+    getters: {
+        getCurrentUser: (state) => state.currentUser,
+        getLoggedIn: (state) => state.loggedIn,
     },
     actions: {
-      handleRequestErrors(_context: ActionContext<State, State>, _data:any) {
-        // if (data.response.status == 401) {
-        //   this.dispatch("logout");
-        // }
-      },
-    //   logout() {
-    //     this.commit("auth/resetState");
-    //     this.commit("workspace/resetState");
-    //     this.commit("repository/resetState");
-    //     this.commit("file/resetState");
-    //     this.commit("language/resetState");
-    //     this.commit("setLoggedIn", false);
-    //     this.state.loggedIn = false;
-    //     location.href = "/";
-    //   },
+        async login(code: string) {
+            const response = await fetch(`/api/v1/user/login/${code}`, { method: 'POST' });
+            if (response.status == 200) {
+                const userResponse = await fetch("/api/v1/user", { credentials: 'include' });
+
+                if(userResponse.status == 200)
+                    this.currentUser = await userResponse.json();
+
+                this.loggedIn = (await response.json()) == "true";
+                router.push("/dashboard");
+            }
+        },
     },
-  });
+    persist: [
+        {
+            key: 'auth',
+            storage: localStorage,
+        }
+    ]
+})

@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from "vue-router";
 import Index from "../views/Index.vue";
 import Dashboard from "../views/Dashboard.vue";
+import Workspaces from "../views/Workspaces.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -12,6 +13,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/dashboard",
         name: "dashboard",
         component: Dashboard,
+    },
+    {
+        path: "/workspaces",
+        name: "workspaces",
+        component: Workspaces
     }
 ];
 

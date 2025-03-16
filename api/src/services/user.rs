@@ -83,7 +83,7 @@ pub async fn login<'a>(
             cookie.set_expires(now);
             cookies.add(cookie);
 
-            return (Status::Accepted, Json("true".to_string()));
+            return (Status::Ok, Json("true".to_string()));
         }
     }
 
