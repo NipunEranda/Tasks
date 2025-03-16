@@ -1,6 +1,5 @@
-use std::time::SystemTime;
-
-use mongodb::bson::{DateTime, oid::ObjectId};
+use chrono::Local;
+use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -10,7 +9,7 @@ pub struct Workspace {
     pub name: String,
     pub deleted: bool,
     pub is_active: bool,
-    pub created: DateTime,
+    pub created: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -25,22 +24,20 @@ pub struct WorkspaceResponse {
     pub name: String,
     pub deleted: bool,
     pub is_active: bool,
-    pub created: DateTime,
+    pub created: String,
 }
 
 impl TryFrom<WorkspaceRequest> for Workspace {
     type Error = Box<dyn std::error::Error>;
 
     fn try_from(item: WorkspaceRequest) -> Result<Self, Self::Error> {
-        let chrono_datetime: SystemTime = chrono::Utc::now().into();
-
         Ok(Self {
             _id: ObjectId::new(),
             owner: ObjectId::new(),
             name: item.name,
             deleted: false,
             is_active: true,
-            created: DateTime::from(chrono_datetime),
+            created: Local::now().to_string(),
         })
     }
 }
@@ -52,7 +49,7 @@ impl WorkspaceResponse {
         name: String,
         deleted: bool,
         is_active: bool,
-        created: DateTime,
+        created: String,
     ) -> Self {
         WorkspaceResponse {
             id,

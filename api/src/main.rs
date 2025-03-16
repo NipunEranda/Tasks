@@ -8,7 +8,7 @@ mod utils;
 use dotenv::dotenv;
 use mongodb::Client;
 use rocket::tokio::sync::Mutex;
-use rocket::{launch, routes};
+use rocket::{launch, route, routes};
 
 pub struct AppState {
     mongo_client: Arc<Mutex<Client>>,
@@ -35,7 +35,9 @@ async fn rocket() -> _ {
                 routes::user::get_user,
                 routes::user::login,
                 routes::workspace::get_workspaces,
-                routes::workspace::create_workspace
+                routes::workspace::create_workspace,
+                routes::workspace::update_workspace,
+                routes::workspace::delete_workspace
             ],
         )
 }
