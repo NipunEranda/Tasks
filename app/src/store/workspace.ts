@@ -24,7 +24,7 @@ export const useWorkspaceStore = defineStore('workspace', {
     },
     persist: [
         {
-            key: 'tasks',
+            key: 'workspace',
             storage: localStorage,
         }
     ]

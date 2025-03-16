@@ -26,7 +26,7 @@ export const useIndexStore = defineStore('index', {
     },
     persist: [
         {
-            key: 'tasks',
+            key: 'auth',
             storage: localStorage,
         }
     ]
