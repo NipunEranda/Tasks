@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import router from "../router";
+
 export const useIndexStore = defineStore('index', {
     state: () => ({
         currentUser: null,
@@ -25,7 +26,7 @@ export const useIndexStore = defineStore('index', {
     },
     persist: [
         {
-            key: 'auth',
+            key: 'tasks',
             storage: localStorage,
         }
     ]

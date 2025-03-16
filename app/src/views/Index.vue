@@ -2,7 +2,7 @@
     <div class="grid place-items-center items-center justify-center h-screen">
         <div class="grid place-items-center -translate-y-16">
             <button
-                class="bg-zinc-800 hover:bg-zinc-700 bg-opacity-90 p-3 px-5 rounded-lg text-white w-full mb-2 cursor-pointer"
+                class="text-white dark:bg-teal-800 dark:hover:bg-teal-700 bg-teal-700 hover:bg-green-800 focus:ring-teal-300 p-3 px-5 rounded-lg w-full mb-2 cursor-pointer"
                 @click="client.requestCode();">
                 <img src="../assets/img/google.png" width="25" class="inline-flex" />
                 <span class="ms-3 font-bold">Continue with Google</span>
@@ -26,8 +26,6 @@ let client = ref(null),
 
 onMounted(async () => {
     if (route.query.code) {
-        // const response = await fetch(`/api/v1/user/login/${btoa(route.query.code)}`, { method: 'POST' });
-        // router.push('/dashboard');
         await indexStore.login(btoa(route.query.code));
     } else {
         client.value = google.accounts.oauth2.initCodeClient({

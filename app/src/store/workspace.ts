@@ -10,13 +10,21 @@ export const useWorkspaceStore = defineStore('workspace', {
         getActiveWorkspace: (state) => state.activeWorkspace,
     },
     actions: {
-        async load(){
+        async load() {
+            const response = await fetch(`/api/v1/workspace`, { credentials: 'include' });
+            if (response.status == 200) {
+                return await response.json();
+            }
 
+            return [];
+        },
+        setWorkspace(workspace: string) {
+            this.activeWorkspace = workspace;
         }
     },
     persist: [
         {
-            key: 'workspaces',
+            key: 'tasks',
             storage: localStorage,
         }
     ]

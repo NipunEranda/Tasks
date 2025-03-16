@@ -1,26 +1,26 @@
 export interface _User {
     id: string;
-    name: String;
+    name: string;
     email: string;
-    picture: String;
-    type: String;
+    picture: string;
+    type: string;
     workspaces: string[];
 }
 
 export class User {
     id: string;
-    name: String;
+    name: string;
     email: string;
-    picture: String;
-    type: String;
+    picture: string;
+    type: string;
     workspaces: string[];
 
     constructor(
         id: string,
-        name: String,
+        name: string,
         email: string,
-        picture: String,
-        type: String,
+        picture: string,
+        type: string,
         workspaces: string[]
     ) {
         this.id = id;
