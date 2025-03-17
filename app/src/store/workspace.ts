@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import type { _Workspace } from "../models/Workspace";
 
 export const useWorkspaceStore = defineStore('workspace', {
     state: () => ({
@@ -13,13 +14,18 @@ export const useWorkspaceStore = defineStore('workspace', {
         async load() {
             const response = await fetch(`/api/v1/workspace`, { credentials: 'include' });
             if (response.status == 200) {
-                return await response.json();
+                this.workspaces = await response.json();
+                return this.workspaces;
             }
 
             return [];
         },
         setWorkspace(workspace: string) {
             this.activeWorkspace = workspace;
+        },
+        async create(workspace: _Workspace){
+            const response = await fetch(`/api/v1/workspace`, { method: 'POST', body: JSON.stringify(workspace), credentials: 'include' });
+            console.log(response);
         }
     },
     persist: [

@@ -7,6 +7,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import 'flowbite';
 
 import WorkspaceModal from './components/modals/WorkspaceModal.vue';
+import SideBar from './components/SideBar.vue';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -26,4 +27,5 @@ createApp(App)
     .use(pinia)
     .component("fai", FontAwesomeIcon)
     .component("WorkspaceModal", WorkspaceModal)
+    .component("SideBar", SideBar)
     .mount('#app')

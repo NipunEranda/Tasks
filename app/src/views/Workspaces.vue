@@ -9,7 +9,7 @@
                 <div v-for="workspace in workspaces" class="flex">
                     <div class="mx-auto border-t border-b dark:border-zinc-700 w-full md:w-1/2 lg:w-1/2 text-center p-2 cursor-pointer"
                         @click="selectWorkspace(workspace)">
-                        <div class="py-3 dark:hover:bg-zinc-800 rounded-xl font-semibold text-2xl">{{ workspace.name }}
+                        <div class="py-2 dark:hover:bg-zinc-800 rounded-xl font-semibold text-xl">{{ workspace.name }}
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ function openWorkspaceModal(type: string) {
 
 function processModal(workspace: _Workspace) {
     if (modal.value.type == 'add') {
-        console.log(workspace);
+        workspaceStore.create(workspace);
     }
 
     // @ts-ignore
