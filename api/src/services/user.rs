@@ -22,6 +22,7 @@ pub async fn login<'a>(
     cookies: &'a CookieJar<'a>,
     code: String,
 ) -> (Status, Json<String>) {
+    let domain = env::var("AUTH_DOMAIN").ok().unwrap();
     let params = [
         ("code", code),
         ("client_id", env::var("GOOGLE_CLIENT_ID").ok().unwrap()),
@@ -33,18 +34,14 @@ pub async fn login<'a>(
         ("grant_type", "authorization_code".to_string()),
     ];
 
-    println!("{:?}", params);
-
     let client = reqwest::Client::new();
     let response = client
         .post("https://oauth2.googleapis.com/token")
         .form(&params)
         .send()
-        .await;
+        .await.ok();
 
-    println!("{:?}", response);
-
-    let response = response.ok().unwrap();
+    let response = response.unwrap();
 
     if response.status() == StatusCode::OK {
         let response_body: serde_json::Value = response.json().await.ok().unwrap();
@@ -84,6 +81,7 @@ pub async fn login<'a>(
             cookie.set_path("/");
             cookie.set_same_site(None);
             cookie.set_expires(now);
+            cookie.set_domain(if domain == "" {String::from("localhost")} else {domain});
             cookies.add(cookie);
 
             return (Status::Ok, Json("true".to_string()));

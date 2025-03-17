@@ -14,7 +14,10 @@ RUN cargo build --release
 FROM ubuntu:latest
 
 # Install the necessary dependencies for the Rocket application (if any)
-RUN apt update && apt full-upgrade -y
+RUN apt update && apt full-upgrade -y && apt-get install -y \
+    ca-certificates \
+    curl \
+    && update-ca-certificates -y
 
 # Set the working directory for the app
 WORKDIR /app
