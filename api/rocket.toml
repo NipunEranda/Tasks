@@ -1,5 +1,3 @@
 [debug]
-port = 5000
-
-[default.databases.tasks] 
-url = "mongodb://localhost:27017"
+port = 8000
+address = "0.0.0.0"

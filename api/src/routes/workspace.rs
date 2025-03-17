@@ -1,6 +1,13 @@
+use std::env;
+
 use rocket::{delete, get, http::Status, post, put, serde::json::Json, State};
 
 use crate::{models::workspace::{WorkspaceRequest, WorkspaceResponse}, services, utils::request_guard::HeaderGuard, AppState};
+
+#[get("/workspace/test")]
+pub async fn test() -> (Status, Json<String>) {
+    (Status::Ok, Json(env::var("TEST_ENV").ok().unwrap()))
+}
 
 #[get("/workspace")]
 pub async fn get_workspaces(

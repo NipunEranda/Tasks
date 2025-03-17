@@ -33,15 +33,18 @@ pub async fn login<'a>(
         ("grant_type", "authorization_code".to_string()),
     ];
 
+    println!("{:?}", params);
+
     let client = reqwest::Client::new();
     let response = client
         .post("https://oauth2.googleapis.com/token")
         .form(&params)
         .send()
-        .await
-        .ok();
+        .await;
 
-    let response = response.unwrap();
+    println!("{:?}", response);
+
+    let response = response.ok().unwrap();
 
     if response.status() == StatusCode::OK {
         let response_body: serde_json::Value = response.json().await.ok().unwrap();
