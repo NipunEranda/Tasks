@@ -22,7 +22,7 @@ RUN apt update && apt full-upgrade -y && apt-get install -y \
     && update-ca-certificates -y
 
 # Set the working directory for the app
-WORKDIR /app
+WORKDIR /usr/share/tasks
 
 # Copy the compiled Rust application from the builder stage
 COPY --from=builder /app/target/release/tasks .
