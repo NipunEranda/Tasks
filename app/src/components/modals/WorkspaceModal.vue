@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { CustomModal } from "../../models/Modal";
 import { Workspace, type _Workspace } from "../../models/Workspace";
 const props = defineProps({

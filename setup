@@ -1,0 +1,55 @@
+
+# docker ps -aqf "name=tasks"
+
+param_1="$1"
+
+case $param_1 in
+    network)
+        docker network rm tasks_network
+        docker network create tasks_network
+        ;;
+    mongo)
+        docker run --name mongo --network tasks_network -p 27017:27017 -d mongo:latest
+        ;;
+    api)
+        tasks_container_id=$(docker ps -aqf "name=tasks_api")
+
+        if [ "$tasks_container_id" != "" ]; then
+            echo $tasks_container_id
+            docker stop "$tasks_container_id"
+            docker remove "$tasks_container_id"
+        fi
+
+        tasks_image_id=$(docker images -q tasks_api)
+
+        if [ "$tasks_image_id" != "" ]; then
+            docker rmi "$tasks_image_id"
+        fi
+
+        cd api/
+        docker build -t tasks_api .
+        docker run -dit --name tasks_api --network tasks_network --env-file .env -e MONGO_URL=mongodb://mongo:27017 -p 8000:8000 tasks_api
+        ;;
+    app)
+        tasks_container_id=$(docker ps -aqf "name=tasks_app")
+
+        if [ "$tasks_container_id" != "" ]; then
+            echo $tasks_container_id
+            docker stop "$tasks_container_id"
+            docker remove "$tasks_container_id"
+        fi
+
+        tasks_image_id=$(docker images -q tasks_app)
+
+        if [ "$tasks_image_id" != "" ]; then
+            docker rmi "$tasks_image_id"
+        fi
+
+        cd app/
+        docker build -t tasks_app .
+        docker run -dit --name tasks_app --network tasks_network --env-file .env -p 3000:3000 tasks_app
+        ;;
+    *)
+        echo "Available options ( network | mongo | api )"
+        ;;
+esac
