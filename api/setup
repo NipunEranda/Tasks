@@ -27,7 +27,7 @@ case $param_1 in
         fi
 
         docker build -t tasks .
-        docker run -dit --name tasks --network tasks_network --env-file api/.env -e MONGO_URL=mongodb://mongo:27017 -p 8000:8000 tasks
+        docker run -dit --name tasks --network tasks_network --env-file .env -e MONGO_URL=mongodb://mongo:27017 -p 8000:8000 tasks
         ;;
     *)
         echo "Available options ( network | mongo | api )"

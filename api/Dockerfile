@@ -5,7 +5,9 @@ FROM rust:latest AS builder
 WORKDIR /app
 
 # Set up the application structure (copy the entire api folder)
-COPY api .
+COPY src ./src
+
+COPY rocket.toml Cargo.toml Cargo.lock ./
 
 # Build the release version of the application
 RUN cargo build --release
