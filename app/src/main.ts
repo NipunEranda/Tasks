@@ -16,11 +16,16 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import {
+    faArrowLeft,
+    faArrowTrendUp,
+    faGear,
     faHome,
-    faLayerGroup
+    faLayerGroup,
+    faList,
+    faUserGroup
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faLayerGroup);
+library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear);
 
 createApp(App)
     .use(router)
