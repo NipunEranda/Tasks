@@ -1,7 +1,7 @@
 <template>
     <div class="flex">
-        <side-bar v-if="showSideBar" class="w-[300px]" />
-        <router-view :class="{ 'w-full': !showSideBar, 'w-auto': showSideBar }"></router-view>
+        <side-bar v-if="showSideBar" class="w-[75px] hover:w-[300px] border-r border-zinc-800 transition-all duration-300"/>
+        <router-view class="p-4" :class="{ 'w-full': !showSideBar, 'w-auto': showSideBar }"></router-view>
     </div>
 </template>
 
