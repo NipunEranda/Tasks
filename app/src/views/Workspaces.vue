@@ -54,9 +54,9 @@ function processModal(workspace: _Workspace) {
     if (modal.value.type == 'add') {
         workspaceStore.create(workspace);
     }
-
     // @ts-ignore
     modal.value.modalEl?.hide();
+    router.go(0);
 }
 
 function selectWorkspace(workspace: _Workspace) {

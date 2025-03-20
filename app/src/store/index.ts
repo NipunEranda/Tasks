@@ -16,13 +16,18 @@ export const useIndexStore = defineStore('index', {
             if (response.status == 200) {
                 const userResponse = await fetch("/api/v1/user", { credentials: 'include' });
 
-                if(userResponse.status == 200)
+                if (userResponse.status == 200)
                     this.currentUser = await userResponse.json();
 
                 this.loggedIn = (await response.json()) == "true";
                 router.push("/dashboard");
             }
         },
+        async logout() {
+            localStorage.clear();
+            await fetch(`/api/v1/user/logout`, { credentials: 'include' });
+            router.go(0);
+        }
     },
     persist: [
         {

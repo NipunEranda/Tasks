@@ -6,6 +6,10 @@ import Templates from "../views/Templates.vue";
 import NotFound from "../views/NotFound.vue";
 import DefaultLayout from "../layouts/DefaultLayout.vue";
 import ErrorLayout from "../layouts/ErrorLayout.vue";
+import Activity from "../views/Activity.vue";
+import Team from "../views/Team.vue";
+import Settings from "../views/Settings.vue";
+import Profile from "../views/Profile.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -42,7 +46,27 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/templates",
                 name: "templates",
                 component: Templates
-            }
+            },
+            {
+                path: "/activity",
+                name: "activity",
+                component: Activity
+            },
+            {
+                path: "/team",
+                name: "team",
+                component: Team
+            },
+            {
+                path: "/settings",
+                name: "settings",
+                component: Settings
+            },
+            {
+                path: "/profile",
+                name: "profile",
+                component: Profile
+            },
         ]
     },
 ];

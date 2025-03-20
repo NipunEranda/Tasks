@@ -23,10 +23,12 @@ import {
     faHome,
     faLayerGroup,
     faList,
+    faPowerOff,
+    faUser,
     faUserGroup
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear);
+library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff);
 
 createApp(App)
     .use(router)
