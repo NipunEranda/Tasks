@@ -16,4 +16,5 @@
 
     ./setup api
 
-    
+    Setup the Tasks Web App
+    ./setup app
