@@ -10,7 +10,6 @@
         "settings": "Settings",
         "profieMenu": {
           "profile": "Profile",
-          "settings": "Settings",
           "workspaces": "Workspaces",
           "signOut": "Sign Out"
         }
