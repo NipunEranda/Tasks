@@ -3,104 +3,104 @@
         <div class="w-full">
             <div class="group flex flex-col h-screen">
                 <div class="h-12 my-5">
-                    <div class="place-items-center items-center justify-center hidden group-hover:inline-flex">
-                        <div class="flex font-extrabold text-6xl mb-8 font-serif tracking-widest">
+                    <div
+                        class="grid place-items-center items-center w-full transition-all duration-300 overflow-auto">
+                        <div class="hidden group-hover:flex font-extrabold text-6xl mb-8 font-serif tracking-widest">
                             <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">T</span>
                             <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">A</span>
                             <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
                             <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">K</span>
                             <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
                         </div>
+                        <div class="flex group-hover:hidden font-extrabold text-6xl mb-8 font-serif tracking-widest">
+                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">T</span>
+                        </div>
                     </div>
                 </div>
-                <div class="flex-1">
-                    <div class="grid place-items-center items-center w-full p-2">
-                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer">
+                <div class="flex-1 transition-all duration-300">
+                    <div class="grid place-items-center items-center w-full p-2 transition-all duration-300">
+                        <div
+                            class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer transition-all duration-300">
                             <div class="flex w-full">
-                                <div class="ml-1 group-hover:mr-3">
+                                <div class="ml-1">
                                     <fai icon="fa-home" />
                                 </div>
-                                <div class="hidden group-hover:inline">
-                                    Home
+                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                    <span class="hidden group-hover:inline-flex group-hover:pl-3">Home</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="grid place-items-center items-center w-full p-2">
-                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer">
+                    <div class="grid place-items-center items-center w-full p-2 transition-all duration-300">
+                        <div
+                            class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer transition-all duration-300">
                             <div class="flex w-full">
-                                <div class="ml-1 group-hover:mr-3">
+                                <div class="ml-1">
                                     <fai icon="fa-list" />
                                 </div>
-                                <div class="hidden group-hover:inline">
-                                    Templates
+                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                    <span class="hidden group-hover:inline-flex group-hover:pl-3">Templates</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="grid place-items-center items-center w-full p-2">
-                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer">
+                    <div class="grid place-items-center items-center w-full p-2 transition-all duration-300">
+                        <div
+                            class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer transition-all duration-300">
                             <div class="flex w-full">
-                                <div class="ml-1 group-hover:mr-3">
+                                <div class="ml-1">
                                     <fai icon="fa-arrow-trend-up" />
                                 </div>
-                                <div class="hidden group-hover:inline">
-                                    Activity
+                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                    <span class="hidden group-hover:inline-flex group-hover:pl-3">Activity</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="grid place-items-center items-center w-full p-2">
-                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer">
+                    <div class="grid place-items-center items-center w-full p-2 transition-all duration-300">
+                        <div
+                            class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer transition-all duration-300">
                             <div class="flex w-full">
-                                <div class="ml-1 group-hover:mr-3">
+                                <div class="ml-1">
                                     <fai icon="fa-user-group" />
                                 </div>
-                                <div class="hidden group-hover:inline">
-                                    Team
+                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                    <span class="hidden group-hover:inline-flex group-hover:pl-3">Team</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="grid place-items-center items-center w-full p-2">
-                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer">
+                    <div class="grid place-items-center items-center w-full p-2 transition-all duration-300">
+                        <div
+                            class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer transition-all duration-300">
                             <div class="flex w-full">
-                                <div class="ml-1 group-hover:mr-3">
+                                <div class="ml-1">
                                     <fai icon="fa-gear" />
                                 </div>
-                                <div class="hidden group-hover:inline">
-                                    Settings
+                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                    <span class="hidden group-hover:inline-flex group-hover:pl-3">Settings</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="h-20 grid w-full p-2">
-                    <div class="w-full">
-                        <div
-                            class="flex dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer text-lg">
-                            <img class="h-6 w-6 rounded-full" :class="{
-                                invert: user ? (user.picture ? false : true) : true,
-                            }" :src="getProfileImage()" alt="" referrerpolicy="no-referrer" />
-                            <div class="ml-3 font-extrabold w-full hidden group-hover:inline-flex">{{ user ? user.name
-                                : ""
-                            }}</div>
-                        </div>
-                    </div>
-                </div> -->
-                <div class="h-20 grid w-full p-2">
+                <div class="h-17 grid w-full">
                     <div class="flex-1">
-                        <div class="grid place-items-center items-center w-full">
-                            <div class="dark:bg-zinc-800 dark:hover:brightness-125 rounded-full cursor-pointer group-hover:w-full">
+                        <div class="grid place-items-center items-center w-full p-2 transition-all duration-300">
+                            <div
+                                class=" dark:bg-teal-600 group-hover:dark:bg-zinc-800 dark:hover:brightness-125 cursor-pointer transition-all duration-300 rounded-lg">
                                 <div class="flex w-full">
                                     <div>
-                                        <img class="h-12 w-12 rounded-full group-hover:mr-4" :class="{
+                                        <img class="h-12 w-12 rounded-lg" :class="{
                                             invert: user ? (user.picture ? false : true) : true,
                                         }" :src="profileImage" alt="" referrerpolicy="no-referrer" />
                                     </div>
                                     <div
-                                        class="hidden group-hover:inline-flex max-w-64 items-center overflow-hidden text-ellipsis truncate">
-                                        {{username}}
+                                        class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll flex">
+                                        <span
+                                            class="hidden group-hover:inline-flex group-hover:pl-3 overflow-hidden text-ellipsis truncate items-center font-bold text-lg">{{
+                                                username
+                                            }}</span>
                                     </div>
                                 </div>
                             </div>
