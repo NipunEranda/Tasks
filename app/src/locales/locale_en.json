@@ -1,0 +1,22 @@
+{
+    "app": {
+      "title": "Tasks",
+      "poweredBy": "Nipun Amarasekara",
+      "sideBar": {
+        "dashboard": "Dashboard",
+        "templates": "Templates",
+        "activity": "Activity",
+        "team": "Team",
+        "settings": "Settings",
+        "profieMenu": {
+          "profile": "Profile",
+          "settings": "Settings",
+          "workspaces": "Workspaces",
+          "signOut": "Sign Out"
+        }
+      }
+    },
+    "login": {
+      "text": "Continue with Google"
+    }
+  }
