@@ -153,7 +153,7 @@ import profile from "../assets/img/profile.png";
 import { computed, onMounted, ref, watch, type Ref } from 'vue';
 import { useIndexStore } from '../store';
 import type { User } from '../models/Auth';
-import { useI18n } from "vue-i18n";
+// import { useI18n } from "vue-i18n";
 import { initFlowbite } from "flowbite";
 import { useRoute } from "vue-router";
 import { useWorkspaceStore } from "../store/workspace";
@@ -161,7 +161,7 @@ import router from "../router";
 
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),
-    i18nLocale = useI18n(),
+    // i18nLocale = useI18n(),
     route = useRoute(),
     user: Ref<User | null> = computed(() => { return indexStore.currentUser }),
     profileImage: Ref<string> = computed(() => {

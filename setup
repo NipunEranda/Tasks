@@ -1,5 +1,4 @@
-
-# docker ps -aqf "name=tasks"
+#!/bin/bash
 
 param_1="$1"
 
@@ -50,6 +49,6 @@ case $param_1 in
         docker run -dit --name tasks_app --network tasks_network --env-file .env -p 3000:3000 tasks_app
         ;;
     *)
-        echo "Available options ( network | mongo | api )"
+        echo "Available options ( network | mongo | api | app )"
         ;;
 esac
