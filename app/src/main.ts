@@ -9,6 +9,7 @@ import i18n from "./locales/i18n";
 
 import WorkspaceModal from './components/modals/WorkspaceModal.vue';
 import SideBar from './components/SideBar.vue';
+import Header from './components/Header.vue';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -19,16 +20,20 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faArrowLeft,
     faArrowTrendUp,
+    faBars,
+    faFilter,
     faGear,
     faHome,
     faLayerGroup,
     faList,
     faPowerOff,
+    faTags,
     faUser,
-    faUserGroup
+    faUserGroup,
+    faXmark
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff);
+library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faXmark, faFilter, faBars);
 
 createApp(App)
     .use(router)
@@ -37,4 +42,5 @@ createApp(App)
     .component("fai", FontAwesomeIcon)
     .component("WorkspaceModal", WorkspaceModal)
     .component("SideBar", SideBar)
+    .component("Header", Header)
     .mount('#app')

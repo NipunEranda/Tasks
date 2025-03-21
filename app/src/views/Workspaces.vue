@@ -27,16 +27,17 @@
 </template>
 
 <script setup lang="ts">
-import { Modal } from 'flowbite';
+import { initFlowbite, Modal } from 'flowbite';
 import { CustomModal } from '../models/Modal';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import type { _Workspace } from '../models/Workspace';
 import { useWorkspaceStore } from '../store/workspace';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const modal = ref(CustomModal.createObj("workspaceModal", "Add Workspace", "add", "Save", processModal, undefined)),
     workspaceStore = useWorkspaceStore(),
-    router = useRouter();
+    router = useRouter(),
+    route = useRoute();
 
 let workspaces = ref<_Workspace[]>([]);
 
@@ -82,7 +83,12 @@ function initModal() {
     modal.value.modalEl = new Modal(document.getElementById(modalId), modalOptions, instanceOptions);
 }
 
+watch(() => route.path, () => {
+    initFlowbite();
+});
+
 onMounted(async () => {
+    initFlowbite();
     initModal();
     await load();
 });

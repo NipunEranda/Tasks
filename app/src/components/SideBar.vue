@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen dark:bg-zinc-900 dark:brightness-110">
+    <!-- <div class="h-screen dark:bg-zinc-900 dark:brightness-110">
         <div class="w-full">
             <div class="group flex flex-col h-screen">
                 <div class="h-12 my-5">
@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 transition-all duration-300">
+                <div class="flex-1 transition-all duration-300 overflow-hidden">
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
                             :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'dashboard', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'dashboard' }"
@@ -25,9 +25,9 @@
                                 <div class="ml-1">
                                     <fai icon="fa-home" />
                                 </div>
-                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                <div class="group-hover:w-[225px] transition-all duration-300 overflow-scroll">
                                     <span
-                                        class="hidden group-hover:inline-flex group-hover:pl-3 uppercase font-semibold">{{
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
                                             $t("app.sideBar.dashboard") }}</span>
                                 </div>
                             </div>
@@ -41,9 +41,9 @@
                                 <div class="ml-1">
                                     <fai icon="fa-list" />
                                 </div>
-                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                <div class="group-hover:w-[225px] transition-all duration-300 overflow-scroll">
                                     <span
-                                        class="hidden group-hover:inline-flex group-hover:pl-3 uppercase font-semibold">{{
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
                                             $t("app.sideBar.templates") }}</span>
                                 </div>
                             </div>
@@ -57,9 +57,9 @@
                                 <div class="ml-1">
                                     <fai icon="fa-arrow-trend-up" />
                                 </div>
-                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                <div class="group-hover:w-[225px] transition-all duration-300 overflow-scroll">
                                     <span
-                                        class="hidden group-hover:inline-flex group-hover:pl-3 uppercase font-semibold">{{
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
                                             $t("app.sideBar.activity") }}</span>
                                 </div>
                             </div>
@@ -73,9 +73,9 @@
                                 <div class="ml-1">
                                     <fai icon="fa-user-group" />
                                 </div>
-                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                <div class="group-hover:w-[225px] transition-all duration-300 overflow-scroll">
                                     <span
-                                        class="hidden group-hover:inline-flex group-hover:pl-3 uppercase font-semibold">{{
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
                                             $t("app.sideBar.team") }}</span>
                                 </div>
                             </div>
@@ -89,9 +89,9 @@
                                 <div class="ml-1">
                                     <fai icon="fa-gear" />
                                 </div>
-                                <div class="w-0 group-hover:w-[225px] transition-all duration-300 overflow-scroll">
+                                <div class="group-hover:w-[225px] transition-all duration-300 overflow-scroll">
                                     <span
-                                        class="hidden group-hover:inline-flex group-hover:pl-3 uppercase font-semibold">{{
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
                                             $t("app.sideBar.settings") }}</span>
                                 </div>
                             </div>
@@ -105,8 +105,9 @@
                                 id="profileMenu" data-dropdown-toggle="profileMenuContainer"
                                 data-dropdown-trigger="hover" data-dropdown-placement="top" data-dropdown-delay="100">
                                 <div class="flex w-full">
-                                    <div>
-                                        <img class="h-12 w-12 rounded-lg" :class="{
+                                    <div
+                                        class="border-3 border-zinc-700 group-hover:border-teal-600 rounded-lg transition-all duration-300">
+                                        <img class="h-11 w-11 rounded-lg" :class="{
                                             invert: user ? (user.picture ? false : true) : true,
                                         }" :src="profileImage" alt="" referrerpolicy="no-referrer" />
                                     </div>
@@ -120,7 +121,6 @@
                                 </div>
                             </div>
 
-                            <!-- Menu -->
                             <div id="profileMenuContainer"
                                 class="z-10 hidden divide-zinc-100 rounded-lg shadow-sm w-full">
                                 <ul class="text-sm px-3" aria-labelledby="profileMenu">
@@ -145,7 +145,159 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <aside id="sideBar"
+        class="fixed top-0 left-0 z-40 w-64 h-screen dark:bg-zinc-900 dark:brightness-110 transition-all -translate-x-full md:translate-x-0 duration-300"
+        aria-label="Sidebar">
+        <div class="w-full">
+            <div class="group flex flex-col h-screen">
+                <div class="h-12 my-5">
+                    <div class="grid place-items-center items-center w-full transition-all duration-300 overflow-auto">
+                        <div class="flex md:hidden md:group-hover:flex font-extrabold text-6xl mb-8 font-serif tracking-widest">
+                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">T</span>
+                            <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">A</span>
+                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
+                            <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">K</span>
+                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
+                        </div>
+                        <div class="hidden md:flex group-hover:hidden font-extrabold text-6xl mb-8 font-serif tracking-widest">
+                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">T</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 transition-all duration-300 overflow-hidden">
+                    <div class="grid place-items-center items-center w-full p-2">
+                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'dashboard', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'dashboard' }"
+                            @click="$router.push('/dashboard')">
+                            <div class="flex w-full">
+                                <div class="ml-1">
+                                    <fai icon="fa-home" />
+                                </div>
+                                <!-- group-hover:w-[200px]  -->
+                                <div class="transition-all duration-300 overflow-scroll">
+                                    <span
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
+                                            $t("app.sideBar.dashboard") }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid place-items-center items-center w-full p-2">
+                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'templates', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'templates' }"
+                            @click="$router.push('/templates')">
+                            <div class="flex w-full">
+                                <div class="ml-1">
+                                    <fai icon="fa-list" />
+                                </div>
+                                <div class="transition-all duration-300 overflow-scroll">
+                                    <span
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
+                                            $t("app.sideBar.templates") }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid place-items-center items-center w-full p-2">
+                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'activity', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'activity' }"
+                            @click="$router.push('/activity')">
+                            <div class="flex w-full">
+                                <div class="ml-1">
+                                    <fai icon="fa-arrow-trend-up" />
+                                </div>
+                                <div class="transition-all duration-300 overflow-scroll">
+                                    <span
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
+                                            $t("app.sideBar.activity") }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid place-items-center items-center w-full p-2">
+                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'team', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'team' }"
+                            @click="$router.push('/team')">
+                            <div class="flex w-full">
+                                <div class="ml-1">
+                                    <fai icon="fa-user-group" />
+                                </div>
+                                <div class="transition-all duration-300 overflow-scroll">
+                                    <span
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
+                                            $t("app.sideBar.team") }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid place-items-center items-center w-full p-2">
+                        <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'settings', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'settings' }"
+                            @click="$router.push('/settings')">
+                            <div class="flex w-full">
+                                <div class="ml-1">
+                                    <fai icon="fa-gear" />
+                                </div>
+                                <div class="transition-all duration-300 overflow-scroll">
+                                    <span
+                                        class="md:hidden group-hover:inline-flex pl-3 uppercase font-semibold">{{
+                                            $t("app.sideBar.settings") }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-17 grid w-full">
+                    <div class="flex-1">
+                        <div class="grid place-items-center items-center w-full p-2">
+                            <div class="dark:bg-zinc-800 group-hover:dark:bg-zinc-800 dark:hover:brightness-125 cursor-pointer transition-all duration-300 rounded-lg"
+                                id="profileMenu" data-dropdown-toggle="profileMenuContainer"
+                                data-dropdown-trigger="hover" data-dropdown-placement="top" data-dropdown-delay="100">
+                                <div class="flex w-full group-hover:w-full">
+                                    <div
+                                        class="border-3 border-zinc-700 rounded-lg transition-all duration-300">
+                                        <img class="h-11 md:w-11 w-14 md:group-hover:w-14 rounded-lg" :class="{
+                                            invert: user ? (user.picture ? false : true) : true,
+                                        }" :src="profileImage" alt="" referrerpolicy="no-referrer" />
+                                    </div>
+                                    <div
+                                        class="w-[225px] md:w-0 md:group-hover:w-[225px] overflow-scroll flex transition-all duration-300">
+                                        <span
+                                            class="flex pl-3 overflow-hidden text-ellipsis truncate items-center font-bold text-lg unselectable">{{
+                                                username
+                                            }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="profileMenuContainer"
+                                class="z-10 hidden divide-zinc-100 rounded-lg shadow-sm w-full">
+                                <ul class="text-sm px-3" aria-labelledby="profileMenu">
+                                    <li class=" dark:bg-zinc-800 dark:hover:brightness-125 p-3 px-4 cursor-pointer uppercase font-semibold rounded-tl-md rounded-tr-md"
+                                        @click="$router.push('/profile')">
+                                        <fai icon="fa-user" class="mr-2" /> {{ $t("app.sideBar.profieMenu.profile") }}
+                                    </li>
+                                    <li class=" dark:bg-zinc-800 dark:hover:brightness-125 p-3 px-4 cursor-pointer uppercase font-semibold"
+                                        @click="navigateToWorkspaces">
+                                        <fai icon="fa-layer-group" class="mr-2" /> {{
+                                            $t("app.sideBar.profieMenu.workspaces") }}
+                                    </li>
+                                    <li class=" dark:bg-zinc-800 dark:hover:bg-red-500 p-3 px-4 cursor-pointer uppercase font-semibold rounded-bl-md rounded-br-md"
+                                        @click="indexStore.logout">
+                                        <fai icon="fa-power-off" class="mr-2" /> {{ $t("app.sideBar.profieMenu.signOut")
+                                        }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
 </template>
 
 <script setup lang="ts">
@@ -191,8 +343,8 @@ function navigateToWorkspaces() {
 }
 
 watch(() => route.path, () => {
+    initFlowbite();
     activeTab.value = route.name ? String(route.name) : "";
-    console.log(activeTab.value);
 });
 
 onMounted(() => {
