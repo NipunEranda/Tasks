@@ -5,8 +5,7 @@
             class="fixed top-0 z-10 w-full bg-white border-zinc-200 dark:bg-zinc-900 dark:brightness-125 inline md:hidden">
             <div class="px-3 py-3 lg:px-3 lg:pl-3">
                 <div class="flex items-center justify-between">
-                    <button class="p-1 pl-3 rounded-lg cursor-pointer text-xl hover:dark:text-teal-600"
-                        data-drawer-target="sideBar" data-drawer-toggle="sideBar">
+                    <button class="p-1 pl-3 rounded-lg cursor-pointer text-xl hover:dark:text-teal-600" data-drawer-target="sideBar" data-drawer-toggle="sideBar">
                         <fai icon="fa-bars" />
                     </button>
                     <div class="flex-grow pl-4 pr-2">

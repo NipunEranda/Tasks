@@ -23,7 +23,7 @@ import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 import $ from "jquery";
 import router from "../router";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useIndexStore } from "../store";
 import { initFlowbite } from "flowbite";
 

@@ -4,6 +4,7 @@
     </div>
 </template>
 
+
 <script setup>
 import { computed, onMounted, watch } from 'vue';
 import { useIndexStore } from '../store';

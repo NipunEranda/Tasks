@@ -169,8 +169,8 @@
                 <div class="flex-1 transition-all duration-300 overflow-hidden">
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'dashboard', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'dashboard' }"
-                            @click="$router.push('/dashboard')">
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'dashboard', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'dashboard' }" data-drawer-toggle="sideBar"
+                            @click="navigation('/dashboard')">
                             <div class="flex w-full">
                                 <div class="ml-1">
                                     <fai icon="fa-home" />
@@ -186,8 +186,8 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'templates', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'templates' }"
-                            @click="$router.push('/templates')">
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'templates', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'templates' }" data-drawer-toggle="sideBar"
+                            @click="navigation('/templates')">
                             <div class="flex w-full">
                                 <div class="ml-1">
                                     <fai icon="fa-list" />
@@ -202,8 +202,8 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'activity', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'activity' }"
-                            @click="$router.push('/activity')">
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'activity', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'activity' }" data-drawer-toggle="sideBar"
+                            @click="navigation('/activity')">
                             <div class="flex w-full">
                                 <div class="ml-1">
                                     <fai icon="fa-arrow-trend-up" />
@@ -218,8 +218,8 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'team', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'team' }"
-                            @click="$router.push('/team')">
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'team', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'team' }" data-drawer-toggle="sideBar"
+                            @click="navigation('/team')">
                             <div class="flex w-full">
                                 <div class="ml-1">
                                     <fai icon="fa-user-group" />
@@ -234,8 +234,8 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'settings', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'settings' }"
-                            @click="$router.push('/settings')">
+                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'settings', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'settings' }" data-drawer-toggle="sideBar"
+                            @click="navigation('/settings')">
                             <div class="flex w-full">
                                 <div class="ml-1">
                                     <fai icon="fa-gear" />
@@ -275,8 +275,8 @@
                             <div id="profileMenuContainer"
                                 class="z-10 hidden divide-zinc-100 rounded-lg shadow-sm w-full">
                                 <ul class="text-sm px-3" aria-labelledby="profileMenu">
-                                    <li class=" dark:bg-zinc-800 dark:hover:brightness-125 p-3 px-4 cursor-pointer uppercase font-semibold rounded-tl-md rounded-tr-md"
-                                        @click="$router.push('/profile')">
+                                    <li class=" dark:bg-zinc-800 dark:hover:brightness-125 p-3 px-4 cursor-pointer uppercase font-semibold rounded-tl-md rounded-tr-md" data-drawer-toggle="sideBar"
+                                        @click="navigation('/profile')">
                                         <fai icon="fa-user" class="mr-2" /> {{ $t("app.sideBar.profieMenu.profile") }}
                                     </li>
                                     <li class=" dark:bg-zinc-800 dark:hover:brightness-125 p-3 px-4 cursor-pointer uppercase font-semibold"
@@ -310,6 +310,7 @@ import { initFlowbite } from "flowbite";
 import { useRoute } from "vue-router";
 import { useWorkspaceStore } from "../store/workspace";
 import router from "../router";
+import { sleep } from "../utils";
 
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),
@@ -336,6 +337,11 @@ let activeTab = ref(route.name ? String(route.name) : "");
 // function isActiveLocalization(value) {
 //     return i18nLocale.locale.value == value;
 // }
+
+async function navigation(path: string) {
+    await sleep(1);
+    router.push(path);
+}
 
 function navigateToWorkspaces() {
     workspaceStore.setWorkspace("");
