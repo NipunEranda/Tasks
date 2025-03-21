@@ -220,6 +220,7 @@ function initSubMenu() {
 
 async function navigation(path: string) {
     await sleep(10);
+    subMenu.value?.hide();
     $('#sideBar').removeClass('transition: none').addClass('-translate-x-full md:translate-x-0');
     router.push(path);
 }
