@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
 
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
