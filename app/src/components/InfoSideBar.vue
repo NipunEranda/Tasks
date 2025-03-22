@@ -94,7 +94,7 @@
                     class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110" v-for="tag in tasksStore.getTags">{{ tag.name }}
                     <button type="button"
                         class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
-                        data-dismiss-target="#badge-dismiss-default" aria-label="Remove">
+                        data-dismiss-target="#badge-dismiss-default" aria-label="Remove" @click="openActionModal('tag', 'remove', tag)">
                         <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -104,7 +104,7 @@
                     </button>
                 </span>
             </div>
-            <div class="px-3">
+            <div class="px-3" :class="{ 'pt-2': tasksStore.getTagsCount == 0 }">
                 <button
                     class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-[#ee845b] dark:text-[#ee845b] dark:hover:bg-[#ee845b]/10 cursor-pointer"
                     @click="openTagModal('add')">Add
@@ -116,7 +116,8 @@
             </div>
         </div>
 
-        <tags-modal :modal="tagModal" />
+        <TagsModal :modal="tagsModal" />
+        <ActionModal :modal="actionModal" :modalIcon="modalIcon"/>
     </div>
 </template>
 
@@ -129,7 +130,7 @@ import { useWorkspaceStore } from "../store/workspace";
 import { useTasksStore } from "../store/tasks";
 import { useRoute } from "vue-router";
 import { CustomModal } from "../models/Modal";
-import { initFlowbite } from "flowbite";
+import { initFlowbite, Modal } from "flowbite";
 import type { _Tag, Tag } from "../models/Tag";
 
 const indexStore = useIndexStore(),
@@ -152,16 +153,18 @@ const indexStore = useIndexStore(),
         title: "Tags"
     }),
     route = useRoute(),
-    tagModal = ref(CustomModal.createObj("tagModal", "New Tag", "add", "Save", tagModalProcess, undefined));
+    tagsModal = ref(CustomModal.createObj("tagModal", "New Tag", "add", "Save", tagModalProcess, undefined)),
+    actionModal = ref(CustomModal.createObj("actionModal", "", "", "", actionModalProcess, undefined)),
+    selectedTag: Ref<_Tag | null> = ref(null),
+    modalIcon = ref("fa-tag");
 
 async function loadData(){
-    await tasksStore.loadTags();
+    await tasksStore.loadTags(workspaceStore.activeWorkspace);
 }
 
-function initModal() {
-    const modalId = "tagModal";
+function initModal(modal: CustomModal, modalId: string) {
     const modalOptions = {
-        backdrop: "dynamic",
+        backdrop: 'dynamic' as 'dynamic',
         backdropClasses: "bg-zinc-900/50 dark:bg-zinc-900/80 fixed inset-0 z-40",
         closable: true,
     };
@@ -173,18 +176,43 @@ function initModal() {
     };
 
     // @ts-ignore
-    tagModal.value.modalEl = new Modal(document.getElementById(modalId), modalOptions, instanceOptions);
+    modal.modalEl = new Modal(document.getElementById(modalId) as HTMLElement, modalOptions, instanceOptions) as any;
 }
 
 function openTagModal(type: string) {
-    tagModal.value.type = type;
+    tagsModal.value.type = type;
     // @ts-ignore
-    tagModal.value.modalEl.show();
+    tagsModal.value.modalEl.show();
+}
+
+function openActionModal(type: string, operation: string, tag: Tag) {
+    selectedTag.value = tag;
+    initModal(actionModal.value,"actionModal");
+
+    switch(type)  {
+        case 'tag':
+            if(operation == "remove"){
+                actionModal.value.message = `<span class='font-bold text-lg'>Do you want to remove <b class='text-red-600'>${tag.name}</b> tag ?</span>`;
+                actionModal.value.processName = "Remove";
+                actionModal.value.title = "Remove Tag";
+                actionModal.value.type = operation;
+            }
+            break;
+        default:
+            break;
+    }
+
+    actionModal.value.modalEl?.show();
 }
 
 async function tagModalProcess(tag: Tag) {
     await tasksStore.createTag(tag);
-    console.log(tag);
+}
+
+async function actionModalProcess() {
+    if (selectedTag.value) {
+        await tasksStore.deleteTag(selectedTag.value);
+    }
 }
 
 let showSection1 = computed(() => {
@@ -223,7 +251,7 @@ let showSection2 = computed(() => {
 
 onMounted(async () => {
     initFlowbite();
-    initModal();
+    initModal(tagsModal.value, "tagModal");
     await loadData();
 });
 </script>

@@ -9,12 +9,18 @@ use crate::{
     models::tag::{Tag, TagRequest, TagResponse},
 };
 
-pub async fn get_tags(state: &State<AppState>) -> (Status, Json<Vec<TagResponse>>) {
+pub async fn get_tags(state: &State<AppState>, workspace_id: String) -> (Status, Json<Vec<TagResponse>>) {
     let mut tags: Vec<TagResponse> = Vec::new();
+
+    if !ObjectId::parse_str(&workspace_id).is_ok() {
+        return (Status::BadRequest, Json(vec![]));
+    }
+
+    let workspace_id = ObjectId::parse_str(workspace_id).ok().unwrap_or_default();
 
     let collection: Collection<Tag> = get_collection(state, "tag").await;
 
-    let result = collection.find(doc! {"deleted": false}).await;
+    let result = collection.find(doc! {"workspace": workspace_id, "deleted": false}).await;
     let cursor = match result {
         Ok(cursor) => cursor,
         Err(_) => return (Status::BadRequest, Json(vec![])),
@@ -29,6 +35,8 @@ pub async fn get_tags(state: &State<AppState>) -> (Status, Json<Vec<TagResponse>
             tags.push(TagResponse::copy(tag));
         });
 
+    println!("{:?}", tags);
+
     (Status::Ok, Json(tags))
 }
 
@@ -39,7 +47,13 @@ pub async fn create_tag(
 ) -> (Status, Json<String>) {
     let mut tag_id = String::from("0");
     let collection = get_collection(state, "tag").await;
-    let mut tag = Tag::try_from(tag_body.into_inner()).unwrap();
+    let tag_result = Tag::try_from(tag_body.into_inner());
+    
+    if let Err(err) = tag_result {
+        return (Status::InternalServerError, Json(err.to_string()));
+    }
+
+    let mut tag = tag_result.unwrap();
 
     tag.created_by = ObjectId::parse_str(owner).ok().unwrap();
 

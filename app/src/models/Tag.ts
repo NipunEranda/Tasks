@@ -5,6 +5,7 @@ export interface _Tag {
     name: string;
     createdBy: string;
     visibility: Visibility;
+    workspace: string;
 }
 
 export class Tag {
@@ -12,19 +13,21 @@ export class Tag {
     name: string;
     createdBy: string;
     visibility: Visibility;
+    workspace: string;
 
-    constructor(id: string, name: string, createdBy: string, visibility: Visibility){
+    constructor(id: string, name: string, createdBy: string, visibility: Visibility, workspace: string){
         this.id = id;
         this.name = name;
         this.createdBy = createdBy;
         this.visibility = visibility;
+        this.workspace = workspace;
     }
 
     static createObject(obj: _Tag) {
-            return new Tag(obj.id, obj.name, obj.createdBy, obj.visibility);
+            return new Tag(obj.id, obj.name, obj.createdBy, obj.visibility, obj.workspace);
         }
     
-        static createEmptyObject() {
-            return new Tag("", "", "", Visibility.PUBLIC);
+        static createEmptyObject(workspace: string) {
+            return new Tag("", "", "", Visibility.PUBLIC, workspace);
         }
 }

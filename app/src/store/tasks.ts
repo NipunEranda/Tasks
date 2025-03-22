@@ -19,13 +19,17 @@ export const useTasksStore = defineStore('tasks', {
         getSubTasksCount: (state) => state.subTasks.length
     },
     actions: {
-        async loadTags() {
-            const tagsReq = await fetch(`/api/v1/tag`, {credentials: 'include'});
+        async loadTags(workspaceId: string) {
+            const tagsReq = await fetch(`/api/v1/tag/${workspaceId}`, {credentials: 'include'});
             if(tagsReq.status == 200)
                 this.tags = await tagsReq.json();
         },
         async createTag(tag: Tag) {
-            await fetch(`/api/v1/tag`, { method: 'POST', credentials: 'include', body: JSON.stringify({ "name": tag.name, "visibility": tag.visibility }) });
+            await fetch(`/api/v1/tag`, { method: 'POST', credentials: 'include', body: JSON.stringify({ name: tag.name, visibility: tag.visibility, workspace: tag.workspace }) });
+            router.go(0);
+        },
+        async deleteTag(tag: Tag) {
+            await fetch(`/api/v1/tag/${tag.id}`, { method: 'DELETE', credentials: 'include' });
             router.go(0);
         }
     },

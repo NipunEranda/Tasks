@@ -67,9 +67,11 @@ import { onMounted, ref } from "vue";
 import { CustomModal } from "../../models/Modal";
 import { type _Tag, Tag } from "../../models/Tag";
 import { Visibility } from "../../models/enums/Visibility";
+import { useWorkspaceStore } from "../../store/workspace";
 const props = defineProps({
     modal: CustomModal,
-});
+}),
+workspaceStore = useWorkspaceStore();
 
-let tag = ref(Tag.createEmptyObject());
+let tag = ref(Tag.createEmptyObject(workspaceStore.activeWorkspace));
 </script>
