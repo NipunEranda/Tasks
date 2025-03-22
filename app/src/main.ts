@@ -27,6 +27,7 @@ import {
     faHome,
     faLayerGroup,
     faList,
+    faPlus,
     faPowerOff,
     faTags,
     faUser,
@@ -35,7 +36,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import InfoSideBar from './components/InfoSideBar.vue';
 
-library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faXmark, faFilter, faBars, faCircleCheck);
+library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faXmark, faFilter, faBars, faCircleCheck, faPlus);
 
 createApp(App)
     .use(router)

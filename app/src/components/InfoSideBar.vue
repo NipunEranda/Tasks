@@ -48,8 +48,8 @@
                 </div>
             </div>
         </div>
-        <div id="section" class="dark:bg-zinc-800 rounded-md mt-3 cursor-pointer" v-if="showSection">
-            <div class="text-center font-bold text-xl p-3 dark:bg-teal-700 rounded-t-md">{{ section.title }}</div>
+        <div id="section1" class="dark:bg-zinc-800 rounded-md mt-3 cursor-pointer" v-if="showSection1">
+            <div class="text-center font-bold text-xl p-3 dark:bg-teal-700 rounded-t-md">{{ section1.title }}</div>
             <div class="w-full px-3">
                 <div class="text-sm dark:text-zinc-300 font-bold py-2 pb-1">
                     {{ tasksStore.updatedDate }}
@@ -80,8 +80,39 @@
                     </div>
                 </div>
             </div>
-            <div class="p-2 uppercase dark:text-teal-600 text-center items-center place-items-center cursor-pointer">
-                <div class="hover:dark:bg-teal-600/10 rounded-full w-fit p-2 px-4" @click="$router.push('/activity')">Show More</div>
+            <div
+                class="p-2 uppercase dark:text-teal-600 text-center items-center place-items-center cursor-pointer text-sm font-bold">
+                <div class="hover:dark:bg-teal-600/10 rounded-full w-fit p-2 px-4" @click="$router.push('/activity')">
+                    Show More</div>
+            </div>
+        </div>
+        <div id="section2" class="dark:bg-zinc-800 rounded-md mt-3 cursor-pointer" v-if="showSection2">
+            <div class="text-center font-bold text-xl p-3 dark:bg-[#ee845b] dark:brightness-90 rounded-t-md">{{
+                section2.title }}</div>
+            <div class="p-3">
+                <span id="badge-dismiss-default"
+                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110">
+                    Default
+                    <button type="button"
+                        class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
+                        data-dismiss-target="#badge-dismiss-default" aria-label="Remove">
+                        <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Remove badge</span>
+                    </button>
+                </span>
+            </div>
+            <div>
+                <button
+                    class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-[#ee845b] dark:text-[#ee845b] dark:hover:bg-[#ee845b]/10 cursor-pointer">Add
+                    Tag</button>
+            </div>
+            <div
+                class="p-2 uppercase dark:text-[#ee845b] text-center items-center place-items-center cursor-pointer text-sm font-bold">
+                <div class="hover:dark:bg-[#ee845b]/10 rounded-full w-fit p-2 px-4">Show More</div>
             </div>
         </div>
     </div>
@@ -109,13 +140,33 @@ const indexStore = useIndexStore(),
         } else return profile;
     }),
     username = computed(() => { return user.value ? user.value.name.split(" ").splice(0, 2).join(" ") : "" }),
-    section = ref({
+    section1 = ref({
         title: "Recent Changes"
+    }),
+    section2 = ref({
+        title: "Tags"
     }),
     route = useRoute();
 
-let showSection = computed(() => {
-    switch(route.path) {
+let showSection1 = computed(() => {
+    switch (route.path) {
+        case '/dashboard':
+            return true;
+        case '/templates':
+            return true;
+        case '/activity':
+            return false;
+        case '/team':
+            return true;
+        case '/settings':
+            return false;
+        default:
+            return false;
+    }
+});
+
+let showSection2 = computed(() => {
+    switch (route.path) {
         case '/dashboard':
             return true;
         case '/templates':
