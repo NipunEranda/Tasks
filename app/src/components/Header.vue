@@ -127,7 +127,7 @@
                                     </div>
                                     <input type="text" id="search"
                                         class="block w-full p-2 ps-10 text-sm border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white focus:ring-teal-600 focus:border-teal-600 dark:focus:ring-teal-500 dark:focus:border-teal-500 focus:outline-none"
-                                        placeholder="Search" autocomplete="none" />
+                                        placeholder="Search" autocomplete="off" />
                                 </div>
                             </div>
                         </div>

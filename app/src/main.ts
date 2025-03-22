@@ -29,14 +29,16 @@ import {
     faList,
     faPlus,
     faPowerOff,
+    faTag,
     faTags,
     faUser,
     faUserGroup,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import InfoSideBar from './components/InfoSideBar.vue';
+import TagsModal from './components/modals/TagsModal.vue';
 
-library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faXmark, faFilter, faBars, faCircleCheck, faPlus);
+library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faTag, faXmark, faFilter, faBars, faCircleCheck, faPlus);
 
 createApp(App)
     .use(router)
@@ -44,6 +46,7 @@ createApp(App)
     .use(i18n)
     .component("fai", FontAwesomeIcon)
     .component("WorkspaceModal", WorkspaceModal)
+    .component("TagsModal", TagsModal)
     .component("SideBar", SideBar)
     .component("Header", Header)
     .component("InfoSideBar", InfoSideBar)

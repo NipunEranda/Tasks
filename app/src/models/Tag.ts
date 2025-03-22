@@ -1,4 +1,4 @@
-import type { Visibility } from "./enums/Visibility";
+import { Visibility } from "./enums/Visibility";
 
 export interface _Tag {
     id: string;
@@ -19,4 +19,12 @@ export class Tag {
         this.createdBy = createdBy;
         this.visibility = visibility;
     }
+
+    static createObject(obj: _Tag) {
+            return new Tag(obj.id, obj.name, obj.createdBy, obj.visibility);
+        }
+    
+        static createEmptyObject() {
+            return new Tag("", "", "", Visibility.PUBLIC);
+        }
 }

@@ -89,10 +89,9 @@
         <div id="section2" class="dark:bg-zinc-800 rounded-md mt-3 cursor-pointer" v-if="showSection2">
             <div class="text-center font-bold text-xl p-3 dark:bg-[#ee845b] dark:brightness-90 rounded-t-md">{{
                 section2.title }}</div>
-            <div class="p-3">
+            <div class="p-3" v-if="tasksStore.getTagsCount > 0">
                 <span id="badge-dismiss-default"
-                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110">
-                    Default
+                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110" v-for="tag in tasksStore.getTags">{{ tag.name }}
                     <button type="button"
                         class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
                         data-dismiss-target="#badge-dismiss-default" aria-label="Remove">
@@ -105,9 +104,10 @@
                     </button>
                 </span>
             </div>
-            <div>
+            <div class="pt-2 px-3">
                 <button
-                    class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-[#ee845b] dark:text-[#ee845b] dark:hover:bg-[#ee845b]/10 cursor-pointer">Add
+                    class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-[#ee845b] dark:text-[#ee845b] dark:hover:bg-[#ee845b]/10 cursor-pointer"
+                    @click="openTagModal('add')">Add
                     Tag</button>
             </div>
             <div
@@ -115,17 +115,22 @@
                 <div class="hover:dark:bg-[#ee845b]/10 rounded-full w-fit p-2 px-4">Show More</div>
             </div>
         </div>
+
+        <tags-modal :modal="tagModal" />
     </div>
 </template>
 
 <script setup lang="ts">
 import profile from "../assets/img/profile.png";
-import { computed, ref, watch, type Ref } from 'vue';
+import { computed, onMounted, ref, type Ref } from 'vue';
 import { useIndexStore } from '../store';
 import type { User } from '../models/Auth';
 import { useWorkspaceStore } from "../store/workspace";
 import { useTasksStore } from "../store/tasks";
 import { useRoute } from "vue-router";
+import { CustomModal } from "../models/Modal";
+import { initFlowbite } from "flowbite";
+import type { _Tag } from "../models/Tag";
 
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),
@@ -146,7 +151,36 @@ const indexStore = useIndexStore(),
     section2 = ref({
         title: "Tags"
     }),
-    route = useRoute();
+    route = useRoute(),
+    tagModal = ref(CustomModal.createObj("tagModal", "New Tag", "add", "Save", tagModalProcess, undefined));
+
+function initModal() {
+    const modalId = "tagModal";
+    const modalOptions = {
+        backdrop: "dynamic",
+        backdropClasses: "bg-zinc-900/50 dark:bg-zinc-900/80 fixed inset-0 z-40",
+        closable: true,
+    };
+
+    // instance options object
+    const instanceOptions = {
+        id: modalId,
+        override: true,
+    };
+
+    // @ts-ignore
+    tagModal.value.modalEl = new Modal(document.getElementById(modalId), modalOptions, instanceOptions);
+}
+
+function openTagModal(type: string) {
+    tagModal.value.type = type;
+    // @ts-ignore
+    tagModal.value.modalEl.show();
+}
+
+function tagModalProcess() {
+
+}
 
 let showSection1 = computed(() => {
     switch (route.path) {
@@ -180,5 +214,10 @@ let showSection2 = computed(() => {
         default:
             return false;
     }
+});
+
+onMounted(async () => {
+    initFlowbite();
+    initModal();
 });
 </script>
