@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
+import moment from "moment";
 
 export const useTasksStore = defineStore('tasks', {
     state: () => ({
         tasks: ["test"],
-        subTasks: ["test sub task"]
+        subTasks: ["test sub task"],
+        updatedDate: moment().format("MMMM DD, YYYY"),
     }),
     getters: {
         getTasks: (state) => state.tasks,
