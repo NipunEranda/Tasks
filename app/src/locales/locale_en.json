@@ -5,6 +5,7 @@
       "sideBar": {
         "dashboard": "Dashboard",
         "templates": "Templates",
+        "tags": "Tags",
         "activity": "Activity",
         "team": "Team",
         "settings": "Settings",

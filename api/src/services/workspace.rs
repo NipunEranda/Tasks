@@ -47,7 +47,11 @@ pub async fn create_workspace(
     let collection = get_collection(state, "workspace").await;
     let mut workspace = Workspace::try_from(workspace_body.into_inner()).unwrap();
 
+    println!("{:?}", owner);
+
     workspace.owner = ObjectId::parse_str(owner).ok().unwrap_or_default();
+
+    println!("{:?}", workspace.owner);
 
     let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
         collection.insert_one(workspace).await;
