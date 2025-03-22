@@ -9,7 +9,7 @@ mod utils;
 use dotenv::dotenv;
 use mongodb::Client;
 use rocket::tokio::sync::Mutex;
-use rocket::{launch, route, routes, Config};
+use rocket::{launch, routes, Config};
 
 pub struct AppState {
     mongo_client: Arc<Mutex<Client>>,
@@ -46,7 +46,10 @@ async fn rocket() -> _ {
                 routes::workspace::get_workspaces,
                 routes::workspace::create_workspace,
                 routes::workspace::update_workspace,
-                routes::workspace::delete_workspace
+                routes::workspace::delete_workspace,
+                routes::tag::get_tags,
+                routes::tag::create_tag,
+                routes::tag::delete_tag
             ],
         )
 }

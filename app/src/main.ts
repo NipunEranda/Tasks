@@ -22,6 +22,8 @@ import {
     faArrowTrendUp,
     faBars,
     faCircleCheck,
+    faEye,
+    faEyeSlash,
     faFilter,
     faGear,
     faHome,
@@ -38,7 +40,7 @@ import {
 import InfoSideBar from './components/InfoSideBar.vue';
 import TagsModal from './components/modals/TagsModal.vue';
 
-library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faTag, faXmark, faFilter, faBars, faCircleCheck, faPlus);
+library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faTag, faXmark, faFilter, faBars, faCircleCheck, faPlus, faEye, faEyeSlash);
 
 createApp(App)
     .use(router)

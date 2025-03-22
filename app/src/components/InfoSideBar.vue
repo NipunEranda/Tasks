@@ -104,7 +104,7 @@
                     </button>
                 </span>
             </div>
-            <div class="pt-2 px-3">
+            <div class="px-3">
                 <button
                     class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-[#ee845b] dark:text-[#ee845b] dark:hover:bg-[#ee845b]/10 cursor-pointer"
                     @click="openTagModal('add')">Add
@@ -130,7 +130,7 @@ import { useTasksStore } from "../store/tasks";
 import { useRoute } from "vue-router";
 import { CustomModal } from "../models/Modal";
 import { initFlowbite } from "flowbite";
-import type { _Tag } from "../models/Tag";
+import type { _Tag, Tag } from "../models/Tag";
 
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),
@@ -153,6 +153,10 @@ const indexStore = useIndexStore(),
     }),
     route = useRoute(),
     tagModal = ref(CustomModal.createObj("tagModal", "New Tag", "add", "Save", tagModalProcess, undefined));
+
+async function loadData(){
+    await tasksStore.loadTags();
+}
 
 function initModal() {
     const modalId = "tagModal";
@@ -178,8 +182,9 @@ function openTagModal(type: string) {
     tagModal.value.modalEl.show();
 }
 
-function tagModalProcess() {
-
+async function tagModalProcess(tag: Tag) {
+    await tasksStore.createTag(tag);
+    console.log(tag);
 }
 
 let showSection1 = computed(() => {
@@ -219,5 +224,6 @@ let showSection2 = computed(() => {
 onMounted(async () => {
     initFlowbite();
     initModal();
+    await loadData();
 });
 </script>

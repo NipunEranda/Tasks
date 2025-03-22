@@ -59,9 +59,10 @@ pub async fn login<'a>(
         let user_response = user_response.unwrap();
 
         if user_response.status() == StatusCode::OK {
-            let google_user = user_response.json::<GoogleUser>().await.ok().unwrap();
+            let mut google_user = user_response.json::<GoogleUser>().await.ok().unwrap();
 
             let user = create_user(state, &google_user).await;
+            google_user.id = user._id.to_hex();
 
             let mut claims = Claims::new(google_user);
             claims._set_role(user.role);

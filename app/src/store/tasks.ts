@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import moment from "moment";
-import type { _Tag } from "../models/Tag";
+import type { _Tag, Tag } from "../models/Tag";
+import router from "../router";
 
 export const useTasksStore = defineStore('tasks', {
     state: () => ({
@@ -18,7 +19,15 @@ export const useTasksStore = defineStore('tasks', {
         getSubTasksCount: (state) => state.subTasks.length
     },
     actions: {
-
+        async loadTags() {
+            const tagsReq = await fetch(`/api/v1/tag`, {credentials: 'include'});
+            if(tagsReq.status == 200)
+                this.tags = await tagsReq.json();
+        },
+        async createTag(tag: Tag) {
+            await fetch(`/api/v1/tag`, { method: 'POST', credentials: 'include', body: JSON.stringify({ "name": tag.name, "visibility": tag.visibility }) });
+            router.go(0);
+        }
     },
     persist: [
         {
