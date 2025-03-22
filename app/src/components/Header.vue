@@ -5,27 +5,24 @@
             class="fixed top-0 z-10 w-full bg-white border-zinc-200 dark:bg-zinc-900 dark:brightness-125 inline md:hidden">
             <div class="px-3 py-3 lg:px-3 lg:pl-3">
                 <div class="flex items-center justify-between">
-                    <button class="p-1 pl-3 rounded-lg cursor-pointer text-xl hover:dark:text-teal-600" data-drawer-target="sideBar" data-drawer-toggle="sideBar">
+                    <button class="p-1 pl-3 rounded-lg cursor-pointer text-xl hover:dark:text-teal-600"
+                        data-drawer-target="sideBar" data-drawer-toggle="sideBar">
                         <fai icon="fa-bars" />
                     </button>
                     <div class="flex-grow pl-4 pr-2">
                         <div class="grid grid-cols-2">
-                            <div class="h-full p-2 dark:bg-teal-800 rounded-lg mr-2">
-                                <div class="grid grid-cols-2">
-                                    <div class="flex text-2xl justify-end pr-5">0</div>
-                                    <div class="row text-xs">
-                                        <div class="font-bold">Sub Tasks</div>
-                                        <div class="text-xs">0 New</div>
-                                    </div>
+                            <div class="flex h-full p-2 dark:bg-purple-800 rounded-lg ml-2 cursor-pointer">
+                                <div class="text-3xl justify-end pl-5 pr-5">25</div>
+                                <div class="row text-xs place-content-center">
+                                    <div class="font-bold">Sub Tasks</div>
+                                    <div class="text-xs">0 New</div>
                                 </div>
                             </div>
-                            <div class="h-full p-2 dark:bg-purple-800 rounded-lg ml-2">
-                                <div class="grid grid-cols-2">
-                                    <div class="flex text-2xl justify-end pr-5">0</div>
-                                    <div class="row text-xs">
-                                        <div class="font-bold">Tasks</div>
-                                        <div class="text-xs">0 New</div>
-                                    </div>
+                            <div class="flex h-full p-2 dark:bg-teal-800 rounded-lg ml-2 cursor-pointer">
+                                <div class="text-3xl justify-end pl-5 pr-5">0</div>
+                                <div class="row text-xs place-content-center">
+                                    <div class="font-bold">Tasks</div>
+                                    <div class="text-xs">0 New</div>
                                 </div>
                             </div>
                         </div>
@@ -34,8 +31,7 @@
             </div>
         </nav>
 
-        <nav
-            class="fixed top-0 w-full bg-white border-zinc-200 dark:bg-zinc-900 mt-[73px] md:m-0">
+        <nav class="fixed top-0 w-full bg-white border-zinc-200 dark:bg-zinc-900 mt-[73px] md:m-0">
             <div class="px-3 py-3 lg:px-3 lg:pl-3">
                 <div class="flex items-center justify-between">
                     <div class="hidden md:flex items-center justify-start rtl:justify-end">
@@ -90,7 +86,7 @@
                                     Start New
                                 </button>
                             </div>
-                            <div class="flex-grow">
+                            <div class="flex-grow pr-2 md:pr-0">
                                 <label for="search"
                                     class="mb-2 text-sm font-medium text-zinc-900 sr-only dark:text-white">Search</label>
                                 <div class="relative">
