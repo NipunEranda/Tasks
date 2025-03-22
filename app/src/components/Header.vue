@@ -162,7 +162,7 @@ const indexStore = useIndexStore(),
             return profile;
         } else return profile;
     }),
-    username = computed(() => { return user.value ? user.value.name.split(" ").splice(0, 2).join(" ") : "" });;
+    username = computed(() => { return user.value ? user.value.name.split(" ").splice(0, 2).join(" ") : "" });
 
 let selectedTasksType = ref(1);
 

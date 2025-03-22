@@ -33,6 +33,7 @@ import {
     faUserGroup,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
+import InfoSideBar from './components/InfoSideBar.vue';
 
 library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faXmark, faFilter, faBars, faCircleCheck);
 
@@ -44,4 +45,5 @@ createApp(App)
     .component("WorkspaceModal", WorkspaceModal)
     .component("SideBar", SideBar)
     .component("Header", Header)
+    .component("InfoSideBar", InfoSideBar)
     .mount('#app')

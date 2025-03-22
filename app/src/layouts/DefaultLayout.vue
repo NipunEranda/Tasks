@@ -3,8 +3,11 @@
         <Header class="z-40" v-if="showSideBar"/>
         <side-bar id="sideBar" v-if="showSideBar"
             class="w-0 lg:w-[75px] hover:w-[256px] border-r border-zinc-800 transition-all duration-300 z-50" />
-        <div class="ml-1 lg:ml-20 mr-1 w-full">
-            <router-view class="w-full px-4 pt-[150px] lg:pt-[73px] h-screen"></router-view>
+        <div class="flex ml-1 lg:ml-20 mr-1 w-full">
+            <router-view class="flex-grow px-4 pr-0 pt-[150px] lg:pt-[73px] h-screen"></router-view>
+            <div class="pt-[150px] lg:pt-[73px] pr-2 hidden lg:inline lg:w-3/12">
+                <info-side-bar />
+            </div>
         </div>
     </div>
 </template>
