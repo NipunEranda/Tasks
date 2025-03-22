@@ -3,12 +3,12 @@ import type { _Workspace } from "../models/Workspace";
 
 export const useWorkspaceStore = defineStore('workspace', {
     state: () => ({
-        workspaces: [],
+        workspaces: [] as _Workspace[],
         activeWorkspace: ""
     }),
     getters: {
         getWorkspaces: (state) => state.workspaces,
-        getActiveWorkspace: (state) => state.activeWorkspace,
+        getActiveWorkspace: (state) => state.workspaces.filter(w => w.id == state.activeWorkspace)[0],
     },
     actions: {
         async load() {

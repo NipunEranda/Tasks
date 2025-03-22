@@ -21,6 +21,7 @@ import {
     faArrowLeft,
     faArrowTrendUp,
     faBars,
+    faCircleCheck,
     faFilter,
     faGear,
     faHome,
@@ -33,7 +34,7 @@ import {
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faXmark, faFilter, faBars);
+library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faXmark, faFilter, faBars, faCircleCheck);
 
 createApp(App)
     .use(router)
