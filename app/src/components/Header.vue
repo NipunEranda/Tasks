@@ -136,8 +136,8 @@
                 </div>
             </div>
         </nav>
+        <TaskModal :modal="taskModal" />
     </div>
-    <TaskModal :modal="taskModal" />
 </template>
 
 <script setup lang="ts">

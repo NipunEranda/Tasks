@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <Header class="z-10" v-if="showSideBar"/>
+        <Header v-if="showSideBar"/>
         <side-bar id="sideBar" v-if="showSideBar"
             class="w-0 lg:w-[75px] hover:w-[256px] border-r border-zinc-800 transition-all duration-300 z-20" />
         <div class="flex ml-1 lg:ml-20 mr-1 w-full">

@@ -23,6 +23,57 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4 bg-zinc-50 dark:bg-zinc-800">
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-md text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai icon="fa-tag" />
+                        </span>
+                        <input type="text" id="website-admin"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none"
+                            placeholder="Name" v-model="task.name" autocomplete="off">
+                    </div>
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-md text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai icon="fa-tag" />
+                        </span>
+                        <input type="text" id="website-admin"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none"
+                            placeholder="Description" v-model="task.description" autocomplete="off">
+                    </div>
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-xs text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai :icon="task.status ==  Status.OPEN ? 'fa-eye' : 'fa-eye-slash'" />
+                        </span>
+                        <select id="small"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.status">
+                            <option v-for="status in Object.keys(Status)" :value="status">{{ status }}</option>
+                        </select>
+                    </div>
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-xs text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai :icon="task.visibility ==  Visibility.PUBLIC ? 'fa-eye' : 'fa-eye-slash'" />
+                        </span>
+                        <select id="small"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.visibility">
+                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility">{{ visibility }}</option>
+                        </select>
+                    </div>
+
+                    <!-- Should be user list -->
+                    <!-- <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-xs text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai :icon="task.visibility ==  Visibility.PUBLIC ? 'fa-eye' : 'fa-eye-slash'" />
+                        </span>
+                        <select id="small"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.visibility">
+                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility">{{ visibility }}</option>
+                        </select>
+                    </div> -->
+                    
                 </div>
                 <!-- Footer -->
                 <div
@@ -44,8 +95,16 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { CustomModal } from "../../models/Modal";
+import { Task } from "../../models/Task";
+import { Workspace } from "../../models/Workspace";
+import { Visibility } from "../../models/enums/Visibility";
+import { Status } from "../../models/enums/Status";
 const props = defineProps({
     modal: CustomModal,
+    workspace: Workspace
 });
+
+let task = ref(Task.createEmptyObject(props.workspace));
 </script>
