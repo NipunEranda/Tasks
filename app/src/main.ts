@@ -40,6 +40,7 @@ import {
     faUserGroup,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
+import TaskModal from './components/modals/TaskModal.vue';
 
 library.add(faHome, faLayerGroup, faArrowLeft, faList, faArrowTrendUp, faUserGroup, faGear, faUser, faPowerOff, faTags, faTag, faXmark, faFilter, faBars, faCircleCheck, faPlus, faEye, faEyeSlash);
 
@@ -51,6 +52,7 @@ createApp(App)
     .component("WorkspaceModal", WorkspaceModal)
     .component("TagsModal", TagsModal)
     .component("ActionModal", ActionModal)
+    .component("TaskModal", TaskModal)
     .component("SideBar", SideBar)
     .component("Header", Header)
     .component("InfoSideBar", InfoSideBar)
