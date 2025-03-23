@@ -136,7 +136,7 @@ import type { _Tag, Tag } from "../models/Tag";
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),
     tasksStore = useTasksStore(),
-    user: Ref<User | null> = computed(() => { return indexStore.currentUser }),
+    user: Ref<User | null> = computed(() => { return indexStore.currentUser || null }),
     profileImage: Ref<string> = computed(() => {
         if (user.value) {
             if (user.value.picture) {

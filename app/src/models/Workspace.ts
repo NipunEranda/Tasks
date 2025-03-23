@@ -1,6 +1,10 @@
+import { Visibility } from "./enums/Visibility";
+
 export interface _Workspace {
     id: string;
     name: string;
+    owner: string;
+    visibility: Visibility,
     created: Date;
     deleted: Boolean;
 }
@@ -8,21 +12,25 @@ export interface _Workspace {
 export class Workspace {
     id: string;
     name: string;
+    owner: string;
+    visibility: Visibility;
     created: Date;
     deleted: Boolean;
 
-    constructor(id: string, name: string, created: Date, deleted: Boolean) {
+    constructor(id: string, name: string, owner: string, visibility: Visibility, created: Date, deleted: Boolean) {
         this.id = id;
         this.name = name;
+        this.owner = owner;
+        this.visibility = visibility;
         this.created = created;
         this.deleted = deleted;
     }
 
     static createObject(obj: _Workspace) {
-        return new Workspace(obj.id, obj.name, obj.created, obj.deleted);
+        return new Workspace(obj.id, obj.name, "", Visibility.PRIVATE, obj.created, obj.deleted);
     }
 
     static createEmptyObject() {
-        return new Workspace("", "", new Date(), false);
+        return new Workspace("", "", "", Visibility.PRIVATE,new Date(), false);
     }
 }

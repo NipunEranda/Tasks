@@ -156,7 +156,7 @@ const indexStore = useIndexStore(),
     tasksStore = useTasksStore(),
     taskTypes = computed(() => { return ["My Tasks", "My Active Tasks", "All Tasks"] }),
     route = useRoute(),
-    user: Ref<User | null> = computed(() => { return indexStore.currentUser }),
+    user: Ref<User | null> = computed(() => { return indexStore.currentUser || null }),
     profileImage: Ref<string> = computed(() => {
         if (user.value) {
             if (user.value.picture) {
