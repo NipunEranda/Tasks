@@ -1,9 +1,9 @@
 use mongodb::{Collection, bson::doc};
-use rocket::State;
+use rocket::{State, futures::TryStreamExt};
 
 use crate::{
     AppState,
-    models::user::{GoogleUser, User},
+    models::user::{GoogleUser, User, UserResponse},
 };
 
 pub async fn create_user(state: &State<AppState>, google_user: &GoogleUser) -> User {
@@ -20,7 +20,15 @@ pub async fn create_user(state: &State<AppState>, google_user: &GoogleUser) -> U
 
     if existing_user.is_some() {
         let existing_user = &existing_user.unwrap();
-        return User::new(&GoogleUser::new(existing_user._id.to_hex(), existing_user.name.to_string(), existing_user.email.to_string(), existing_user.picture.to_string()), existing_user.role.to_string());
+        return User::new(
+            &GoogleUser::new(
+                existing_user._id.to_hex(),
+                existing_user.name.to_string(),
+                existing_user.email.to_string(),
+                existing_user.picture.to_string(),
+            ),
+            existing_user.role.to_string(),
+        );
     }
 
     let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
@@ -31,6 +39,28 @@ pub async fn create_user(state: &State<AppState>, google_user: &GoogleUser) -> U
 
     user
 }
+
+// pub async fn get_users(state: &State<AppState>) -> Vec<UserResponse> {
+//     let mut users: Vec<UserResponse> = Vec::new();
+//     let collection: Collection<User> = get_collection(state, "user").await;
+//     let result = collection.find(doc! {}).await;
+
+//     let cursor = match result {
+//         Ok(cursor) => cursor,
+//         Err(_) => return vec![],
+//     };
+
+//     cursor
+//         .try_collect()
+//         .await
+//         .unwrap_or(vec![])
+//         .iter()
+//         .for_each(|user| {
+//             users.push(UserResponse::copy(user));
+//         });
+
+//     users
+// }
 
 async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<User> {
     let client = state.mongo_client.lock().await;

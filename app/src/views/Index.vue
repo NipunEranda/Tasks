@@ -43,7 +43,7 @@ onMounted(async () => {
     } else {
         client.value = google.accounts.oauth2.initCodeClient({
             client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-            scope: 'openid https://www.googleapis.com/auth/userinfo.profile',
+            scope: 'openid email https://www.googleapis.com/auth/userinfo.profile',
             ux_mode: 'redirect',
             redirect_uri: import.meta.env.VITE_GOOGLE_REDIRECT_URI,
             state: "1234"

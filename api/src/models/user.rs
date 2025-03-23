@@ -17,6 +17,17 @@ pub struct User {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct UserResponse {
+    pub id: String,
+    pub name: String,
+    pub email: String,
+    pub picture: String,
+    pub role: String,
+    pub created: DateTime,
+    pub is_active: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct LoginResponse {
     pub access_token: String,
     pub refresh_token: String,
@@ -53,6 +64,20 @@ impl User {
             role,
             created: DateTime::from(chrono_datetime),
             is_active: true,
+        }
+    }
+}
+
+impl UserResponse {
+    pub fn copy(obj: &User) -> Self {
+        UserResponse {
+            id: obj._id.to_hex(),
+            name: obj.name.clone(),
+            email: obj.email.clone(),
+            picture: obj.picture.clone(),
+            role: obj.role.clone(),
+            created: obj.created,
+            is_active: obj.is_active,
         }
     }
 }

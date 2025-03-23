@@ -40,6 +40,7 @@ async fn rocket() -> _ {
             "/api/v1/",
             routes![
                 routes::user::get_user,
+                routes::user::get_users,
                 routes::user::login,
                 routes::user::logout_user,
                 routes::workspace::test,

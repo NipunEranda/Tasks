@@ -66,15 +66,15 @@ impl TagResponse {
     }
 }
 
-impl Tag {
-    pub fn new() -> Self {
-        Tag {
-            _id: ObjectId::new(),
-            name: String::from(""),
-            created_by: ObjectId::new(),
-            visibility:Visibility::PUBLIC,
-            deleted: false,
-            workspace: ObjectId::new(),
-        }
-    }
-}
+// impl Tag {
+//     pub fn new() -> Self {
+//         Tag {
+//             _id: ObjectId::new(),
+//             name: String::from(""),
+//             created_by: ObjectId::new(),
+//             visibility:Visibility::PUBLIC,
+//             deleted: false,
+//             workspace: ObjectId::new(),
+//         }
+//     }
+// }
