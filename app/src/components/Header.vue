@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
                                 <div class="flex">
-                                    <fai icon="fa-circle-check" class="px-1"/>
+                                    <fai icon="fa-circle-check" class="px-1" />
                                 </div>
                             </div>
                             <div
@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="flex">
-                                    <fai icon="fa-list" class="px-1"/>
+                                    <fai icon="fa-list" class="px-1" />
                                 </div>
                             </div>
                         </div>
@@ -110,7 +110,8 @@
                             </div>
                             <div class="hidden lg:flex mr-2">
                                 <button type="button"
-                                    class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-teal-700 dark:border-teal-600 dark:hover:bg-teal-600 dark:placeholder-teal-400 dark:text-white focus:ring-teal-600 focus:outline-none cursor-pointer">
+                                    class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-teal-700 dark:border-teal-600 dark:hover:bg-teal-600 dark:placeholder-teal-400 dark:text-white focus:ring-teal-600 focus:outline-none cursor-pointer"
+                                    @click="openTaskModal('new')">
                                     Start New
                                 </button>
                             </div>
@@ -135,6 +136,7 @@
                 </div>
             </div>
         </nav>
+        <TaskModal :modal="taskModal" />
     </div>
 </template>
 
@@ -147,13 +149,14 @@ import type { User } from '../models/Auth';
 import { useIndexStore } from '../store';
 import { useWorkspaceStore } from "../store/workspace";
 import { useTasksStore } from "../store/tasks";
+import { CustomModal } from "../models/Modal";
 
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),
     tasksStore = useTasksStore(),
     taskTypes = computed(() => { return ["My Tasks", "My Active Tasks", "All Tasks"] }),
     route = useRoute(),
-    user: Ref<User | null> = computed(() => { return indexStore.currentUser }),
+    user: Ref<User | null> = computed(() => { return indexStore.currentUser || null }),
     profileImage: Ref<string> = computed(() => {
         if (user.value) {
             if (user.value.picture) {
@@ -162,16 +165,47 @@ const indexStore = useIndexStore(),
             return profile;
         } else return profile;
     }),
-    username = computed(() => { return user.value ? user.value.name.split(" ").splice(0, 2).join(" ") : "" });
+    username = computed(() => { return user.value ? user.value.name.split(" ").splice(0, 2).join(" ") : "" }),
+    taskModal = ref(CustomModal.createObj("taskModal", "New Task", "add", "Save", taskModalProcess, undefined));
 
 let selectedTasksType = ref(1);
 
+function initModal(modal: CustomModal, modalId: string) {
+    const modalOptions = {
+        backdrop: 'dynamic' as 'dynamic',
+        backdropClasses: "bg-zinc-900/50 dark:bg-zinc-900/80 fixed inset-0 z-40",
+        closable: true,
+    };
+
+    // instance options object
+    const instanceOptions = {
+        id: modalId,
+        override: true,
+    };
+
+    // @ts-ignore
+    modal.modalEl = new Modal(document.getElementById(modalId) as HTMLElement, modalOptions, instanceOptions) as any;
+}
+
+function openTaskModal(type: string) {
+    taskModal.value.type = type;
+    taskModal.value.processName = "Save";
+    taskModal.value.title = "New Task";
+    // @ts-ignore
+    taskModal.value.modalEl.show();
+}
+
+async function taskModalProcess() {
+
+}
+
 onMounted(() => {
     initFlowbite();
+    initModal(taskModal.value, "taskModal");
 });
-
 
 watch(() => route.path, () => {
     initFlowbite();
+    initModal(taskModal.value, "taskModal");
 });
 </script>

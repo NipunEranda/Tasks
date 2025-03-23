@@ -165,7 +165,7 @@ const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),
     // i18nLocale = useI18n(),
     route = useRoute(),
-    user: Ref<User | null> = computed(() => { return indexStore.currentUser }),
+    user: Ref<User | null> = computed(() => { return indexStore.currentUser || null }),
     profileImage: Ref<string> = computed(() => {
         if (user.value) {
             if (user.value.picture) {

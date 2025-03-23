@@ -29,6 +29,7 @@ pub async fn get_workspaces(state: &State<AppState>) -> (Status, Json<Vec<Worksp
                 workspace._id.to_hex(),
                 workspace.owner.to_string(),
                 workspace.name.to_string(),
+                workspace.visibility,
                 workspace.deleted.to_string().parse().unwrap(),
                 workspace.is_active.to_string().parse().unwrap(),
                 workspace.created.to_string(),
@@ -47,11 +48,7 @@ pub async fn create_workspace(
     let collection = get_collection(state, "workspace").await;
     let mut workspace = Workspace::try_from(workspace_body.into_inner()).unwrap();
 
-    println!("{:?}", owner);
-
     workspace.owner = ObjectId::parse_str(owner).ok().unwrap_or_default();
-
-    println!("{:?}", workspace.owner);
 
     let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
         collection.insert_one(workspace).await;

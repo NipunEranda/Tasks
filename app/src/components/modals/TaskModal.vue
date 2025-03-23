@@ -30,23 +30,55 @@
                         </span>
                         <input type="text" id="website-admin"
                             class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none"
-                            placeholder="Tag Name" v-model="tag.name" autocomplete="off">
+                            placeholder="Name" v-model="task.name" autocomplete="off">
+                    </div>
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-md text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai icon="fa-tag" />
+                        </span>
+                        <input type="text" id="website-admin"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none"
+                            placeholder="Description" v-model="task.description" autocomplete="off">
                     </div>
                     <div class="flex">
                         <span
                             class="inline-flex items-center px-3 text-xs text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
-                            <fai :icon="tag.visibility ==  Visibility.PUBLIC ? 'fa-eye' : 'fa-eye-slash'" />
+                            <fai :icon="task.status ==  Status.OPEN ? 'fa-eye' : 'fa-eye-slash'" />
                         </span>
                         <select id="small"
-                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="tag.visibility">
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.status">
+                            <option v-for="status in Object.keys(Status)" :value="status">{{ status }}</option>
+                        </select>
+                    </div>
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-xs text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai :icon="task.visibility ==  Visibility.PUBLIC ? 'fa-eye' : 'fa-eye-slash'" />
+                        </span>
+                        <select id="small"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.visibility">
                             <option v-for="visibility in Object.keys(Visibility)" :value="visibility">{{ visibility }}</option>
                         </select>
                     </div>
+
+                    <!-- Should be user list -->
+                    <!-- <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 text-xs text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
+                            <fai :icon="task.visibility ==  Visibility.PUBLIC ? 'fa-eye' : 'fa-eye-slash'" />
+                        </span>
+                        <select id="small"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.visibility">
+                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility">{{ visibility }}</option>
+                        </select>
+                    </div> -->
+                    
                 </div>
                 <!-- Footer -->
                 <div
                     class="bg-zinc-100 bg-opacity-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 border-t-1 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-full">
-                    <button @click="props.modal?.process(tag)" type="button"
+                    <button @click="props.modal?.process()" type="button"
                         class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-[#ee855bd1] dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer">
                         {{ props.modal?.processName }}
                     </button>
@@ -65,13 +97,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { CustomModal } from "../../models/Modal";
-import { type _Tag, Tag } from "../../models/Tag";
+import { Task } from "../../models/Task";
+import { Workspace } from "../../models/Workspace";
 import { Visibility } from "../../models/enums/Visibility";
-import { useWorkspaceStore } from "../../store/workspace";
+import { Status } from "../../models/enums/Status";
 const props = defineProps({
     modal: CustomModal,
-}),
-workspaceStore = useWorkspaceStore();
+    workspace: Workspace
+});
 
-let tag = ref(Tag.createEmptyObject(workspaceStore.activeWorkspace));
+let task = ref(Task.createEmptyObject(props.workspace));
 </script>

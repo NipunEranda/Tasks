@@ -1,9 +1,10 @@
 import { defineStore } from "pinia"
 import router from "../router";
+import type { _User } from "../models/Auth";
 
 export const useIndexStore = defineStore('index', {
     state: () => ({
-        currentUser: null,
+        currentUser: undefined as _User | undefined,
         loggedIn: false
     }),
     getters: {

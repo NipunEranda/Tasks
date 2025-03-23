@@ -1,15 +1,19 @@
 use std::env;
 
 use jsonwebtoken::{EncodingKey, Header, encode};
+use mongodb::bson::doc;
+use mongodb::Collection;
 use reqwest::StatusCode;
+use rocket::futures::TryStreamExt;
+use rocket::serde::json::Json;
 use rocket::time::Duration;
 use rocket::{
     State,
     http::{Cookie, CookieJar, Status},
-    serde::json::Json,
     time::OffsetDateTime,
 };
 
+use crate::models::user::{User, UserResponse};
 use crate::{
     AppState,
     models::{claims::Claims, user::GoogleUser},
@@ -47,11 +51,13 @@ pub async fn login<'a>(
         let response_body: serde_json::Value = response.json().await.ok().unwrap();
         let response_body = response_body.as_object().unwrap();
 
+        let token = response_body.get("access_token").unwrap().as_str().unwrap();
+
         let user_response = client
             .get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json")
             .header(
                 "Authorization",
-                "Bearer ".to_owned() + response_body.get("access_token").unwrap().as_str().unwrap(),
+                "Bearer ".to_owned() + token,
             )
             .send()
             .await
@@ -90,4 +96,32 @@ pub async fn login<'a>(
     }
 
     (Status::Unauthorized, Json("false".to_string()))
+}
+
+pub async fn get_users(state: &State<AppState>) -> (Status, Json<Vec<UserResponse>>) {
+    let mut users: Vec<UserResponse> = Vec::new();
+    let collection: Collection<User> = get_collection(state, "user").await;
+    let result = collection.find(doc! {}).await;
+
+    let cursor = match result {
+        Ok(cursor) => cursor,
+        Err(_) => return (Status::Ok, Json(vec![])),
+    };
+
+    cursor
+        .try_collect()
+        .await
+        .unwrap_or(vec![])
+        .iter()
+        .for_each(|user| {
+            users.push(UserResponse::copy(user));
+        });
+
+    (Status::Ok, Json(users))
+}
+
+async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<User> {
+    let client = state.mongo_client.lock().await;
+    let db: mongodb::Database = client.database("tasks");
+    db.collection::<User>(collection)
 }
