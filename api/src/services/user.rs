@@ -13,19 +13,18 @@ use rocket::{
     time::OffsetDateTime,
 };
 
+use crate::models::response::Response;
 use crate::models::user::{User, UserResponse};
 use crate::{
     AppState,
     models::{claims::Claims, user::GoogleUser},
 };
 
-use super::db::user::create_user;
-
 pub async fn login<'a>(
     state: &State<AppState>,
     cookies: &'a CookieJar<'a>,
     code: String,
-) -> (Status, Json<String>) {
+) -> (Status, Json<Response>) {
     let domain = env::var("AUTH_DOMAIN").ok().unwrap();
     let params = [
         ("code", code),
@@ -68,6 +67,13 @@ pub async fn login<'a>(
             let mut google_user = user_response.json::<GoogleUser>().await.ok().unwrap();
 
             let user = create_user(state, &google_user).await;
+
+            if user.is_none() {
+                return Response::Unauthorized(String::from("Access Denied"));
+            }
+
+            let user = user.unwrap();
+
             google_user.id = user._id.to_hex();
 
             let mut claims = Claims::new(google_user);
@@ -91,11 +97,12 @@ pub async fn login<'a>(
             cookie.set_domain(if domain == "" {String::from("localhost")} else {domain});
             cookies.add(cookie);
 
-            return (Status::Ok, Json("true".to_string()));
+            return Response::Ok(String::from("User Logged In Successfully"));
         }
     }
 
-    (Status::Unauthorized, Json("false".to_string()))
+    // (Status::Unauthorized, Json("false".to_string()))
+    Response::Unauthorized(String::from("Access Denied"))
 }
 
 pub async fn get_users(state: &State<AppState>) -> (Status, Json<Vec<UserResponse>>) {
@@ -118,6 +125,44 @@ pub async fn get_users(state: &State<AppState>) -> (Status, Json<Vec<UserRespons
         });
 
     (Status::Ok, Json(users))
+}
+
+async fn create_user(state: &State<AppState>, google_user: &GoogleUser) -> Option<User> {
+    let mut user_id: String = String::from("0");
+    let collection: Collection<User> = get_collection(state, "user").await;
+
+    let user = User::new(google_user, String::from("user"));
+
+    let existing_user: Option<User> = collection
+        .find_one(doc! {"email": &user.email })
+        .await
+        .ok()
+        .unwrap();
+
+    if existing_user.is_some() {
+        let existing_user = &existing_user.unwrap();
+        return Some(User::new(
+            &GoogleUser::new(
+                existing_user._id.to_hex(),
+                existing_user.name.to_string(),
+                existing_user.email.to_string(),
+                existing_user.picture.to_string(),
+            ),
+            existing_user.role.to_string(),
+        ));
+    }
+
+    let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
+        collection.insert_one(&user).await;
+    if let Some(inserted_id) = result.unwrap().inserted_id.as_object_id() {
+        user_id = inserted_id.to_hex();
+    }
+
+    if user_id != "0" {
+        return Some(user);
+    }else {
+        return None
+    }
 }
 
 async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<User> {
