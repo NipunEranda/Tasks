@@ -5,11 +5,11 @@ use mongodb::{
 use rocket::{State, futures::TryStreamExt, http::Status, serde::json::Json};
 
 use crate::{
-    AppState,
-    models::workspace::{Workspace, WorkspaceRequest, WorkspaceResponse},
+    models::workspace::{Visibility, Workspace, WorkspaceRequest, WorkspaceResponse}, utils::request_guard::HeaderGuard, AppState
 };
 
-pub async fn get_workspaces(state: &State<AppState>) -> (Status, Json<Vec<WorkspaceResponse>>) {
+pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (Status, Json<Vec<WorkspaceResponse>>) {
+    let user_id = ObjectId::parse_str(_guard._get_id()).ok().unwrap();
     let mut workspaces: Vec<WorkspaceResponse> = Vec::new();
     let collection: Collection<Workspace> = get_collection(state, "workspace").await;
 
@@ -24,12 +24,14 @@ pub async fn get_workspaces(state: &State<AppState>) -> (Status, Json<Vec<Worksp
         .await
         .unwrap_or(vec![])
         .iter()
+        .filter(|workspace| workspace.team.contains(&user_id) || workspace.visibility == Visibility::PUBLIC)
         .for_each(|workspace| {
             workspaces.push(WorkspaceResponse::new(
                 workspace._id.to_hex(),
                 workspace.owner.to_string(),
                 workspace.name.to_string(),
                 workspace.visibility,
+                workspace.team.clone(),
                 workspace.deleted.to_string().parse().unwrap(),
                 workspace.is_active.to_string().parse().unwrap(),
                 workspace.created.to_string(),
@@ -49,6 +51,8 @@ pub async fn create_workspace(
     let mut workspace = Workspace::try_from(workspace_body.into_inner()).unwrap();
 
     workspace.owner = ObjectId::parse_str(owner).ok().unwrap_or_default();
+
+    workspace.team.push(workspace.owner);
 
     let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
         collection.insert_one(workspace).await;
@@ -84,7 +88,7 @@ pub async fn update_workspace(
     collection
         .update_one(
             doc! {"_id": workspace_id},
-            doc! { "$set": doc! {"name": workspace.name} },
+            doc! { "$set": doc! {"name": workspace.name, "team": workspace.team} },
         )
         .await
         .ok()
