@@ -13,7 +13,7 @@ pub async fn get_tags(
     state: &State<AppState>,
     workspace_id: &str,
 ) -> (Status, Json<Vec<TagResponse>>) {
-    services::tag::get_tags(state, String::from(workspace_id)).await
+    services::tag::get_tags(_guard, state, String::from(workspace_id)).await
 }
 
 #[post("/tag", data = "<tag>")]

@@ -39,7 +39,7 @@
                         </span>
                         <select id="small"
                             class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="tag.visibility">
-                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility">{{ visibility }}</option>
+                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility" :key="visibility">{{ visibility }}</option>
                         </select>
                     </div>
                 </div>

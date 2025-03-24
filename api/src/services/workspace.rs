@@ -54,6 +54,8 @@ pub async fn create_workspace(
 
     workspace.team.push(workspace.owner);
 
+    println!("{:?}", workspace);
+
     let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
         collection.insert_one(workspace).await;
     if let Some(inserted_id) = result.unwrap().inserted_id.as_object_id() {
