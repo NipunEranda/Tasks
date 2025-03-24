@@ -5,11 +5,11 @@ use mongodb::{
 use rocket::{State, futures::TryStreamExt, http::Status, serde::json::Json};
 
 use crate::{
-    AppState,
-    models::tag::{Tag, TagRequest, TagResponse},
+    models::tag::{Tag, TagRequest, TagResponse, Visibility}, utils::request_guard::HeaderGuard, AppState
 };
 
-pub async fn get_tags(state: &State<AppState>, workspace_id: String) -> (Status, Json<Vec<TagResponse>>) {
+pub async fn get_tags(_guard: HeaderGuard, state: &State<AppState>, workspace_id: String) -> (Status, Json<Vec<TagResponse>>) {
+    let user_id = ObjectId::parse_str(_guard._get_id()).ok().unwrap();
     let mut tags: Vec<TagResponse> = Vec::new();
 
     if !ObjectId::parse_str(&workspace_id).is_ok() {
@@ -31,11 +31,10 @@ pub async fn get_tags(state: &State<AppState>, workspace_id: String) -> (Status,
         .await
         .unwrap_or(vec![])
         .iter()
+        .filter(|tag| tag.visibility == Visibility::PUBLIC || (tag.visibility == Visibility::PRIVATE && tag.created_by == user_id))
         .for_each(|tag| {
             tags.push(TagResponse::copy(tag));
         });
-
-    println!("{:?}", tags);
 
     (Status::Ok, Json(tags))
 }
@@ -56,6 +55,8 @@ pub async fn create_tag(
     let mut tag = tag_result.unwrap();
 
     tag.created_by = ObjectId::parse_str(owner).ok().unwrap();
+
+    println!("{:?}", tag);
 
     let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
         collection.insert_one(tag).await;

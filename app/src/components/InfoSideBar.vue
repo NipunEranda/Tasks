@@ -91,7 +91,7 @@
                 section2.title }}</div>
             <div class="p-3" v-if="tasksStore.getTagsCount > 0">
                 <span id="badge-dismiss-default"
-                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110" v-for="tag in tasksStore.getTags">{{ tag.name }}
+                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110" v-for="tag in tasksStore.getTags" :key="tag">{{ tag.name }}
                     <button type="button"
                         class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
                         data-dismiss-target="#badge-dismiss-default" aria-label="Remove" @click="openActionModal('tag', 'remove', tag)">

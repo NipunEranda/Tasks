@@ -14,7 +14,7 @@ pub async fn get_workspaces(
     _guard: HeaderGuard,
     state: &State<AppState>,
 ) -> (Status, Json<Vec<WorkspaceResponse>>) {
-    services::workspace::get_workspaces(state).await
+    services::workspace::get_workspaces(_guard, state).await
 }
 
 #[post("/workspace", data = "<workspace>")]

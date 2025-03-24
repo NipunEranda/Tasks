@@ -1,7 +1,7 @@
 use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone, Copy)]
+#[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
 pub enum Visibility {
     PUBLIC,
     PRIVATE,
@@ -47,7 +47,7 @@ impl TryFrom<TagRequest> for Tag {
             _id: ObjectId::new(),
             name: item.name,
             created_by: ObjectId::new(),
-            visibility: Visibility::PUBLIC,
+            visibility: item.visibility,
             workspace: workspace_id,
             deleted: false,
         })

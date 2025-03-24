@@ -16,11 +16,13 @@ export const useIndexStore = defineStore('index', {
             const response = await fetch(`/api/v1/user/login/${code}`, { method: 'POST' });
             if (response.status == 200) {
                 const userResponse = await fetch("/api/v1/user", { credentials: 'include' });
+                console.log(userResponse);
 
-                if (userResponse.status == 200)
+                if (userResponse.status == 200){
                     this.currentUser = await userResponse.json();
+                    this.loggedIn = true;
+                }
 
-                this.loggedIn = (await response.json()) == "true";
                 router.push("/dashboard");
             }
         },

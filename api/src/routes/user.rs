@@ -6,7 +6,7 @@ use rocket::{
     serde::json::Json,
 };
 
-use crate::{models::user::UserResponse, services, utils::request_guard::HeaderGuard, AppState};
+use crate::{models::{response::Response, user::UserResponse}, services, utils::request_guard::HeaderGuard, AppState};
 
 #[get("/user")]
 pub async fn get_user(_guard: HeaderGuard) -> (Status, Json<HeaderGuard>) {
@@ -33,7 +33,7 @@ pub async fn login<'a>(
     state: &State<AppState>,
     cookies: &'a CookieJar<'a>,
     code: &str,
-) -> (Status, Json<String>) {
+) -> (Status, Json<Response>) {
     services::user::login(
         state,
         cookies,
