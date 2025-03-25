@@ -45,6 +45,7 @@ async fn rocket() -> _ {
                 routes::user::logout_user,
                 routes::workspace::test,
                 routes::workspace::get_workspaces,
+                routes::workspace::get_workspace_team,
                 routes::workspace::create_workspace,
                 routes::workspace::update_workspace,
                 routes::workspace::delete_workspace,

@@ -14,7 +14,7 @@ export const useIndexStore = defineStore('index', {
     actions: {
         async login(code: string) {
             const response = await fetch(`/api/v1/user/login/${code}`, { method: 'POST' });
-            if (response.status == 200) {
+            if (response.status == 200 || response.status == 201) {
                 const userResponse = await fetch("/api/v1/user", { credentials: 'include' });
                 console.log(userResponse);
 
