@@ -2,7 +2,7 @@ use rocket::{State, delete, get, http::Status, post, serde::json::Json};
 
 use crate::{
     AppState,
-    models::tag::{TagRequest, TagResponse},
+    models::tag::TagRequest,
     services,
     utils::request_guard::HeaderGuard,
 };
@@ -12,7 +12,7 @@ pub async fn get_tags(
     _guard: HeaderGuard,
     state: &State<AppState>,
     workspace_id: &str,
-) -> (Status, Json<Vec<TagResponse>>) {
+) -> (Status, String) {
     services::tag::get_tags(_guard, state, String::from(workspace_id)).await
 }
 
@@ -21,7 +21,7 @@ pub async fn create_tag(
     _guard: HeaderGuard,
     state: &State<AppState>,
     tag: Json<TagRequest>,
-) -> (Status, Json<String>) {
+) -> (Status, String) {
     services::tag::create_tag(state, tag, _guard._get_id()).await
 }
 
@@ -30,6 +30,6 @@ pub async fn delete_tag(
     _guard: HeaderGuard,
     state: &State<AppState>,
     id: &str,
-) -> (Status, Json<bool>) {
+) -> (Status, String) {
     services::tag::delete_tag(state, id).await
 }

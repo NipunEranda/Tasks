@@ -1,11 +1,12 @@
 // use std::time::SystemTime;
 
-use std::time::SystemTime;
+use std::{fmt, time::SystemTime};
 
 use mongodb::bson::{oid::ObjectId, DateTime};
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct User {
     pub _id: ObjectId,
     pub name: String,
@@ -90,5 +91,11 @@ impl GoogleUser {
             email,
             picture,
         }
+    }
+}
+
+impl fmt::Display for UserResponse {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }

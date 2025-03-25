@@ -2,21 +2,27 @@ use mongodb::{
     Collection,
     bson::{doc, oid::ObjectId},
 };
-use rocket::{State, futures::TryStreamExt, http::Status, serde::json::Json};
+use rocket::{futures::{self, TryStreamExt}, http::Status, serde::json::Json, State};
 
 use crate::{
-    models::workspace::{Visibility, Workspace, WorkspaceRequest, WorkspaceResponse}, utils::request_guard::HeaderGuard, AppState
+    models::{
+        response::Response, user::{User, UserResponse}, workspace::{Visibility, Workspace, WorkspaceRequest, WorkspaceResponse}
+    }, utils::request_guard::HeaderGuard, AppState
 };
 
-pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (Status, Json<Vec<WorkspaceResponse>>) {
+use super::user::{self, get_user_by_id};
+
+pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (Status, String) {
     let user_id = ObjectId::parse_str(_guard._get_id()).ok().unwrap();
     let mut workspaces: Vec<WorkspaceResponse> = Vec::new();
     let collection: Collection<Workspace> = get_collection(state, "workspace").await;
 
-    let result = collection.find(doc! {"deleted": false, "is_active": true}).await;
+    let result = collection
+        .find(doc! {"deleted": false, "is_active": true})
+        .await;
     let cursor = match result {
         Ok(cursor) => cursor,
-        Err(_) => return (Status::BadRequest, Json(vec![])),
+        Err(_) => return Response::bad_request(None),
     };
 
     cursor
@@ -24,7 +30,9 @@ pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (St
         .await
         .unwrap_or(vec![])
         .iter()
-        .filter(|workspace| workspace.team.contains(&user_id) || workspace.visibility == Visibility::PUBLIC)
+        .filter(|workspace| {
+            (workspace.team.contains(&user_id) && workspace.visibility == Visibility::PRIVATE) || workspace.owner == user_id || workspace.visibility == Visibility::PUBLIC
+        })
         .for_each(|workspace| {
             workspaces.push(WorkspaceResponse::new(
                 workspace._id.to_hex(),
@@ -38,14 +46,50 @@ pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (St
             ));
         });
 
-    (Status::Ok, Json(workspaces))
+    Response::ok(serde_json::to_string(&workspaces).unwrap())
+}
+
+pub async fn get_workspace_team(
+    _guard: HeaderGuard,
+    state: &State<AppState>,
+    id: &str,
+) -> (Status, String) {
+    let mut team: Vec<UserResponse> = vec![];
+    if !ObjectId::parse_str(&id).is_ok() {
+        return Response::bad_request(None);
+    }
+
+    let workspace = get_workspace(&state, &id).await;
+
+    if workspace.is_none() {
+        return Response::not_found(Some(String::from("Workspace Not Found")));
+    }
+
+    let workspace = workspace.unwrap();
+    
+    let user_futures = workspace.team.iter().map(|user_id| {
+        get_user_by_id(state, user_id.to_hex())
+    });
+
+    let users = futures::future::join_all(user_futures).await;
+
+    for user in users {
+        let user_response = get_user_by_id(state, user.unwrap().id).await;
+        if user_response.is_none() {
+            continue;
+        }
+
+        team.push(user_response.unwrap());
+    }
+
+    Response::ok(serde_json::to_string(&team).unwrap())
 }
 
 pub async fn create_workspace(
     state: &State<AppState>,
     workspace_body: Json<WorkspaceRequest>,
     owner: String,
-) -> (Status, Json<String>) {
+) -> (Status, String) {
     let mut workspace_id = String::from("0");
     let collection = get_collection(state, "workspace").await;
     let mut workspace = Workspace::try_from(workspace_body.into_inner()).unwrap();
@@ -54,35 +98,31 @@ pub async fn create_workspace(
 
     workspace.team.push(workspace.owner);
 
-    println!("{:?}", workspace);
-
     let result: Result<mongodb::results::InsertOneResult, mongodb::error::Error> =
         collection.insert_one(workspace).await;
     if let Some(inserted_id) = result.unwrap().inserted_id.as_object_id() {
         workspace_id = inserted_id.to_hex();
     }
 
-    (Status::Ok, Json(String::from(workspace_id)))
+    Response::ok(serde_json::to_string(&workspace_id).unwrap())
 }
 
 pub async fn update_workspace(
     state: &State<AppState>,
     workspace_id: &str,
     workspace_body: Json<WorkspaceRequest>,
-) -> (Status, Json<bool>) {
+) -> (Status, String) {
     if !ObjectId::parse_str(&workspace_id).is_ok() {
-        return (Status::BadRequest, Json(false));
+        return Response::bad_request(None);
     }
 
     let workspace_id = ObjectId::parse_str(workspace_id).ok().unwrap_or_default();
 
     let collection = get_collection(state, "workspace").await;
-    let existing_workspace_result = collection
-        .find_one(doc! {"_id": workspace_id })
-        .await;
+    let existing_workspace_result = collection.find_one(doc! {"_id": workspace_id }).await;
 
     if existing_workspace_result.ok().unwrap().is_none() {
-        return (Status::NotFound, Json(false));
+        return Response::not_found(None);
     }
 
     let workspace = Workspace::try_from(workspace_body.into_inner()).unwrap();
@@ -96,23 +136,21 @@ pub async fn update_workspace(
         .ok()
         .unwrap();
 
-    (Status::Ok, Json(true))
+    Response::ok(stringify!(true).to_string())
 }
 
-pub async fn delete_workspace(state: &State<AppState>, workspace_id: &str) -> (Status, Json<bool>) {
+pub async fn delete_workspace(state: &State<AppState>, workspace_id: &str) -> (Status, String) {
     if !ObjectId::parse_str(&workspace_id).is_ok() {
-        return (Status::BadRequest, Json(false));
+        return Response::bad_request(None);
     }
 
     let workspace_id = ObjectId::parse_str(workspace_id).ok().unwrap_or_default();
 
     let collection = get_collection(state, "workspace").await;
-    let existing_workspace_result = collection
-        .find_one(doc! {"_id": workspace_id })
-        .await;
+    let existing_workspace_result = collection.find_one(doc! {"_id": workspace_id }).await;
 
     if existing_workspace_result.ok().unwrap().is_none() {
-        return (Status::NotFound, Json(false));
+        return Response::not_found(None);
     }
 
     collection
@@ -124,7 +162,15 @@ pub async fn delete_workspace(state: &State<AppState>, workspace_id: &str) -> (S
         .ok()
         .unwrap();
 
-    (Status::Ok, Json(true))
+    return Response::ok(stringify!(true).to_string());
+}
+
+async fn get_workspace(state: &State<AppState>, id: &str) -> Option<Workspace> {
+    let workspace_id = ObjectId::parse_str(id).ok().unwrap_or_default();
+    let collection = get_collection(&state, "workspace").await;
+    let workspace_result = collection.find_one(doc! {"_id": workspace_id }).await;
+
+    return workspace_result.ok().unwrap();
 }
 
 async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<Workspace> {

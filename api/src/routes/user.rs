@@ -2,30 +2,29 @@ use base64::{Engine, prelude::BASE64_STANDARD};
 use rocket::{
     State, get,
     http::{CookieJar, Status},
-    post,
-    serde::json::Json,
+    post
 };
 
-use crate::{models::{response::Response, user::UserResponse}, services, utils::request_guard::HeaderGuard, AppState};
+use crate::{models::response::Response, services, utils::request_guard::HeaderGuard, AppState};
 
 #[get("/user")]
-pub async fn get_user(_guard: HeaderGuard) -> (Status, Json<HeaderGuard>) {
-    (Status::Ok, Json(_guard))
+pub async fn get_user(_guard: HeaderGuard) -> (Status, String) {
+    Response::ok(serde_json::to_string(&_guard).unwrap())
 }
 
 #[get("/user/list")]
 pub async fn get_users(_guard: HeaderGuard, 
-    state: &State<AppState>) -> (Status, Json<Vec<UserResponse>>){
+    state: &State<AppState>) -> (Status, String){
     services::user::get_users(state).await
 }
 
 #[get("/user/logout")]
-pub async fn logout_user<'a>(cookies: &'a CookieJar<'a>) -> (Status, Json<String>) {
+pub async fn logout_user<'a>(cookies: &'a CookieJar<'a>) -> (Status, String) {
     for cookie in cookies.iter() {
         cookies.remove(cookie.clone());
     }
 
-    (Status::Ok, Json(String::from("Logged Out Successfully")))
+    Response::ok(String::from("Logged out successfully"))
 }
 
 #[post("/user/login/<code>")]
@@ -33,7 +32,7 @@ pub async fn login<'a>(
     state: &State<AppState>,
     cookies: &'a CookieJar<'a>,
     code: &str,
-) -> (Status, Json<Response>) {
+) -> (Status, String) {
     services::user::login(
         state,
         cookies,

@@ -1,4 +1,4 @@
-use rocket::{http::Status, serde::json::Json};
+use rocket::http::Status;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -7,37 +7,64 @@ pub struct Response {
 }
 
 impl Response {
-    pub fn Ok(data: String) -> (Status, Json<Response>) {
-        (Status::Ok, Json(Response { data }))
+    pub fn ok(data: String) -> (Status, String) {
+        (Status::Ok, data)
     }
-    pub fn Created(data: String) -> (Status, Json<Response>) {
-        (Status::Created, Json(Response { data }))
+    pub fn created(data: String) -> (Status, String) {
+        (Status::Created, data)
     }
-    pub fn Accepted(data: String) -> (Status, Json<Response>) {
-        (Status::Accepted, Json(Response { data }))
+    pub fn accepted(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Accepted")),
+        }
     }
-    pub fn NoContent(data: String) -> (Status, Json<Response>) {
-        (Status::NoContent, Json(Response { data }))
+    pub fn no_content(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted,String::from("No content")),
+        }
     }
-    pub fn NotFound(data: String) -> (Status, Json<Response>) {
-        (Status::NotFound, Json(Response { data }))
+    pub fn not_found(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Data not found")),
+        }
     }
-    pub fn BadRequest(data: String) -> (Status, Json<Response>) {
-        (Status::BadRequest, Json(Response { data }))
+    pub fn bad_request(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Bad request")),
+        }
     }
-    pub fn InternalServerError(data: String) -> (Status, Json<Response>) {
-        (Status::InternalServerError, Json(Response { data }))
+    pub fn internal_server_error(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Internal server error")),
+        }
     }
-    pub fn Forbidden(data: String) -> (Status, Json<Response>) {
-        (Status::Forbidden, Json(Response { data }))
+    pub fn forbidden(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Forbidden to the operations")),
+        }
     }
-    pub fn UnsupportedMediaTypecode415(data: String) -> (Status, Json<Response>) {
-        (Status::UnsupportedMediaType, Json(Response { data }))
+    pub fn unsupported_media_type(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Unsupported media type")),
+        }
     }
-    pub fn Unauthorized(data: String) -> (Status, Json<Response>) {
-        (Status::Unauthorized, Json(Response { data }))
+    pub fn unauthorized(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Unauthorized to the operations")),
+        }
     }
-    pub fn NotModified(data: String) -> (Status, Json<Response>) {
-        (Status::NotModified, Json(Response { data }))
+    pub fn not_modified(custom_message: Option<String>) -> (Status, String) {
+        match custom_message {
+            Some(message) => (Status::Accepted, message),
+            None => (Status::Accepted, String::from("Data not modified")),
+        }
     }
 }
