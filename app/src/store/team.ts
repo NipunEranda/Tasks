@@ -11,8 +11,6 @@ export const useTeamStore = defineStore("team", {
         if (response.status == 200) {
             this.team = await response.json();
         }
-
-        console.log(this.team);
     }
   },
   persist: [
