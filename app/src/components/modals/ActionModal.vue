@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { CustomModal } from "../../models/Modal";
+import { CustomModal } from "../../types/Modal";
 const props = defineProps({
     modal: CustomModal,
     modalIcon: String,

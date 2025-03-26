@@ -125,13 +125,13 @@
 import profile from "../assets/img/profile.png";
 import { computed, onMounted, ref, type Ref } from 'vue';
 import { useIndexStore } from '../store';
-import type { User } from '../models/Auth';
+import type { User } from '../types/Auth';
 import { useWorkspaceStore } from "../store/workspace";
 import { useTasksStore } from "../store/tasks";
 import { useRoute } from "vue-router";
-import { CustomModal } from "../models/Modal";
+import { CustomModal } from "../types/Modal";
 import { initFlowbite, Modal } from "flowbite";
-import type { _Tag, Tag } from "../models/Tag";
+import type { _Tag, Tag } from "../types/Tag";
 
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),

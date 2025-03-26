@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { _User } from "../models/Auth";
+import type { _User } from "../types/Auth";
 
 export const useTeamStore = defineStore("team", {
   state: () => ({
@@ -11,8 +11,6 @@ export const useTeamStore = defineStore("team", {
         if (response.status == 200) {
             this.team = await response.json();
         }
-
-        console.log(this.team);
     }
   },
   persist: [
