@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import moment from "moment";
-import type { _Tag, Tag } from "../models/Tag";
+import type { _Tag, Tag } from "../types/Tag";
 import router from "../router";
 
 export const useTasksStore = defineStore('tasks', {

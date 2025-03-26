@@ -64,9 +64,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { CustomModal } from "../../models/Modal";
-import { Workspace, type _Workspace } from "../../models/Workspace";
-import { Visibility } from "../../models/enums/Visibility";
+import { CustomModal } from "../../types/Modal";
+import { Workspace, type _Workspace } from "../../types/Workspace";
+import { Visibility } from "../../types/enums/Visibility";
 const props = defineProps({
     modal: CustomModal,
 });

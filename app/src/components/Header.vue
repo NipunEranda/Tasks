@@ -145,11 +145,11 @@ import profile from "../assets/img/profile.png";
 import { initFlowbite } from 'flowbite';
 import { computed, onMounted, ref, watch, type Ref } from 'vue';
 import { useRoute } from 'vue-router';
-import type { User } from '../models/Auth';
+import type { User } from '../types/Auth';
 import { useIndexStore } from '../store';
 import { useWorkspaceStore } from "../store/workspace";
 import { useTasksStore } from "../store/tasks";
-import { CustomModal } from "../models/Modal";
+import { CustomModal } from "../types/Modal";
 
 const indexStore = useIndexStore(),
     workspaceStore = useWorkspaceStore(),

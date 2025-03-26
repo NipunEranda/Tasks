@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { _Workspace } from "../models/Workspace";
+import type { _Workspace } from "../types/Workspace";
 
 export const useWorkspaceStore = defineStore('workspace', {
     state: () => ({

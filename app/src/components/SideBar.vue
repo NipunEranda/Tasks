@@ -152,7 +152,7 @@
 import profile from "../assets/img/profile.png";
 import { computed, onMounted, ref, watch, type Ref } from 'vue';
 import { useIndexStore } from '../store';
-import type { User } from '../models/Auth';
+import type { User } from '../types/Auth';
 // import { useI18n } from "vue-i18n";
 import { Dropdown, initFlowbite, type DropdownInterface, type DropdownOptions } from "flowbite";
 import { useRoute } from "vue-router";

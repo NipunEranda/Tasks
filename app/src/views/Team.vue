@@ -1,6 +1,6 @@
 <template>
   <div class="pr-4">
-    <div v-for="member in teamStore.team" :key="member">
+    <div v-for="(member, m) in teamStore.team" :key="m">
       <div
         class="flex bg-zinc-800 mb-2 rounded-lg justify-center place-items-center"
       >
@@ -26,12 +26,13 @@
 </template>
 
 <script setup lang="ts">
-import profile from "../assets/img/profile.png";
-import { computed, onMounted, watch, ref, type Ref } from "vue";
+import profile from "@/assets/img/profile.png";
+import { computed, onMounted, watch, type Ref } from "vue";
 import { useIndexStore } from "../store";
 import { useTeamStore } from "../store/team";
 import { useRoute } from "vue-router";
 import { useWorkspaceStore } from "../store/workspace";
+import { initFlowbite } from "flowbite";
 
 const indexStore = useIndexStore(),
   teamStore = useTeamStore(),

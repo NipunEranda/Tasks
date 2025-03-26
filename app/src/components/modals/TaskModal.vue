@@ -48,7 +48,7 @@
                         </span>
                         <select id="small"
                             class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.status">
-                            <option v-for="status in Object.keys(Status)" :value="status">{{ status }}</option>
+                            <option v-for="status in Object.keys(Status)" :value="status" :key="status">{{ status }}</option>
                         </select>
                     </div>
                     <div class="flex">
@@ -58,7 +58,7 @@
                         </span>
                         <select id="small"
                             class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="task.visibility">
-                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility">{{ visibility }}</option>
+                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility" :key="visibility">{{ visibility }}</option>
                         </select>
                     </div>
 
@@ -96,11 +96,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { CustomModal } from "../../models/Modal";
-import { Task } from "../../models/Task";
-import { Workspace } from "../../models/Workspace";
-import { Visibility } from "../../models/enums/Visibility";
-import { Status } from "../../models/enums/Status";
+import { CustomModal } from "../../types/Modal";
+import { Task } from "../../types/Task";
+import { Workspace } from "../../types/Workspace";
+import { Visibility } from "../../types/enums/Visibility";
+import { Status } from "../../types/enums/Status";
 const props = defineProps({
     modal: CustomModal,
     workspace: Workspace

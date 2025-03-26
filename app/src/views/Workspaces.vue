@@ -6,7 +6,7 @@
             </div>
             <div class="pt-7 w-full">
                 <!-- Workspaces list -->
-                <div v-for="workspace in workspaces" class="flex">
+                <div v-for="workspace in workspaces" class="flex" :key="workspace">
                     <div class="mx-auto border-t border-b dark:border-zinc-700 w-full md:w-1/2 lg:w-1/2 text-center p-2 cursor-pointer"
                         @click="selectWorkspace(workspace)">
                         <div class="py-2 dark:hover:bg-zinc-800 rounded-xl font-semibold text-xl">{{ workspace.name }}
@@ -28,9 +28,9 @@
 
 <script setup lang="ts">
 import { initFlowbite, Modal } from 'flowbite';
-import { CustomModal } from '../models/Modal';
+import { CustomModal } from '../types/Modal';
 import { onMounted, ref, watch } from 'vue';
-import type { _Workspace } from '../models/Workspace';
+import type { _Workspace } from '../types/Workspace';
 import { useWorkspaceStore } from '../store/workspace';
 import { useRoute, useRouter } from 'vue-router';
 

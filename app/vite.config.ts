@@ -19,4 +19,9 @@ export default defineConfig({
     vue(),
     tailwindcss()
   ],
+  resolve: {
+    alias: {
+      '@': '/src', // Ensure this alias is correctly set
+    },
+  },
 })
