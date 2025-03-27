@@ -1,6 +1,6 @@
 <template>
   <div class="pr-5">
-    <div v-for="(member, m) in teamStore.team" :key="m">
+    <div v-for="member in workspaceStore.team" :key="member.id">
       <div
         class="group flex bg-zinc-800 mb-1 rounded-lg justify-center place-items-center cursor-pointer transition-all duration-300 hover:brightness-125"
       >
@@ -19,14 +19,14 @@
           </div>
           <div class="flex-grow">
             <span class="text-xl font-bold text-zinc-400">
-              {{ member.name }}
-            </span><br/>
+              {{ member.name }} </span
+            ><br />
             <span class="text-sm font-extralight text-zinc-100">
               {{ member.email }}
             </span>
           </div>
           <div class="w-fit px-5 font-bold text-lg text-teal-500">
-            <fai icon="fa-circle-check" class="mr-2"/><span>Online</span>
+            <fai icon="fa-circle-check" class="mr-2" /><span>Online</span>
           </div>
         </div>
       </div>
@@ -36,20 +36,13 @@
 
 <script setup lang="ts">
 import profile from "@/assets/img/profile.png";
-import { computed, onMounted, watch } from "vue";
-import { useIndexStore } from "../store";
-import { useTeamStore } from "../store/team";
+import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useWorkspaceStore } from "../store/workspace";
 import { initFlowbite } from "flowbite";
 import type { _User } from "@/types/Auth";
 
-const indexStore = useIndexStore(),
-  teamStore = useTeamStore(),
-  workspaceStore = useWorkspaceStore(),
-  user = computed(() => {
-    return indexStore.currentUser;
-  }),
+const workspaceStore = useWorkspaceStore(),
   route = useRoute();
 
 function profileImage(member: _User) {
@@ -70,6 +63,6 @@ watch(
 
 onMounted(async () => {
   initFlowbite();
-  await teamStore.load(workspaceStore.activeWorkspace);
+  await workspaceStore.loadTeam();
 });
 </script>

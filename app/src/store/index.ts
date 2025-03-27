@@ -1,11 +1,14 @@
 import { defineStore } from "pinia"
 import router from "../router";
 import type { _User } from "../types/Auth";
+import type { CustomModal } from "@/types/Modal";
 
 export const useIndexStore = defineStore('index', {
     state: () => ({
         currentUser: undefined as _User | undefined,
-        loggedIn: false
+        loggedIn: false,
+        tagModal: undefined as CustomModal | undefined,
+        actionModal: undefined as CustomModal | undefined,
     }),
     getters: {
         getCurrentUser: (state) => state.currentUser,
@@ -16,7 +19,6 @@ export const useIndexStore = defineStore('index', {
             const response = await fetch(`/api/v1/user/login/${code}`, { method: 'POST' });
             if (response.status == 200 || response.status == 201) {
                 const userResponse = await fetch("/api/v1/user", { credentials: 'include' });
-                console.log(userResponse);
 
                 if (userResponse.status == 200){
                     this.currentUser = await userResponse.json();
