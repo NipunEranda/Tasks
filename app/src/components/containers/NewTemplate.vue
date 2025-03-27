@@ -4,11 +4,11 @@
       id="vertical-line"
       class="fixed bg-teal-400 w-[2px] left-[44px] lg:left-[120px] z-0 h-full"
     ></div> -->
-    <TaskCard />
+    <TaskCard :task="task"/>
     <ul>
       <VueDraggableNext class="dragArea list-group w-full" v-model="subTasks">
         <div v-for="(subTask, e) in subTasks" :key="e">
-          <SubTaskCard :subTask="subTask" :removeSubTask="removeSubTask" />
+          <SubTaskCard :task="task" :subTask="subTask" :removeSubTask="removeSubTask" />
         </div>
       </VueDraggableNext>
     </ul>
@@ -32,14 +32,15 @@
 <script setup lang="ts">
 import { useTasksStore } from "@/store/tasks";
 import { useWorkspaceStore } from "@/store/workspace";
-import { SubTask, type _SubTask } from "@/types/Task";
+import { SubTask, Task, type _SubTask } from "@/types/Task";
 import { onMounted, ref, type Ref } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 
 let subTasks: Ref<_SubTask[]> = ref([]),
   taskStore = useTasksStore(),
   workspaceStore = useWorkspaceStore(),
-  count = ref(0);
+  count = ref(0),
+  task = ref(Task.createEmptyObject(workspaceStore.getActiveWorkspace));
 
 function addTask() {
   subTasks.value.push(new SubTask((count.value++).toString(), "", "", ""));
