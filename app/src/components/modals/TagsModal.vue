@@ -63,13 +63,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { CustomModal } from "../../types/Modal";
+import { onMounted, ref, type PropType } from "vue";
+import type { _Modal } from "../../types/Modal";
 import { type _Tag, Tag } from "../../types/Tag";
 import { Visibility } from "../../types/enums/Visibility";
 import { useWorkspaceStore } from "../../store/workspace";
 const props = defineProps({
-    modal: CustomModal,
+    modal: {
+        type: Object as PropType<_Modal>
+    },
 }),
 workspaceStore = useWorkspaceStore();
 

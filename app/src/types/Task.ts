@@ -16,6 +16,13 @@ export interface _Task {
     visibility: Visibility;
 }
 
+export interface _SubTask {
+    id: string;
+    name: string;
+    description: string;
+    assignedTo: string;
+}
+
 export class Task {
     id: string;
     name: string;
@@ -64,5 +71,19 @@ export class Task {
             return new Task("", "", "", workspace.id, Status.OPEN, "", moment().toDate(), "", Visibility.PUBLIC, []);
         else
             return new Task("", "", "", "", Status.OPEN, "", moment().toDate(), "", Visibility.PUBLIC, []);
+    }
+}
+
+export class SubTask {
+    id: string;
+    name: string;
+    description: string;
+    assignedTo: string;
+
+    constructor(id: string, name: string, description: string, assignedTo: string){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.assignedTo = assignedTo;
     }
 }

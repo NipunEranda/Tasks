@@ -38,12 +38,14 @@ import {
   faPowerOff,
   faTag,
   faTags,
+  faTrashCan,
   faUser,
   faUserGroup,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import NewTemplate from "./components/containers/NewTemplate.vue";
 import TaskCard from "./components/cards/TaskCard.vue";
+import SubTaskCard from "./components/cards/SubTaskCard.vue";
 
 library.add(
   faHome,
@@ -65,7 +67,8 @@ library.add(
   faEye,
   faEyeSlash,
   faPen,
-  faCircleInfo
+  faCircleInfo,
+  faTrashCan
 );
 
 createApp(App)
@@ -81,4 +84,5 @@ createApp(App)
   .component("InfoSideBar", InfoSideBar)
   .component("NewTemplate", NewTemplate)
   .component("TaskCard", TaskCard)
+  .component("SubTaskCard", SubTaskCard)
   .mount("#app");

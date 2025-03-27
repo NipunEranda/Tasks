@@ -19,7 +19,6 @@ const indexStore = useIndexStore(),
 
 watch(() => route.path, () => {
     initFlowbite();
-    console.log(route.query.type);
 });
 
 onMounted(async () => {
