@@ -1,17 +1,14 @@
 <template>
-  <div class="pr-5 overflow-hidden">
+  <div class="pr-5 overflow-hidden pb-20">
     <!-- <div
       id="vertical-line"
       class="fixed bg-teal-400 w-[2px] left-[44px] lg:left-[120px] z-0 h-full"
     ></div> -->
     <TaskCard />
     <ul>
-      <VueDraggableNext
-        class="dragArea list-group w-full"
-        v-model="subTasks"
-      >
-        <div v-for="element in subTasks" :key="element.id">
-          <SubTaskCard />
+      <VueDraggableNext class="dragArea list-group w-full" v-model="subTasks">
+        <div v-for="(subTask, e) in subTasks" :key="e">
+          <SubTaskCard :subTask="subTask" :removeSubTask="removeSubTask" />
         </div>
       </VueDraggableNext>
     </ul>
@@ -33,19 +30,30 @@
 </template>
 
 <script setup lang="ts">
+import { useTasksStore } from "@/store/tasks";
+import { useWorkspaceStore } from "@/store/workspace";
 import { SubTask, type _SubTask } from "@/types/Task";
-import { ref, type Ref } from "vue";
+import { onMounted, ref, type Ref } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 
 let subTasks: Ref<_SubTask[]> = ref([]),
-count = ref(0);
+  taskStore = useTasksStore(),
+  workspaceStore = useWorkspaceStore(),
+  count = ref(0);
 
 function addTask() {
-  count.value++;
-  subTasks.value.push(new SubTask((++count.value).toString(), "", "", ""));
+  subTasks.value.push(new SubTask((count.value++).toString(), "", "", ""));
 }
 
-function log(event: Event) {
-  console.log(event);
+function removeSubTask(id: string) {
+  const subTask = subTasks.value.find((subTask) => subTask.id === id);
+  if (subTask) {
+    delete subTasks.value[subTasks.value.indexOf(subTask)];
+    subTasks.value = subTasks.value.filter((subTask) => subTask);
+  }
 }
+
+onMounted(async () => {
+  await Promise.all([taskStore.loadTags(workspaceStore.activeWorkspace), workspaceStore.loadTeam()]);
+});
 </script>

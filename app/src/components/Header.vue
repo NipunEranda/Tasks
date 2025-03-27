@@ -2,9 +2,9 @@
   <div>
     <!-- Mobile View -->
     <nav
-      class="fixed top-0 z-10 w-full bg-white border-zinc-200 dark:bg-zinc-900 dark:brightness-125 inline lg:hidden"
+      class="absolute top-0 flex w-full z-10 bg-white border-zinc-200 dark:bg-zinc-900 dark:brightness-125 lg:hidden"
     >
-      <div class="px-3 py-3 lg:px-3 lg:pl-3">
+      <div class="px-3 py-3 lg:px-3 lg:pl-3 w-full">
         <div class="flex items-center justify-between">
           <button
             class="p-1 pl-3 rounded-lg cursor-pointer text-xl hover:dark:text-teal-600"
@@ -85,9 +85,9 @@
     </nav>
 
     <nav
-      class="fixed top-0 w-full bg-white border-zinc-200 dark:bg-zinc-900 mt-[73px] lg:m-0"
+      class="absolute top-0 w-full flex bg-white border-zinc-200 dark:bg-zinc-900 mt-[73px] lg:m-0"
     >
-      <div class="px-3 py-3 lg:px-3 lg:pl-3">
+      <div class="px-3 py-3 lg:px-3 lg:pl-3 w-full">
         <div class="flex items-center justify-between">
           <div
             class="hidden lg:flex items-center justify-start rtl:justify-end"
@@ -129,7 +129,6 @@
                   </svg>
                 </button>
 
-                <!-- Dropdown menu -->
                 <div
                   id="taskTypesDropdown"
                   class="z-10 hidden bg-white divide-y divide-zinc-100 rounded-md shadow-sm w-44 dark:bg-zinc-700"

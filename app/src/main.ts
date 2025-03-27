@@ -26,6 +26,7 @@ import {
   faBars,
   faCircleCheck,
   faCircleInfo,
+  faCircleUser,
   faEye,
   faEyeSlash,
   faFilter,
@@ -68,7 +69,8 @@ library.add(
   faEyeSlash,
   faPen,
   faCircleInfo,
-  faTrashCan
+  faTrashCan,
+  faCircleUser
 );
 
 createApp(App)

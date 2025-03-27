@@ -6,7 +6,7 @@
             </div>
             <div class="pt-7 w-full">
                 <!-- Workspaces list -->
-                <div v-for="workspace in workspaces" class="flex" :key="workspace">
+                <div v-for="workspace in workspaceStore.workspaces" class="flex" :key="workspace.id">
                     <div class="mx-auto border-t border-b dark:border-zinc-700 w-full md:w-1/2 lg:w-1/2 text-center p-2 cursor-pointer"
                         @click="selectWorkspace(workspace)">
                         <div class="py-2 dark:hover:bg-zinc-800 rounded-xl font-semibold text-xl">{{ workspace.name }}
@@ -39,10 +39,8 @@ const modal = ref(CustomModal.createObj("workspaceModal", "Add Workspace", "add"
     router = useRouter(),
     route = useRoute();
 
-let workspaces = ref<_Workspace[]>([]);
-
 async function load() {
-    workspaces.value = await workspaceStore.load();
+    await workspaceStore.load();
 }
 
 function openWorkspaceModal(type: string) {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex bg-zinc-800 rounded-lg cursor-pointer transition-all duration-300 hover:brightness-110 mb-4 z-10"
+    class="relative flex bg-zinc-800 rounded-lg cursor-pointer transition-all duration-300 hover:brightness-110 mb-4 z-10"
   >
     <div class="w-[10px] bg-teal-500 rounded-l-lg py-10"></div>
     <div class="flex-grow flex">
@@ -25,6 +25,7 @@
                 class="block px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 dark:group-focus-within:border-teal-500 peer"
                 placeholder="Template Name"
                 required
+                autocomplete="off"
               />
             </div>
           </div>
@@ -49,6 +50,7 @@
                 class="block px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 dark:group-focus-within:border-teal-500"
                 placeholder="Template Description"
                 required
+                autocomplete="off"
               />
             </div>
           </div>
@@ -57,7 +59,7 @@
           <div
             class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-teal-500"
           >
-            <fai icon="fa-circle-info" />
+            <fai icon="fa-tags" />
           </div>
           <div class="flex-grow">
             <div class="relative">
@@ -73,6 +75,7 @@
                 class="block px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 dark:group-focus-within:border-teal-500"
                 placeholder="Tags"
                 required
+                autocomplete="off"
               />
 
               <div
