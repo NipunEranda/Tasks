@@ -27,7 +27,7 @@
         <button
           id="workspaceModalTrigger"
           type="button"
-          class="text-white dark:bg-teal-800 dark:hover:bg-teal-700 bg-teal-700 hover:bg-green-800 font-medium rounded-lg text-sm px-8 py-3 text-center uppercase cursor-pointer"
+          class="text-white dark:bg-theme-first dark:hover:brightness-110 font-medium rounded-lg text-sm px-8 py-3 text-center uppercase cursor-pointer"
           @click="openWorkspaceModal('add')"
         >
           Create Workspace

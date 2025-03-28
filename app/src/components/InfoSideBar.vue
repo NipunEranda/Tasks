@@ -30,7 +30,7 @@
           </div>
         </div>
         <div
-          class="flex h-full p-2 dark:bg-purple-800 hover:dark:brightness-110 rounded-lg mt-2 cursor-pointer place-content-center items-center"
+          class="flex h-full p-2 dark:bg-theme-second hover:dark:brightness-110 rounded-lg mt-2 cursor-pointer place-content-center items-center"
         >
           <div class="flex flex-grow">
             <div class="text-3xl justify-end pl-4 pr-4">
@@ -49,7 +49,7 @@
           </div>
         </div>
         <div
-          class="flex h-full p-2 dark:bg-teal-800 hover:dark:brightness-110 rounded-lg mt-2 cursor-pointer place-content-center items-center"
+          class="flex h-full p-2 dark:bg-theme-first hover:dark:brightness-110 rounded-lg mt-2 cursor-pointer place-content-center items-center"
         >
           <div class="flex flex-grow">
             <div class="text-3xl justify-end pl-4 pr-4">
@@ -74,7 +74,7 @@
       v-if="showSection1"
     >
       <div
-        class="text-center font-bold text-xl p-3 dark:bg-teal-700 rounded-t-md"
+        class="text-center font-bold text-xl p-3 dark:bg-theme-first rounded-t-md"
       >
         {{ section1.title }}
       </div>
@@ -88,9 +88,9 @@
             class="border-b dark:bg-zinc-800 hover:dark:brightness-110 dark:border-zinc-600 flex items-center p-1 px-3 cursor-pointer"
           >
             <div
-              class="flex border-2 dark:border-purple-600 items-center place-items-center p-1 rounded-sm mr-2"
+              class="flex border-2 dark:border-theme-second items-center place-items-center p-1 rounded-sm mr-2"
             >
-              <fai icon="fa-list" class="dark:text-purple-600" />
+              <fai icon="fa-list" class="dark:text-theme-second" />
             </div>
             <div class="flex-grow text-sm">
               <div>Sub Task</div>
@@ -101,9 +101,9 @@
             class="border-b dark:bg-zinc-800 hover:dark:brightness-110 dark:border-zinc-600 flex items-center p-1 px-3 cursor-pointer"
           >
             <div
-              class="flex border-2 dark:border-teal-600 items-center place-items-center p-1 rounded-sm mr-2"
+              class="flex border-2 dark:border-theme-first items-center place-items-center p-1 rounded-sm mr-2"
             >
-              <fai icon="fa-list" class="dark:text-teal-600" />
+              <fai icon="fa-list" class="dark:text-theme-first" />
             </div>
             <div class="flex-grow text-sm">
               <div>Task</div>
@@ -113,10 +113,10 @@
         </div>
       </div>
       <div
-        class="p-2 uppercase dark:text-teal-600 text-center items-center place-items-center cursor-pointer text-sm font-bold"
+        class="p-2 uppercase dark:text-theme-first text-center items-center place-items-center cursor-pointer text-sm font-bold"
       >
         <div
-          class="hover:dark:bg-teal-600/10 rounded-full w-fit p-2 px-4"
+          class="hover:dark:bg-theme-first/10 rounded-full w-fit p-2 px-4"
           @click="$router.push('/activity')"
         >
           Show More

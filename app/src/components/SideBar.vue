@@ -3,26 +3,26 @@
         class="fixed top-0 left-0 z-40 w-64 h-screen dark:bg-zinc-900 dark:brightness-110 transition-all -translate-x-full lg:translate-x-0 duration-300">
         <div class="w-full">
             <div class="group flex flex-col h-screen">
-                <div class="h-12 my-5" id="iconDiv">
+                <div class="h-12 my-5">
                     <div class="grid place-items-center items-center w-full transition-all duration-300 overflow-auto">
                         <div
                             class="flex lg:hidden lg:group-hover:flex font-extrabold text-6xl mb-8 font-serif tracking-widest">
-                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">T</span>
-                            <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">A</span>
-                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
-                            <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">K</span>
-                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
+                            <span class="dark:text-theme-first" style="font-family: 'Faith Hope', sans-serif;">T</span>
+                            <span class="dark:text-theme-first brightness-50" style="font-family: 'Faith Hope', sans-serif;">A</span>
+                            <span class="dark:text-theme-first" style="font-family: 'Faith Hope', sans-serif;">S</span>
+                            <span class="dark:text-theme-first brightness-50" style="font-family: 'Faith Hope', sans-serif;">K</span>
+                            <span class="dark:text-theme-first" style="font-family: 'Faith Hope', sans-serif;">S</span>
                         </div>
                         <div
                             class="hidden lg:flex group-hover:hidden font-extrabold text-6xl mb-8 font-serif tracking-widest">
-                            <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">T</span>
+                            <span class="dark:text-theme-first" style="font-family: 'Faith Hope', sans-serif;">T</span>
                         </div>
                     </div>
                 </div>
                 <div class="flex-1 transition-all duration-300 overflow-hidden">
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'dashboard', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'dashboard' }"
+                            :class="{ 'dark:text-theme-first hover:dark:text-theme-first': activeTab == 'dashboard', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'dashboard' }"
                             data-drawer-toggle="sideBar" @click="navigation('/dashboard')">
                             <div class="flex w-full">
                                 <div class="ml-1">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'templates', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'templates' }"
+                            :class="{ 'dark:text-theme-first hover:dark:text-theme-first': activeTab == 'templates', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'templates' }"
                             data-drawer-toggle="sideBar" @click="navigation('/templates')">
                             <div class="flex w-full">
                                 <div class="ml-1">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'activity', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'activity' }"
+                            :class="{ 'dark:text-theme-first hover:dark:text-theme-first': activeTab == 'activity', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'activity' }"
                             data-drawer-toggle="sideBar" @click="navigation('/activity')">
                             <div class="flex w-full">
                                 <div class="ml-1">
@@ -68,7 +68,7 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'team', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'team' }"
+                            :class="{ 'dark:text-theme-first hover:dark:text-theme-first': activeTab == 'team', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'team' }"
                             data-drawer-toggle="sideBar" @click="navigation('/team')">
                             <div class="flex w-full">
                                 <div class="ml-1">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="grid place-items-center items-center w-full p-2">
                         <div class="dark:bg-zinc-800 dark:hover:brightness-125 w-full p-4 rounded-lg cursor-pointer"
-                            :class="{ 'dark:text-teal-500 hover:dark:text-teal-400': activeTab == 'settings', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'settings' }"
+                            :class="{ 'dark:text-theme-first hover:dark:text-theme-first': activeTab == 'settings', 'dark:text-zinc-400 hover:dark:text-zinc-50': activeTab != 'settings' }"
                             data-drawer-toggle="sideBar" @click="navigation('/settings')">
                             <div class="flex w-full">
                                 <div class="ml-1">

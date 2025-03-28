@@ -7,7 +7,7 @@
       <div class="px-3 py-3 lg:px-3 lg:pl-3 w-full">
         <div class="flex items-center justify-between">
           <button
-            class="p-1 pl-3 rounded-lg cursor-pointer text-xl hover:dark:text-teal-600"
+            class="p-1 pl-3 rounded-lg cursor-pointer text-xl hover:dark:text-theme-first"
             data-drawer-target="sideBar"
             data-drawer-toggle="sideBar"
           >
@@ -41,7 +41,7 @@
                 </div>
               </div>
               <div
-                class="flex h-full p-2 dark:bg-purple-800 hover:dark:brightness-110 rounded-lg ml-2 cursor-pointer place-content-center items-center"
+                class="flex h-full p-2 dark:bg-theme-second hover:dark:brightness-110 rounded-lg ml-2 cursor-pointer place-content-center items-center"
               >
                 <div class="flex flex-grow">
                   <div class="text-3xl justify-end pl-4 pr-4">
@@ -60,7 +60,7 @@
                 </div>
               </div>
               <div
-                class="flex h-full p-2 dark:bg-teal-800 hover:dark:brightness-110 rounded-lg ml-2 cursor-pointer place-content-center items-center"
+                class="flex h-full p-2 dark:bg-theme-first hover:dark:brightness-110 rounded-lg ml-2 cursor-pointer place-content-center items-center"
               >
                 <div class="flex flex-grow">
                   <div class="text-3xl justify-end pl-4 pr-4">
@@ -109,7 +109,7 @@
                 <button
                   id="tasksTypeButton"
                   data-dropdown-toggle="taskTypesDropdown"
-                  class="font-medium text-sm px-5 py-2 text-center lg:inline-flex items-center border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white focus:outline-none cursor-pointer dark:focus:border-teal-600 focus:ring-teal-600 dark:focus:bg-teal-700 ml-2 hidden"
+                  class="font-medium text-sm px-5 py-2 text-center lg:inline-flex items-center border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white focus:outline-none cursor-pointer dark:focus:border-theme-first dark:focus:bg-theme-first ml-2 hidden"
                   type="button"
                 >
                   {{ taskTypes[selectedTasksType] }}
@@ -162,7 +162,7 @@
               <div class="hidden lg:flex mr-2" v-if="showMainActionModalButton">
                 <button
                   type="button"
-                  class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-teal-700 dark:border-teal-600 dark:hover:bg-teal-600 dark:placeholder-teal-400 dark:text-white focus:ring-teal-600 focus:outline-none cursor-pointer items-center"
+                  class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-theme-first dark:border-theme-first dark:hover:brightness-110 dark:placeholder-theme-first dark:text-white focus:outline-none cursor-pointer items-center"
                   @click="headerButtonOperation()"
                 >
                   <fai :icon="mainActionModalButtonContent[0]" class="mr-2 cursor-pointer" />
@@ -197,7 +197,7 @@
                   <input
                     type="text"
                     id="search"
-                    class="block w-full p-2 ps-10 text-sm border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white focus:ring-teal-600 focus:border-teal-600 dark:focus:ring-teal-500 dark:focus:border-teal-500 focus:outline-none"
+                    class="block w-full p-2 ps-10 text-sm border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-theme-first dark:focus:border-theme-first focus:outline-none"
                     placeholder="Search"
                     autocomplete="off"
                   />

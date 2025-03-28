@@ -29,7 +29,7 @@
                             <fai icon="fa-layer-group" />
                         </span>
                         <input type="text" id="website-admin"
-                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white focus:ring-teal-600 focus:border-teal-600 dark:focus:ring-teal-500 dark:focus:border-teal-500 focus:outline-none"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-theme-first dark:focus:border-theme-first focus:outline-none"
                             placeholder="Workspace Name" v-model="workspace.name">
                     </div>
                     <div class="flex">
@@ -38,7 +38,7 @@
                             <fai :icon="workspace.is_private ? 'fa-eye' : 'fa-eye-slash'" />
                         </span>
                         <select id="small"
-                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 focus:ring-teal-600 focus:border-teal-600 dark:focus:ring-teal-500 dark:focus:border-teal-500 focus:outline-none cursor-pointer" v-model="workspace.is_private">
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-theme-first dark:focus:border-theme-first focus:outline-none cursor-pointer" v-model="workspace.is_private">
                             <option value=false>Public</option>
                             <option value=true>is_private</option>
                         </select>
@@ -48,7 +48,7 @@
                 <div
                     class="bg-zinc-100 bg-opacity-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 border-t-1 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-full">
                     <button @click="props.modal?.process(workspace)" type="button"
-                        class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto bg-teal-600 hover:bg-teal-700 dark:bg-teal-800 dark:hover:bg-teal-700 mb-2 sm:mb-0 sm:ms-2 cursor-pointer">
+                        class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-theme-first dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer">
                         {{ props.modal?.processName }}
                     </button>
                     <!-- @vue-ignore -->
