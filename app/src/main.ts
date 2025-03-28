@@ -37,6 +37,7 @@ import {
   faPen,
   faPlus,
   faPowerOff,
+  faSave,
   faTag,
   faTags,
   faTrashCan,
@@ -70,7 +71,8 @@ library.add(
   faPen,
   faCircleInfo,
   faTrashCan,
-  faCircleUser
+  faCircleUser,
+  faSave
 );
 
 createApp(App)

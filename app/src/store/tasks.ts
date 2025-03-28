@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
 import moment from "moment";
 import type { _Tag, Tag } from "../types/Tag";
-import router from "../router";
 import type { _Modal } from "@/types/Modal";
+import { Task, type _Task } from "@/types/Task";
+import type { _Workspace } from "@/types/Workspace";
 
 export const useTasksStore = defineStore("tasks", {
   state: () => ({
@@ -11,6 +12,7 @@ export const useTasksStore = defineStore("tasks", {
     subTasks: ["test sub task"],
     updatedDate: moment().format("MMMM DD, YYYY"),
     selectedTag: undefined as _Tag | undefined,
+    newTask: undefined as unknown as Task,
   }),
   getters: {
     getTags: (state) => state.tags,
@@ -21,6 +23,9 @@ export const useTasksStore = defineStore("tasks", {
     getSubTasksCount: (state) => state.subTasks.length,
   },
   actions: {
+    initializeNewTemplate(task: _Task) {
+      this.newTask = task;
+    },
     async loadTags(workspaceId: string) {
       const tagsReq = await fetch(`/api/v1/tag/${workspaceId}`, {
         credentials: "include",
@@ -48,6 +53,9 @@ export const useTasksStore = defineStore("tasks", {
 
       this.loadTags(tag.workspace);
       modal.modalEl?.hide();
+    },
+    async createTemplate() {
+      console.log(this.newTask);
     },
   },
   persist: [

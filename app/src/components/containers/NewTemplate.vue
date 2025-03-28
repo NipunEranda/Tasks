@@ -1,14 +1,18 @@
 <template>
-  <div class="pr-5 overflow-hidden pb-20">
+  <div class="pr-5 overflow-hidden pb-20" v-if="task">
     <!-- <div
       id="vertical-line"
       class="fixed bg-teal-400 w-[2px] left-[44px] lg:left-[120px] z-0 h-full"
     ></div> -->
-    <TaskCard :task="task"/>
+    <TaskCard :task="task" />
     <ul>
       <VueDraggableNext class="dragArea list-group w-full" v-model="subTasks">
-        <div v-for="(subTask, e) in subTasks" :key="e">
-          <SubTaskCard :task="task" :subTask="subTask" :removeSubTask="removeSubTask" />
+        <div v-for="(subTask, e) in task.subTasks" :key="e">
+          <SubTaskCard
+            :task="task"
+            :subTask="subTask"
+            :removeSubTask="removeSubTask"
+          />
         </div>
       </VueDraggableNext>
     </ul>
@@ -30,31 +34,38 @@
 </template>
 
 <script setup lang="ts">
+import { useIndexStore } from "@/store";
 import { useTasksStore } from "@/store/tasks";
 import { useWorkspaceStore } from "@/store/workspace";
 import { SubTask, Task, type _SubTask } from "@/types/Task";
-import { onMounted, ref, type Ref } from "vue";
+import { computed, onMounted, ref, type Ref } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 
 let subTasks: Ref<_SubTask[]> = ref([]),
   taskStore = useTasksStore(),
+  indexStore = useIndexStore(),
   workspaceStore = useWorkspaceStore(),
   count = ref(0),
-  task = ref(Task.createEmptyObject(workspaceStore.getActiveWorkspace));
+  user = computed(() => { return indexStore.currentUser }),
+  task = ref(Task.createEmptyObject(workspaceStore.activeWorkspace, user.value?.id));
 
 function addTask() {
-  subTasks.value.push(new SubTask((count.value++).toString(), "", "", ""));
+  task.value.subTasks.push(new SubTask((count.value++).toString(), "", "", "", false));
 }
 
 function removeSubTask(id: string) {
-  const subTask = subTasks.value.find((subTask) => subTask.id === id);
+  const subTask = task.value.subTasks.find((subTask) => subTask.id === id);
   if (subTask) {
-    delete subTasks.value[subTasks.value.indexOf(subTask)];
-    subTasks.value = subTasks.value.filter((subTask) => subTask);
+    delete task.value.subTasks[task.value.subTasks.indexOf(subTask)];
+    task.value.subTasks = task.value.subTasks.filter((subTask) => subTask);
   }
 }
 
 onMounted(async () => {
-  await Promise.all([taskStore.loadTags(workspaceStore.activeWorkspace), workspaceStore.loadTeam()]);
+  taskStore.initializeNewTemplate(task.value);
+  await Promise.all([
+    taskStore.loadTags(workspaceStore.activeWorkspace),
+    workspaceStore.loadTeam(),
+  ]);
 });
 </script>

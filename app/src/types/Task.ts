@@ -1,5 +1,4 @@
 import moment from "moment";
-import { Status } from "./enums/Status";
 import { Visibility } from "./enums/Visibility";
 import type { _Workspace } from "./Workspace";
 import type { Tag } from "./Tag";
@@ -9,20 +8,13 @@ export interface _Task {
   name: string;
   description: string;
   workspace: string;
-  subTasks: Array<_Task>;
+  subTasks: Array<_SubTask>;
   tags: Array<Tag>;
-  status: Status;
+  completed: boolean;
   assignedTo: string;
   lastUpdate: Date;
   updatedBy: string;
   visibility: Visibility;
-}
-
-export interface _SubTask {
-  id: string;
-  name: string;
-  description: string;
-  assignedTo: string;
 }
 
 export class Task {
@@ -30,9 +22,9 @@ export class Task {
   name: string;
   description: string;
   workspace: string;
-  subTasks: Array<_Task>;
+  subTasks: Array<_SubTask>;
   tags: Array<Tag>;
-  status: Status;
+  completed: boolean;
   assignedTo: string;
   lastUpdate: Date;
   updatedBy: string;
@@ -43,12 +35,12 @@ export class Task {
     name: string,
     title: string,
     workspace: string,
-    status: Status,
+    completed: boolean,
     assignedTo: string,
     lastUpdate: Date,
     updatedBy: string,
     visibility: Visibility,
-    subTasks: Array<_Task>,
+    subTasks: Array<_SubTask>,
     tags: Array<Tag>
   ) {
     this.id = id;
@@ -57,7 +49,7 @@ export class Task {
     this.workspace = workspace;
     this.subTasks = subTasks ? (subTasks.length > 0 ? subTasks : []) : [];
     this.tags = tags ? (tags.length > 0 ? tags : []) : [];
-    this.status = status;
+    this.completed = completed;
     this.assignedTo = assignedTo;
     this.lastUpdate = lastUpdate;
     this.updatedBy = updatedBy;
@@ -70,7 +62,7 @@ export class Task {
       obj.name,
       obj.description,
       obj.workspace,
-      obj.status,
+      obj.completed,
       obj.assignedTo,
       obj.lastUpdate,
       obj.updatedBy,
@@ -80,17 +72,17 @@ export class Task {
     );
   }
 
-  static createEmptyObject(workspace: _Workspace | undefined) {
-    if (workspace)
+  static createEmptyObject(workspaceId: string, userId: string | undefined,) {
+    if (workspaceId != "")
       return new Task(
         "",
         "",
         "",
-        workspace.id,
-        Status.OPEN,
+        workspaceId,
+        false,
         "",
         moment().toDate(),
-        "",
+        userId ? userId : "",
         Visibility.PUBLIC,
         [],
         []
@@ -101,10 +93,10 @@ export class Task {
         "",
         "",
         "",
-        Status.OPEN,
+        false,
         "",
         moment().toDate(),
-        "",
+        userId ? userId : "",
         Visibility.PUBLIC,
         [],
         []
@@ -112,29 +104,40 @@ export class Task {
   }
 }
 
+export interface _SubTask {
+  id: string;
+  name: string;
+  description: string;
+  assignedTo: string;
+  completed: boolean;
+}
+
 export class SubTask {
   id: string;
   name: string;
   description: string;
   assignedTo: string;
+  completed: boolean;
 
   constructor(
     id: string,
     name: string,
     description: string,
-    assignedTo: string
+    assignedTo: string,
+    completed: boolean
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.assignedTo = assignedTo;
+    this.completed = completed;
   }
 
   static createObject(obj: _SubTask) {
-    return new SubTask(obj.id, obj.name, obj.description, obj.assignedTo);
+    return new SubTask(obj.id, obj.name, obj.description, obj.assignedTo, false);
   }
 
   static createEmptyObject() {
-    return new SubTask("", "", "", "");
+    return new SubTask("", "", "", "", false);
   }
 }

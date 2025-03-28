@@ -122,12 +122,12 @@
         <div class="ml-8 mt-3">
           <span
             v-for="tag in props.task.tags.filter(tag => tag)"
-            class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-yellow-800 bg-yellow-100 rounded-sm dark:bg-yellow-900 dark:text-yellow-300 z-50"
+            class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-teal-800 bg-teal-100 rounded-sm dark:bg-teal-900 dark:text-teal-300 z-50"
           >
           {{ tag.name }}
             <button
               type="button"
-              class="inline-flex items-center p-1 ms-2 text-sm text-yellow-400 bg-transparent rounded-xs hover:bg-yellow-200 hover:text-yellow-900 dark:hover:bg-yellow-800 dark:hover:text-yellow-300 cursor-pointer"
+              class="inline-flex items-center p-1 ms-2 text-sm text-teal-400 bg-transparent rounded-xs hover:bg-teal-200 hover:text-teal-900 dark:hover:bg-teal-800 dark:hover:text-teal-300 cursor-pointer"
               aria-label="Remove"
               @click="removeTag(tag)"
             >

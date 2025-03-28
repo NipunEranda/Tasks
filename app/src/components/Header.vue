@@ -169,10 +169,10 @@
                 <button
                   type="button"
                   class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-teal-700 dark:border-teal-600 dark:hover:bg-teal-600 dark:placeholder-teal-400 dark:text-white focus:ring-teal-600 focus:outline-none cursor-pointer items-center"
-                  @click="openMainModal()"
+                  @click="headerButtonOperation()"
                 >
-                  <fai icon="fa-plus" class="mr-2" />
-                  {{ mainActionModalButtonName }}
+                  <fai :icon="mainActionModalButtonContent[0]" class="mr-2" />
+                  {{ mainActionModalButtonContent[1] }}
                 </button>
               </div>
               <div class="flex-grow pr-2 lg:pr-0">
@@ -249,10 +249,11 @@ const indexStore = useIndexStore(),
   username = computed(() => {
     return user.value ? user.value.name.split(" ").splice(0, 2).join(" ") : "";
   }),
-  mainActionModalButtonName = computed(() => {
-    if (route.name == "dashboard") return "Start New Task";
-    else if (route.name == "templates") return "Start New Template";
-    else if (route.name == "team") return "Invite User";
+  mainActionModalButtonContent = computed(() => {
+    if (route.name == "dashboard") return ["fa-plus", "Start New Task"];
+    else if (route.name == "templates" && route.query.type == "new") return ["fa-save", "Save"];
+    else if (route.name == "templates") return ["fa-plus", "Start New Template"];
+    else if (route.name == "team") return ["fa-plus", "Invite User"];
     else return "Start New Task";
   }),
   showMainActionModalButton = computed(() => {
@@ -265,11 +266,13 @@ const indexStore = useIndexStore(),
 
 let selectedTasksType = ref(1);
 
-function openMainModal() {
+async function headerButtonOperation() {
   if (route.name == "dashboard") {
     router.push('/templates');
-  } else if (route.name == 'templates') {
+  } else if (route.name == 'templates' && !route.query.type) {
     router.push('/templates?type=new');
+  } else if (route.name == 'templates' && route.query.type == 'new') {
+    await tasksStore.createTemplate();
   }
 }
 
