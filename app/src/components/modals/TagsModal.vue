@@ -29,7 +29,7 @@
                             <fai icon="fa-tag" />
                         </span>
                         <input type="text" id="website-admin"
-                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none"
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-theme-third dark:focus:border-theme-third focus:outline-none"
                             placeholder="Tag Name" v-model="tag.name" autocomplete="off">
                     </div>
                     <div class="flex">
@@ -38,7 +38,7 @@
                             <fai :icon="tag.is_private ? 'fa-eye' : 'fa-eye-slash'" />
                         </span>
                         <select id="small"
-                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="tag.is_private">
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-theme-third dark:focus:border-theme-third focus:outline-none cursor-pointer" v-model="tag.is_private">
                              <option value=false>Public</option>
                              <option value=true>is_private</option>
                         </select>
@@ -48,7 +48,7 @@
                 <div
                     class="bg-zinc-100 bg-opacity-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 border-t-1 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-full">
                     <button @click="props.modal?.process(tag)" type="button"
-                        class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-[#ee855bd1] dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer">
+                        class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-theme-third dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer">
                         {{ props.modal?.processName }}
                     </button>
                     <!-- @vue-ignore -->

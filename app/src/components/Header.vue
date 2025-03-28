@@ -165,8 +165,8 @@
                   class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-teal-700 dark:border-teal-600 dark:hover:bg-teal-600 dark:placeholder-teal-400 dark:text-white focus:ring-teal-600 focus:outline-none cursor-pointer items-center"
                   @click="headerButtonOperation()"
                 >
-                  <fai :icon="mainActionModalButtonContent[0]" class="mr-2" />
-                  {{ mainActionModalButtonContent[1] }}
+                  <fai :icon="mainActionModalButtonContent[0]" class="mr-2 cursor-pointer" />
+                  <span class="cursor-pointer">{{ mainActionModalButtonContent[1] }}</span>
                 </button>
               </div>
               <div class="flex-grow pr-2 lg:pr-0">

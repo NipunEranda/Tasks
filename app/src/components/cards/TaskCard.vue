@@ -87,27 +87,19 @@
                 <div class="w-full" v-if="taskStore.getTagsCount > 0">
                   <button
                     id="badge-dismiss-default"
-                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110 cursor-pointer"
+                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-third hover:dark:brightness-110 cursor-pointer"
                     v-for="tag in taskStore.getTags"
                     :key="tag.id"
                     @click="addTagToTask(tag)"
                   >
                     {{ tag.name }}
-                    <span
-                      class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
-                      data-dismiss-target="#badge-dismiss-default"
-                      @click="openActionModal('tag', 'remove', tag)"
-                    >
-                      <fai icon="fa-xmark" />
-                      <span class="sr-only">Remove badge</span>
-                    </span>
                   </button>
                 </div>
 
                 <div class="mt-5">
                   <button
                     type="button"
-                    class="inline-flex w-full rounded-md px-4 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-[#ee855bd1] dark:hover:brightness-110 cursor-pointer"
+                    class="inline-flex w-full rounded-md px-4 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-theme-third dark:hover:brightness-110 cursor-pointer"
                     @click="openTagModal('add')"
                   >
                     <fai icon="fa-plus" class="mr-2 self-center" />
@@ -120,10 +112,10 @@
         </div>
         <div class="ml-8 mt-3">
           <span
-            v-for="tag in props.task.tags.filter(tag => tag)"
+            v-for="tag in props.task.tags.filter((tag) => tag)"
             class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-teal-800 bg-teal-100 rounded-sm dark:bg-teal-900 dark:text-teal-300 z-50"
           >
-          {{ tag.name }}
+            {{ tag.name }}
             <button
               type="button"
               class="inline-flex items-center p-1 ms-2 text-sm text-teal-400 bg-transparent rounded-xs hover:bg-teal-200 hover:text-teal-900 dark:hover:bg-teal-800 dark:hover:text-teal-300 cursor-pointer"
@@ -140,7 +132,11 @@
           ></div>
           <div class="flex-grow">
             <label class="inline-flex items-center cursor-pointer mt-5">
-              <input type="checkbox" v-model="task.is_private" class="sr-only peer" />
+              <input
+                type="checkbox"
+                v-model="task.is_private"
+                class="sr-only peer"
+              />
               <div
                 class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600 dark:peer-checked:bg-teal-600"
               ></div>
@@ -172,26 +168,6 @@ function openTagModal(type: string) {
   if (indexStore.tagModal) {
     indexStore.tagModal.type = type;
     indexStore.tagModal.modalEl?.show();
-  }
-}
-
-function openActionModal(type: string, operation: string, tag: Tag) {
-  taskStore.selectedTag = tag;
-
-  switch (type) {
-    case "tag":
-      if (operation == "remove") {
-        if (indexStore.actionModal) {
-          indexStore.actionModal.message = `<span class='font-bold text-lg'>Do you want to remove <b class='text-red-600'>${tag.name}</b> tag ?</span>`;
-          indexStore.actionModal.processName = "Remove";
-          indexStore.actionModal.title = "Remove Tag";
-          indexStore.actionModal.type = operation;
-          indexStore.actionModal.modalEl?.show();
-        }
-      }
-      break;
-    default:
-      break;
   }
 }
 

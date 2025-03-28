@@ -53,7 +53,7 @@
           <button
             @click="props.modal?.process()"
             type="button"
-            class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-[#ee855bd1] dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer"
+            class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-theme-third dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer"
             :class="{ 'dark:bg-red-700': props.modal?.type == 'remove' }"
           >
             {{ props.modal?.processName }}

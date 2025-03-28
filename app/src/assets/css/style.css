@@ -29,3 +29,7 @@ select:-webkit-autofill:focus {
   -ms-user-select: none;
   user-select: none;
 }
+
+@theme {
+  --color-theme-third: #ee855bcd;
+}

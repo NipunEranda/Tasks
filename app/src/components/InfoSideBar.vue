@@ -129,14 +129,14 @@
       v-if="showSection2"
     >
       <div
-        class="text-center font-bold text-xl p-3 dark:bg-[#ee845b] dark:brightness-90 rounded-t-md"
+        class="text-center font-bold text-xl p-3 dark:bg-theme-third dark:brightness-110 rounded-t-md"
       >
         {{ section2.title }}
       </div>
       <div class="p-3" v-if="tasksStore.getTagsCount > 0">
         <span
           id="badge-dismiss-default"
-          class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-[#ee855be1] hover:dark:brightness-110"
+          class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-third hover:dark:brightness-110"
           v-for="tag in tasksStore.getTags"
           :key="tag.id"
           >{{ tag.name }}
@@ -166,7 +166,8 @@
       </div>
       <div class="px-3" :class="{ 'pt-2': tasksStore.getTagsCount == 0 }">
         <button
-          class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-[#ee845b] dark:text-[#ee845b] dark:hover:bg-[#ee845b]/10 cursor-pointer"
+          ref="triggerButton"
+          class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-theme-third dark:text-theme-third dark:hover:bg-theme-third/10 cursor-pointer"
           id="addTagButton"
           @click="openTagModal('add')"
         >
@@ -174,9 +175,11 @@
         </button>
       </div>
       <div
-        class="p-2 uppercase dark:text-[#ee845b] text-center items-center place-items-center text-sm font-bold"
+        class="p-2 uppercase dark:text-theme-third text-center items-center place-items-center text-sm font-bold"
       >
-        <div class="hover:dark:bg-[#ee845b]/10 rounded-full w-fit p-2 px-4 cursor-pointer">
+        <div
+          class="hover:dark:bg-theme-third/10 rounded-full w-fit p-2 px-4 cursor-pointer"
+        >
           Show More
         </div>
       </div>
@@ -196,8 +199,9 @@ import { useWorkspaceStore } from "../store/workspace";
 import { useTasksStore } from "../store/tasks";
 import { useRoute } from "vue-router";
 import { CustomModal } from "../types/Modal";
-import { initFlowbite, Modal } from "flowbite";
+import { initFlowbite } from "flowbite";
 import type { _Tag, Tag } from "../types/Tag";
+import { initModal } from "@/utils";
 
 const indexStore = useIndexStore(),
   workspaceStore = useWorkspaceStore(),
@@ -255,27 +259,6 @@ async function loadData() {
   await tasksStore.loadTags(workspaceStore.activeWorkspace);
 }
 
-function initModal(modal: CustomModal, modalId: string) {
-  const modalOptions = {
-    backdrop: "dynamic" as "dynamic",
-    backdropClasses: "bg-zinc-900/50 dark:bg-zinc-900/80 fixed inset-0 z-40",
-    closable: true,
-  };
-
-  // instance options object
-  const instanceOptions = {
-    id: modalId,
-    override: true,
-  };
-
-  // @ts-ignore
-  modal.modalEl = new Modal(
-    document.getElementById(modalId) as HTMLElement,
-    modalOptions,
-    instanceOptions
-  ) as any;
-}
-
 function openTagModal(type: string) {
   tagsModal.value.type = type;
   // @ts-ignore
@@ -284,7 +267,7 @@ function openTagModal(type: string) {
 
 function openActionModal(type: string, operation: string, tag: Tag) {
   tasksStore.selectedTag = tag;
-  initModal(actionModal.value, "actionModal");
+  initModal(actionModal.value, "actionModal", "addTagButton");
 
   switch (type) {
     case "tag":
@@ -337,8 +320,8 @@ let showSection2 = computed(() => {
 
 onMounted(async () => {
   initFlowbite();
-  initModal(tagsModal.value, "tagModal");
-  initModal(actionModal.value, "actionModal");
+  initModal(tagsModal.value, "tagModal", "addTagButton");
+  initModal(actionModal.value, "actionModal", "addTagButton");
   await loadData();
 });
 </script>
