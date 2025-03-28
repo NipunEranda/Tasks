@@ -7,7 +7,7 @@ export const sleep = async (ms: number) => {
 export const initModal = (modal: CustomModal, modalId: string, triggerName: string) => {
   const modalOptions = {
     backdrop: "dynamic" as "dynamic",
-    backdropClasses: "bg-zinc-900/50 dark:bg-zinc-900/80 fixed inset-0 z-40",
+    backdropClasses: "bg-theme-primary/50 dark:bg-theme-primary/80 fixed inset-0 z-40",
     closable: true,
     onHide: () => {
       const triggerButton = document.getElementById(triggerName);

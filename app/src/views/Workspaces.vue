@@ -12,11 +12,11 @@
           :key="workspace.id"
         >
           <div
-            class="mx-auto border-t border-b dark:border-zinc-700 w-full md:w-1/2 lg:w-1/2 text-center p-2 cursor-pointer"
+            class="mx-auto border-t border-b dark:border-theme-primary-border w-full md:w-1/2 lg:w-1/2 text-center p-2 cursor-pointer"
             @click="selectWorkspace(workspace)"
           >
             <div
-              class="py-2 dark:hover:bg-zinc-800 rounded-xl font-semibold text-xl"
+              class="py-2 dark:bg-theme-primary hover:dark:brightness-150 rounded-xl font-semibold text-xl"
             >
               {{ workspace.name }}
             </div>
@@ -27,7 +27,7 @@
         <button
           id="workspaceModalTrigger"
           type="button"
-          class="text-white dark:bg-theme-first dark:hover:brightness-110 font-medium rounded-lg text-sm px-8 py-3 text-center uppercase cursor-pointer"
+          class="dark:text-theme-primary-text dark:bg-theme-first dark:hover:brightness-110 font-medium rounded-lg text-sm px-8 py-3 text-center uppercase cursor-pointer"
           @click="openWorkspaceModal('add')"
         >
           Create Workspace

@@ -11,7 +11,7 @@
       <fai icon="fa-trash-can" />
     </button>
     <div
-      class="flex bg-zinc-800 rounded-lg cursor-pointer transition-all duration-300 hover:brightness-110 mb-4 w-full"
+      class="flex bg-theme-primary-secondary rounded-lg cursor-pointer transition-all duration-300 hover:brightness-110 mb-4 w-full"
     >
       <div class="w-[10px] dark:bg-theme-first rounded-l-lg py-10"></div>
       <div class="flex-grow flex">
@@ -27,7 +27,7 @@
                 type="text"
                 :name="'subtask-name-' + props.subTask.id + '-name'"
                 :id="'subtask-name-' + props.subTask.id + '-id'"
-                class="block px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first peer cursor-pointer"
+                class="block px-0 w-full text-md text-zinc-900 bg-transparent border-0 border-b-2 border-zinc-300 appearance-none dark:text-white dark:border-zinc-600 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first peer cursor-pointer"
                 placeholder="Task Name"
                 required
                 autocomplete="off"
@@ -46,7 +46,7 @@
                 type="text"
                 :name="'subtask-description-' + props.subTask.id + '-name'"
                 :id="'subtask-description-' + props.subTask.id + '-name'"
-                class="block px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first cursor-pointer"
+                class="block px-0 w-full text-md text-zinc-900 bg-transparent border-0 border-b-2 border-zinc-300 appearance-none dark:text-white dark:border-zinc-600 focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first cursor-pointer"
                 placeholder="Task Description"
                 required
                 autocomplete="off"
@@ -63,7 +63,7 @@
                 type="text"
                 :name="'subtask-assignee-' + props.subTask.id + '-name'"
                 :id="'subtask-assignee-' + props.subTask.id + '-name'"
-                class="block px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0"
+                class="block px-0 w-full text-md text-zinc-900 bg-transparent border-0 border-b-2 border-zinc-300 appearance-none dark:text-white dark:border-zinc-600 focus:outline-none focus:ring-0"
                 placeholder="Assignees"
                 required
                 autocomplete="off"
@@ -71,7 +71,7 @@
 
               <div
                 id="dropdown"
-                class="dropdown hidden absolute border dark:bg-zinc-800 dark:border-zinc-700 shadow-md mt-1 rounded-md z-20 group-focus-within:flex"
+                class="dropdown hidden absolute border dark:bg-theme-primary-secondary dark:border-zinc-700 shadow-md mt-1 rounded-md z-20 group-focus-within:flex"
               >
                 <div class="min-h-30 max-h-42 overflow-scroll" v-if="workspaceStore.team.length > 0">
                   <div

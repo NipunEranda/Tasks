@@ -2,7 +2,7 @@
   <div>
     <!-- Mobile View -->
     <nav
-      class="absolute top-0 flex w-full z-10 bg-white border-zinc-200 dark:bg-zinc-900 dark:brightness-125 lg:hidden"
+      class="absolute top-0 flex w-full z-10 dark:bg-theme-primary dark:brightness-125 lg:hidden"
     >
       <div class="px-3 py-3 lg:px-3 lg:pl-3 w-full">
         <div class="flex items-center justify-between">
@@ -16,11 +16,11 @@
           <div class="flex-grow pl-4 pr-2">
             <div class="grid grid-cols-2 sm:grid-cols-3">
               <div
-                class="h-full p-2 dark:bg-zinc-800 hover:dark:brightness-110 rounded-lg ml-2 cursor-pointer items-center hidden sm:flex"
+                class="h-full p-2 dark:bg-theme-primary dark:hover:brightness-110 rounded-lg ml-2 cursor-pointer items-center hidden sm:flex"
               >
                 <div class="text-3xl justify-end pl-2 pr-2">
                   <div
-                    class="border-3 border-zinc-700 rounded-full transition-all duration-300"
+                    class="border-3 border-theme-primary-border rounded-full transition-all duration-300"
                   >
                     <img
                       class="h-7 w-7 lg:group-hover:w-14 rounded-full"
@@ -85,7 +85,7 @@
     </nav>
 
     <nav
-      class="absolute top-0 w-full flex bg-white border-zinc-200 dark:bg-zinc-900 mt-[73px] lg:m-0"
+      class="absolute top-0 w-full flex dark:bg-theme-primary mt-[73px] lg:m-0"
     >
       <div class="px-3 py-3 lg:px-3 lg:pl-3 w-full">
         <div class="flex items-center justify-between">
@@ -94,14 +94,14 @@
           ></div>
           <div class="flex items-center w-full lg:w-fit">
             <div class="flex items-center ms-3 w-full lg:w-fit">
-              <div class="flex mr-5 lg:mr-2 items-center">
+              <div class="flex mr-5 items-center">
                 <button
                   id="tasksTypeButton"
                   data-dropdown-toggle="taskTypesDropdownIcon"
                   data-dropdown-offset-distance="10"
                   data-dropdown-offset-skidding="60"
                   data-dropdown-placement="bottom"
-                  class="cursor-pointer"
+                  class="cursor-pointer dark:text-theme-primary-text flex lg:hidden"
                 >
                   <fai icon="fa-filter" class="text-2xl" />
                 </button>
@@ -109,7 +109,7 @@
                 <button
                   id="tasksTypeButton"
                   data-dropdown-toggle="taskTypesDropdown"
-                  class="font-medium text-sm px-5 py-2 text-center lg:inline-flex items-center border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white focus:outline-none cursor-pointer dark:focus:border-theme-first dark:focus:bg-theme-first ml-2 hidden"
+                  class="font-medium text-sm px-5 py-2 text-center lg:inline-flex items-center border rounded-md dark:bg-theme-primary dark:brightness-125 dark:border-theme-primary-border dark:placeholder-theme-primary-border dark:text-theme-primary-text focus:outline-none cursor-pointer dark:focus:border-theme-first dark:focus:bg-theme-first ml-2 hidden"
                   type="button"
                 >
                   {{ taskTypes[selectedTasksType] }}
@@ -131,12 +131,12 @@
 
                 <div
                   id="taskTypesDropdown"
-                  class="z-10 hidden bg-white divide-y divide-zinc-100 rounded-md shadow-sm w-44 dark:bg-zinc-700"
+                  class="z-10 hidden divide-y rounded-md shadow-sm w-44 dark:bg-theme-primary dark:brightness-125"
                 >
-                  <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200">
+                  <ul class="py-2 text-sm dark:text-theme-primary-text-secondary">
                     <li v-for="(type, t) in taskTypes">
                       <a
-                        class="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white cursor-pointer"
+                        class="block px-4 py-2 dark:bg-theme-primary dark:hover:brightness-125 cursor-pointer"
                         @click="selectedTasksType = t"
                         >{{ type }}</a
                       >
@@ -146,12 +146,12 @@
 
                 <div
                   id="taskTypesDropdownIcon"
-                  class="ml-10 z-10 hidden bg-white divide-y divide-zinc-100 rounded-md shadow-sm w-44 dark:bg-zinc-700"
+                  class="z-10 hidden divide-y rounded-md shadow-sm w-44 dark:bg-theme-primary dark:brightness-125"
                 >
-                  <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200">
+                  <ul class="py-2 text-sm dark:text-theme-primary-text-secondary">
                     <li v-for="(type, t) in taskTypes">
                       <a
-                        class="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white cursor-pointer"
+                        class="block px-4 py-2 dark:bg-theme-primary dark:hover:text-theme-primary-text dark:hover:brightness-125 cursor-pointer"
                         @click="selectedTasksType = t"
                         >{{ type }}</a
                       >
@@ -162,7 +162,7 @@
               <div class="hidden lg:flex mr-2" v-if="showMainActionModalButton">
                 <button
                   type="button"
-                  class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-theme-first dark:border-theme-first dark:hover:brightness-110 dark:placeholder-theme-first dark:text-white focus:outline-none cursor-pointer items-center"
+                  class="inline-flex w-full justify-center px-5 py-2 text-sm font-semibold border rounded-md dark:bg-theme-first dark:border-theme-first dark:hover:brightness-110 dark:placeholder-theme-first dark:text-theme-primary-text focus:outline-none cursor-pointer items-center"
                   @click="headerButtonOperation()"
                 >
                   <fai :icon="mainActionModalButtonContent[0]" class="mr-2 cursor-pointer" />
@@ -172,32 +172,19 @@
               <div class="flex-grow pr-2 lg:pr-0">
                 <label
                   for="search"
-                  class="mb-2 text-sm font-medium text-zinc-900 sr-only dark:text-white"
+                  class="mb-2 text-sm font-medium sr-only dark:text-theme-primary-text"
                   >Search</label
                 >
-                <div class="relative">
+                <div class="relative dark:brightness-110">
                   <div
                     class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
                   >
-                    <svg
-                      class="w-4 h-4 text-zinc-500 dark:text-zinc-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
+                    <fai icon="fa-search" class="dark:text-theme-primary-placeholder"/>
                   </div>
                   <input
                     type="text"
                     id="search"
-                    class="block w-full p-2 ps-10 text-sm border rounded-md bg-zinc-50 border-zinc-300 text-zinc-900 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-theme-first dark:focus:border-theme-first focus:outline-none"
+                    class="block w-full p-2 ps-10 text-sm border rounded-md dark:bg-theme-primary dark:border-theme-primary-border dark:placeholder-theme-primary-placeholder dark:text-theme-primary-text dark:focus:ring-theme-first dark:focus:border-theme-first focus:outline-none"
                     placeholder="Search"
                     autocomplete="off"
                   />

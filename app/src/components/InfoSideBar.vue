@@ -1,17 +1,19 @@
 <template>
   <div>
-    <div class="dark:bg-zinc-800 p-3 rounded-md cursor-pointer">
+    <div
+      class="dark:bg-theme-primary-secondary/60 p-3 rounded-md cursor-pointer"
+    >
       <div>
         <div class="w-full grid">
           <div
-            class="h-full dark:bg-zinc-800 hover:dark:brightness-110 rounded-lg cursor-pointer items-center hidden sm:flex p-2"
+            class="h-full dark:bg-theme-primary-secondary hover:dark:brightness-130 rounded-lg cursor-pointer items-center hidden sm:flex p-2"
           >
             <div class="text-3xl justify-end pr-2">
               <div
-                class="border-3 border-zinc-700 rounded-full transition-all duration-300"
+                class="border-3 dark:border-theme-primary-border rounded-full transition-all duration-300"
               >
                 <img
-                  class="h-9 w-9 lg:group-hover:w-14 rounded-full"
+                  class="h-9 w-9 lg:group-hover:w-14 rounded-full brightness-75"
                   :class="{
                     invert: user ? (user.picture ? false : true) : true,
                   }"
@@ -30,7 +32,7 @@
           </div>
         </div>
         <div
-          class="flex h-full p-2 dark:bg-theme-second hover:dark:brightness-110 rounded-lg mt-2 cursor-pointer place-content-center items-center"
+          class="flex h-full p-2 dark:bg-theme-second dark:brightness-90 hover:dark:brightness-100 rounded-lg mt-2 cursor-pointer place-content-center items-center"
         >
           <div class="flex flex-grow">
             <div class="text-3xl justify-end pl-4 pr-4">
@@ -49,7 +51,7 @@
           </div>
         </div>
         <div
-          class="flex h-full p-2 dark:bg-theme-first hover:dark:brightness-110 rounded-lg mt-2 cursor-pointer place-content-center items-center"
+          class="flex h-full p-2 dark:bg-theme-first dark:brightness-90 hover:dark:brightness-100 rounded-lg mt-2 cursor-pointer place-content-center items-center"
         >
           <div class="flex flex-grow">
             <div class="text-3xl justify-end pl-4 pr-4">
@@ -70,7 +72,7 @@
     </div>
     <div
       id="section1"
-      class="dark:bg-zinc-800 rounded-md mt-3 cursor-pointer"
+      class="dark:bg-theme-primary-secondary/60 rounded-md mt-3 cursor-pointer"
       v-if="showSection1"
     >
       <div
@@ -79,13 +81,15 @@
         {{ section1.title }}
       </div>
       <div class="w-full px-3">
-        <div class="text-sm dark:text-zinc-300 font-bold py-2 pb-1">
+        <div
+          class="text-sm dark:text-theme-primary-text-secondary font-bold py-4"
+        >
           {{ tasksStore.updatedDate }}
         </div>
         <!-- List -->
         <div>
           <div
-            class="border-b dark:bg-zinc-800 hover:dark:brightness-110 dark:border-zinc-600 flex items-center p-1 px-3 cursor-pointer"
+            class="border-b hover:dark:bg-theme-primary-secondary hover:dark:brightness-125 dark:border-theme-primary-border flex items-center p-1 px-3 cursor-pointer"
           >
             <div
               class="flex border-2 dark:border-theme-second items-center place-items-center p-1 rounded-sm mr-2"
@@ -98,7 +102,7 @@
             </div>
           </div>
           <div
-            class="border-b dark:bg-zinc-800 hover:dark:brightness-110 dark:border-zinc-600 flex items-center p-1 px-3 cursor-pointer"
+            class="border-b hover:dark:bg-theme-primary-secondary hover:dark:brightness-125 dark:border-theme-primary-border flex items-center p-1 px-3 cursor-pointer"
           >
             <div
               class="flex border-2 dark:border-theme-first items-center place-items-center p-1 rounded-sm mr-2"
@@ -116,7 +120,7 @@
         class="p-2 uppercase dark:text-theme-first text-center items-center place-items-center cursor-pointer text-sm font-bold"
       >
         <div
-          class="hover:dark:bg-theme-first/10 rounded-full w-fit p-2 px-4"
+          class="hover:dark:bg-theme-first/20 rounded-full w-fit p-2 px-4"
           @click="$router.push('/activity')"
         >
           Show More
@@ -125,7 +129,7 @@
     </div>
     <div
       id="section2"
-      class="dark:bg-zinc-800 rounded-md mt-3"
+      class="dark:bg-theme-primary-secondary/60 rounded-md mt-3"
       v-if="showSection2"
     >
       <div
@@ -136,30 +140,23 @@
       <div class="p-3" v-if="tasksStore.getTagsCount > 0">
         <span
           id="badge-dismiss-default"
-          class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-third hover:dark:brightness-110"
+          class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-third dark:brightness-100 hover:dark:brightness-115 cursor-pointer"
           v-for="tag in tasksStore.getTags"
           :key="tag.id"
-          >{{ tag.name }}
+        >
+          <fai
+            icon="fa-lock"
+            class="mr-1 self-center text-xs"
+            v-show="tag.is_private"
+          />
+          <span class="text-sm m-1">{{ tag.name }}</span>
           <button
             type="button"
-            class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
+            class="inline-flex items-center p-1 ms-2 text-sm dark:text-theme-primary-text bg-transparent rounded-xs cursor-pointer"
             data-dismiss-target="#badge-dismiss-default"
             @click="openActionModal('tag', 'remove', tag)"
           >
-            <svg
-              class="w-2 h-2"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-              />
-            </svg>
+            <fai icon="fa-xmark" />
             <span class="sr-only">Remove badge</span>
           </button>
         </span>

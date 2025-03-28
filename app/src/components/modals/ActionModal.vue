@@ -6,13 +6,13 @@
   >
     <div class="relative p-4 w-full max-w-2xl max-h-full">
       <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow-sm dark:bg-zinc-800">
+      <div class="relative rounded-lg shadow-sm dark:bg-theme-primary dark:text-theme-primary-text dark:border-theme-primary-border dark:brightness-125">
         <!-- Modal header -->
         <div
-          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-zinc-700 border-zinc-100"
+          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-theme-primary-border"
         >
           <div
-            class="flex text-xl font-semibold text-zinc-900 dark:text-white place-items-center"
+            class="text-xl font-semibold dark:text-theme-primary-text"
           >
             <fai :icon="modalIcon" class="mr-3 text-2xl" />{{
               props.modal?.title
@@ -21,48 +21,35 @@
           <!-- @vue-ignore -->
           <button
             type="button"
-            class="text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white hover:bg-zinc-200 hover:text-zinc-900 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center cursor-pointer"
+            class="hover:dark:bg-theme-primary hover:dark:brightness-150 dark:text-theme-primary-text-secondary hover:dark:text-theme-primary-text bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center cursor-pointer"
             @click="props.modal?.modalEl ? props.modal?.modalEl.hide() : null"
           >
-            <svg
-              class="w-3 h-3"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-              />
-            </svg>
+          <fai icon="fa-xmark"/>
             <span class="sr-only">Close modal</span>
           </button>
         </div>
         <!-- Modal body -->
         <div
-          class="p-4 md:p-5 space-y-4 bg-zinc-50 dark:bg-zinc-800 text-center"
+          class="p-4 md:p-5 space-y-4 dark:bg-theme-primary text-center"
           v-html="props.modal?.message"
         ></div>
         <!-- Footer -->
         <div
-          class="bg-zinc-100 bg-opacity-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 border-t-1 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-full"
+          class="dark:bg-theme-primary-secondary dark:border-theme-primary-border border-t-1 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-full"
         >
           <button
             @click="props.modal?.process()"
             type="button"
-            class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold text-white shadow-sm sm:w-auto dark:bg-theme-third dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer"
-            :class="{ 'dark:bg-red-700': props.modal?.type == 'remove' }"
+            class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold shadow-sm sm:w-auto dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer"
+            :class="{ 'dark:bg-red-800': props.modal?.type == 'remove' }"
           >
-            {{ props.modal?.processName }}
+            <fai icon="fa-trash-can" class="mr-2 self-center"/>{{ props.modal?.processName }}
           </button>
           <!-- @vue-ignore -->
           <button
             @click="props.modal?.modalEl.hide()"
             type="button"
-            class="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm sm:w-auto mb-2 sm:mb-0 sm:ms-2 dark:border-zinc-600 dark:text-white dark:hover:bg-zinc-700 text-black hover:bg-zinc-200 border border-zinc-300 cursor-pointer"
+            class="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm sm:w-auto mb-2 sm:mb-0 sm:ms-2 dark:border-theme-primary-border/80 dark:text-theme-primary-text dark:bg-theme-primary dark:brightness-110 hover:dark:brightness-150 border cursor-pointer"
           >
             Cancel
           </button>
