@@ -1,4 +1,4 @@
-import type { ActivityType } from "./enums/ActivityType";
+import type { ActivityType } from "@/types/enums/ActivityType";
 
 export interface _Activity {
     id: string,

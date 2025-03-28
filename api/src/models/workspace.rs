@@ -2,19 +2,12 @@ use chrono::Local;
 use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
-pub enum Visibility {
-    PUBLIC,
-    PRIVATE,
-}
-
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Workspace {
     pub _id: ObjectId,
     pub owner: ObjectId,
     pub name: String,
-    pub visibility: Visibility,
+    pub is_private: bool,
     pub team: Vec<ObjectId>,
     pub deleted: bool,
     pub is_active: bool,
@@ -24,7 +17,7 @@ pub struct Workspace {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WorkspaceRequest {
     pub name: String,
-    pub visibility: Visibility
+    pub is_private: bool
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -32,7 +25,7 @@ pub struct WorkspaceResponse {
     pub id: String,
     pub owner: String,
     pub name: String,
-    pub visibility: Visibility,
+    pub is_private: bool,
     pub team: Vec<ObjectId>,
     pub deleted: bool,
     pub is_active: bool,
@@ -47,7 +40,7 @@ impl TryFrom<WorkspaceRequest> for Workspace {
             _id: ObjectId::new(),
             owner: ObjectId::new(),
             name: item.name,
-            visibility: item.visibility,
+            is_private: item.is_private,
             team: vec![],
             deleted: false,
             is_active: true,
@@ -61,7 +54,7 @@ impl WorkspaceResponse {
         id: String,
         owner: String,
         name: String,
-        visibility: Visibility,
+        is_private: bool,
         team: Vec<ObjectId>,
         deleted: bool,
         is_active: bool,
@@ -71,7 +64,7 @@ impl WorkspaceResponse {
             id,
             owner,
             name,
-            visibility,
+            is_private,
             team,
             deleted,
             is_active,

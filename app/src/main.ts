@@ -34,9 +34,12 @@ import {
   faHome,
   faLayerGroup,
   faList,
+  faLock,
   faPen,
   faPlus,
   faPowerOff,
+  faSave,
+  faSearch,
   faTag,
   faTags,
   faTrashCan,
@@ -70,7 +73,10 @@ library.add(
   faPen,
   faCircleInfo,
   faTrashCan,
-  faCircleUser
+  faCircleUser,
+  faSave,
+  faSearch,
+  faLock
 );
 
 createApp(App)

@@ -1,18 +1,12 @@
 use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
-pub enum Visibility {
-    PUBLIC,
-    PRIVATE,
-}
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Tag {
     pub _id: ObjectId,
     pub name: String,
     pub created_by: ObjectId,
-    pub visibility: Visibility,
+    pub is_private: bool,
     pub workspace: ObjectId,
     pub deleted: bool,
 }
@@ -20,7 +14,7 @@ pub struct Tag {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TagRequest {
     pub name: String,
-    pub visibility: Visibility,
+    pub is_private: bool,
     pub workspace: String,
 }
 
@@ -29,7 +23,7 @@ pub struct TagResponse {
     pub id: String,
     pub name: String,
     pub created_by: String,
-    pub visibility: Visibility,
+    pub is_private: bool,
     pub deleted: bool,
 }
 
@@ -47,7 +41,7 @@ impl TryFrom<TagRequest> for Tag {
             _id: ObjectId::new(),
             name: item.name,
             created_by: ObjectId::new(),
-            visibility: item.visibility,
+            is_private: item.is_private,
             workspace: workspace_id,
             deleted: false,
         })
@@ -60,21 +54,8 @@ impl TagResponse {
             id: obj._id.to_hex(),
             name: obj.name.clone(),
             created_by: obj.created_by.to_hex(),
-            visibility: obj.visibility,
+            is_private: obj.is_private,
             deleted: obj.deleted,
         }
     }
 }
-
-// impl Tag {
-//     pub fn new() -> Self {
-//         Tag {
-//             _id: ObjectId::new(),
-//             name: String::from(""),
-//             created_by: ObjectId::new(),
-//             visibility:Visibility::PUBLIC,
-//             deleted: false,
-//             workspace: ObjectId::new(),
-//         }
-//     }
-// }

@@ -2,14 +2,14 @@
     <div class="grid place-items-center items-center justify-center h-screen">
         <div class="grid place-items-center -translate-y-16">
             <div class="flex font-extrabold text-9xl mb-8 font-serif tracking-widest">
-                <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">T</span>
-                <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">A</span>
-                <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
-                <span class="text-teal-700" style="font-family: 'Faith Hope', sans-serif;">K</span>
-                <span class="text-teal-500" style="font-family: 'Faith Hope', sans-serif;">S</span>
+                <span class="dark:text-theme-first dark:brightness-170" style="font-family: 'Faith Hope', sans-serif;">T</span>
+                <span class="dark:text-theme-first dark:brightness-100" style="font-family: 'Faith Hope', sans-serif;">A</span>
+                <span class="dark:text-theme-first dark:brightness-170" style="font-family: 'Faith Hope', sans-serif;">S</span>
+                <span class="dark:text-theme-first dark:brightness-100" style="font-family: 'Faith Hope', sans-serif;">K</span>
+                <span class="dark:text-theme-first dark:brightness-170" style="font-family: 'Faith Hope', sans-serif;">S</span>
             </div>
             <button
-                class="text-white dark:bg-teal-800 dark:hover:bg-teal-700 bg-teal-700 hover:bg-green-800 focus:ring-teal-300 p-3 px-5 rounded-lg mb-2 cursor-pointer"
+                class="text-white dark:bg-theme-first dark:hover:brightness-110 p-3 px-5 rounded-lg mb-2 cursor-pointer"
                 @click="client.requestCode();">
                 <img src="../assets/img/google.png" width="25" class="inline-flex" />
                 <span class="ms-3 font-bold">Continue with Google</span>
