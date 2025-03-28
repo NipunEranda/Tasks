@@ -133,10 +133,7 @@
                   id="taskTypesDropdown"
                   class="z-10 hidden bg-white divide-y divide-zinc-100 rounded-md shadow-sm w-44 dark:bg-zinc-700"
                 >
-                  <ul
-                    class="py-2 text-sm text-zinc-700 dark:text-zinc-200"
-                    aria-labelledby="tasksTypeButton"
-                  >
+                  <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200">
                     <li v-for="(type, t) in taskTypes">
                       <a
                         class="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white cursor-pointer"
@@ -151,10 +148,7 @@
                   id="taskTypesDropdownIcon"
                   class="ml-10 z-10 hidden bg-white divide-y divide-zinc-100 rounded-md shadow-sm w-44 dark:bg-zinc-700"
                 >
-                  <ul
-                    class="py-2 text-sm text-zinc-700 dark:text-zinc-200"
-                    aria-labelledby="taskTypesDropdownIcon"
-                  >
+                  <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200">
                     <li v-for="(type, t) in taskTypes">
                       <a
                         class="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white cursor-pointer"
@@ -251,8 +245,10 @@ const indexStore = useIndexStore(),
   }),
   mainActionModalButtonContent = computed(() => {
     if (route.name == "dashboard") return ["fa-plus", "Start New Task"];
-    else if (route.name == "templates" && route.query.type == "new") return ["fa-save", "Save"];
-    else if (route.name == "templates") return ["fa-plus", "Start New Template"];
+    else if (route.name == "templates" && route.query.type == "new")
+      return ["fa-save", "Save"];
+    else if (route.name == "templates")
+      return ["fa-plus", "Start New Template"];
     else if (route.name == "team") return ["fa-plus", "Invite User"];
     else return "Start New Task";
   }),
@@ -268,10 +264,10 @@ let selectedTasksType = ref(1);
 
 async function headerButtonOperation() {
   if (route.name == "dashboard") {
-    router.push('/templates');
-  } else if (route.name == 'templates' && !route.query.type) {
-    router.push('/templates?type=new');
-  } else if (route.name == 'templates' && route.query.type == 'new') {
+    router.push("/templates");
+  } else if (route.name == "templates" && !route.query.type) {
+    router.push("/templates?type=new");
+  } else if (route.name == "templates" && route.query.type == "new") {
     await tasksStore.createTemplate();
   }
 }

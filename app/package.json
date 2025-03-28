@@ -1,6 +1,6 @@
 {
   "name": "tasks",
-  "private": true,
+  "is_private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {

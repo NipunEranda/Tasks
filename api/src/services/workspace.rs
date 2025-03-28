@@ -6,11 +6,11 @@ use rocket::{futures::{self, TryStreamExt}, http::Status, serde::json::Json, Sta
 
 use crate::{
     models::{
-        response::Response, user::{User, UserResponse}, workspace::{Visibility, Workspace, WorkspaceRequest, WorkspaceResponse}
+        response::Response, user::UserResponse, workspace::{Workspace, WorkspaceRequest, WorkspaceResponse}
     }, utils::request_guard::HeaderGuard, AppState
 };
 
-use super::user::{self, get_user_by_id};
+use super::user::get_user_by_id;
 
 pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (Status, String) {
     let user_id = ObjectId::parse_str(_guard._get_id()).ok().unwrap();
@@ -31,14 +31,14 @@ pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (St
         .unwrap_or(vec![])
         .iter()
         .filter(|workspace| {
-            (workspace.team.contains(&user_id) && workspace.visibility == Visibility::PRIVATE) || workspace.owner == user_id || workspace.visibility == Visibility::PUBLIC
+            (workspace.team.contains(&user_id) && workspace.is_private) || workspace.owner == user_id || !workspace.is_private
         })
         .for_each(|workspace| {
             workspaces.push(WorkspaceResponse::new(
                 workspace._id.to_hex(),
                 workspace.owner.to_string(),
                 workspace.name.to_string(),
-                workspace.visibility,
+                workspace.is_private,
                 workspace.team.clone(),
                 workspace.deleted.to_string().parse().unwrap(),
                 workspace.is_active.to_string().parse().unwrap(),

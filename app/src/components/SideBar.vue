@@ -1,10 +1,9 @@
 <template>
     <aside id="sideBar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen dark:bg-zinc-900 dark:brightness-110 transition-all -translate-x-full lg:translate-x-0 duration-300"
-        aria-label="Sidebar">
+        class="fixed top-0 left-0 z-40 w-64 h-screen dark:bg-zinc-900 dark:brightness-110 transition-all -translate-x-full lg:translate-x-0 duration-300">
         <div class="w-full">
             <div class="group flex flex-col h-screen">
-                <div class="h-12 my-5">
+                <div class="h-12 my-5" id="iconDiv">
                     <div class="grid place-items-center items-center w-full transition-all duration-300 overflow-auto">
                         <div
                             class="flex lg:hidden lg:group-hover:flex font-extrabold text-6xl mb-8 font-serif tracking-widest">
@@ -122,7 +121,7 @@
 
                             <div id="profileMenuContainer"
                                 class="z-10 hidden divide-zinc-100 rounded-lg shadow-sm w-full">
-                                <ul class="text-sm px-3" aria-labelledby="profileMenu">
+                                <ul class="text-sm px-3">
                                     <li class=" dark:bg-zinc-800 dark:hover:brightness-125 p-3 px-4 cursor-pointer uppercase font-semibold rounded-tl-md rounded-tr-md" data-drawer-toggle="sideBar"
                                         @click="navigation('/profile')">
                                         <fai icon="fa-user" class="mr-2" /> {{ $t("app.sideBar.profieMenu.profile") }}

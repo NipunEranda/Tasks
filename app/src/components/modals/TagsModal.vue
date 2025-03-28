@@ -35,11 +35,12 @@
                     <div class="flex">
                         <span
                             class="inline-flex items-center px-3 text-xs text-zinc-900 bg-zinc-200 border border-e-0 border-zinc-300 rounded-s-md dark:bg-zinc-600 dark:text-zinc-400 dark:border-zinc-600">
-                            <fai :icon="tag.visibility ==  Visibility.PUBLIC ? 'fa-eye' : 'fa-eye-slash'" />
+                            <fai :icon="tag.is_private ? 'fa-eye' : 'fa-eye-slash'" />
                         </span>
                         <select id="small"
-                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="tag.visibility">
-                            <option v-for="visibility in Object.keys(Visibility)" :value="visibility" :key="visibility">{{ visibility }}</option>
+                            class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-zinc-300 dark:focus:ring-[#ee855bd1] dark:focus:border-[#ee855bd1] focus:outline-none cursor-pointer" v-model="tag.is_private">
+                             <option value=false>Public</option>
+                             <option value=true>is_private</option>
                         </select>
                     </div>
                 </div>
@@ -63,10 +64,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, type PropType } from "vue";
+import { ref, type PropType } from "vue";
 import type { _Modal } from "../../types/Modal";
 import { type _Tag, Tag } from "../../types/Tag";
-import { Visibility } from "../../types/enums/Visibility";
 import { useWorkspaceStore } from "../../store/workspace";
 const props = defineProps({
     modal: {

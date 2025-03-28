@@ -125,7 +125,7 @@
     </div>
     <div
       id="section2"
-      class="dark:bg-zinc-800 rounded-md mt-3 cursor-pointer"
+      class="dark:bg-zinc-800 rounded-md mt-3"
       v-if="showSection2"
     >
       <div
@@ -144,7 +144,6 @@
             type="button"
             class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
             data-dismiss-target="#badge-dismiss-default"
-            aria-label="Remove"
             @click="openActionModal('tag', 'remove', tag)"
           >
             <svg
@@ -168,15 +167,16 @@
       <div class="px-3" :class="{ 'pt-2': tasksStore.getTagsCount == 0 }">
         <button
           class="w-full border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-[#ee845b] dark:text-[#ee845b] dark:hover:bg-[#ee845b]/10 cursor-pointer"
+          id="addTagButton"
           @click="openTagModal('add')"
         >
           Add Tag
         </button>
       </div>
       <div
-        class="p-2 uppercase dark:text-[#ee845b] text-center items-center place-items-center cursor-pointer text-sm font-bold"
+        class="p-2 uppercase dark:text-[#ee845b] text-center items-center place-items-center text-sm font-bold"
       >
-        <div class="hover:dark:bg-[#ee845b]/10 rounded-full w-fit p-2 px-4">
+        <div class="hover:dark:bg-[#ee845b]/10 rounded-full w-fit p-2 px-4 cursor-pointer">
           Show More
         </div>
       </div>

@@ -9,7 +9,7 @@ export const useTasksStore = defineStore("tasks", {
   state: () => ({
     tags: [] as Array<_Tag>,
     tasks: ["test"],
-    subTasks: ["test sub task"],
+    sub_tasks: ["test sub task"],
     updatedDate: moment().format("MMMM DD, YYYY"),
     selectedTag: undefined as _Tag | undefined,
     newTask: undefined as unknown as Task,
@@ -18,9 +18,9 @@ export const useTasksStore = defineStore("tasks", {
     getTags: (state) => state.tags,
     getTagsCount: (state) => state.tags.length,
     getTasks: (state) => state.tasks,
-    getSubTasks: (state) => state.subTasks,
+    getSubTasks: (state) => state.sub_tasks,
     getTasksCount: (state) => state.tasks.length,
-    getSubTasksCount: (state) => state.subTasks.length,
+    getSubTasksCount: (state) => state.sub_tasks.length,
   },
   actions: {
     initializeNewTemplate(task: _Task) {
@@ -38,7 +38,7 @@ export const useTasksStore = defineStore("tasks", {
         credentials: "include",
         body: JSON.stringify({
           name: tag.name,
-          visibility: tag.visibility,
+          is_private: tag.is_private,
           workspace: tag.workspace,
         }),
       });

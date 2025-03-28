@@ -96,7 +96,6 @@
                     <span
                       class="inline-flex items-center p-1 ms-2 text-sm text-zinc-50 bg-transparent rounded-xs cursor-pointer"
                       data-dismiss-target="#badge-dismiss-default"
-                      aria-label="Remove"
                       @click="openActionModal('tag', 'remove', tag)"
                     >
                       <fai icon="fa-xmark" />
@@ -128,7 +127,6 @@
             <button
               type="button"
               class="inline-flex items-center p-1 ms-2 text-sm text-teal-400 bg-transparent rounded-xs hover:bg-teal-200 hover:text-teal-900 dark:hover:bg-teal-800 dark:hover:text-teal-300 cursor-pointer"
-              aria-label="Remove"
               @click="removeTag(tag)"
             >
               <fai icon="fa-xmark" class="w-2 h-2" />
@@ -142,7 +140,7 @@
           ></div>
           <div class="flex-grow">
             <label class="inline-flex items-center cursor-pointer mt-5">
-              <input type="checkbox" v-model="task.visibility" class="sr-only peer" />
+              <input type="checkbox" v-model="task.is_private" class="sr-only peer" />
               <div
                 class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600 dark:peer-checked:bg-teal-600"
               ></div>

@@ -5,7 +5,7 @@ use mongodb::{
 use rocket::{State, futures::TryStreamExt, http::Status, serde::json::Json};
 
 use crate::{
-    models::{response::Response, tag::{Tag, TagRequest, TagResponse, Visibility}}, utils::request_guard::HeaderGuard, AppState
+    models::{response::Response, tag::{Tag, TagRequest, TagResponse}}, utils::request_guard::HeaderGuard, AppState
 };
 
 pub async fn get_tags(_guard: HeaderGuard, state: &State<AppState>, workspace_id: String) -> (Status, String) {
@@ -31,7 +31,7 @@ pub async fn get_tags(_guard: HeaderGuard, state: &State<AppState>, workspace_id
         .await
         .unwrap_or(vec![])
         .iter()
-        .filter(|tag| tag.visibility == Visibility::PUBLIC || (tag.visibility == Visibility::PRIVATE && tag.created_by == user_id))
+        .filter(|tag| !tag.is_private || (tag.is_private && tag.created_by == user_id))
         .for_each(|tag| {
             tags.push(TagResponse::copy(tag));
         });
