@@ -35,13 +35,13 @@
         ></div>
         <!-- Footer -->
         <div
-          class="dark:bg-theme-primary-secondary dark:border-theme-primary-border border-t-1 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-full"
+          class="dark:bg-theme-primary dark:border-theme-primary-border border-t-1 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 rounded-b-lg"
         >
           <button
             @click="props.modal?.process()"
             type="button"
             class="inline-flex w-full justify-center rounded-md px-5 py-2 text-sm font-semibold shadow-sm sm:w-auto dark:hover:brightness-110 mb-2 sm:mb-0 sm:ms-2 cursor-pointer"
-            :class="{ 'dark:bg-red-800': props.modal?.type == 'remove' }"
+            :class="{ 'dark:bg-theme-danger': props.modal?.type == 'remove' }"
           >
             <fai icon="fa-trash-can" class="mr-2 self-center"/>{{ props.modal?.processName }}
           </button>

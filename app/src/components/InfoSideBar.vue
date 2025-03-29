@@ -6,14 +6,14 @@
       <div>
         <div class="w-full grid">
           <div
-            class="h-full dark:bg-theme-primary-secondary hover:dark:brightness-130 rounded-lg cursor-pointer items-center hidden sm:flex p-2"
+            class="h-full dark:bg-theme-primary-secondary hover:dark:brightness-130 rounded-lg cursor-pointer items-center hidden sm:flex p-2 group"
           >
             <div class="text-3xl justify-end pr-2">
               <div
                 class="border-3 dark:border-theme-primary-border rounded-full transition-all duration-300"
               >
                 <img
-                  class="h-9 w-9 lg:group-hover:w-14 rounded-full brightness-75"
+                  class="h-9 w-9 rounded-full"
                   :class="{
                     invert: user ? (user.picture ? false : true) : true,
                   }"
@@ -117,7 +117,7 @@
         </div>
       </div>
       <div
-        class="p-2 uppercase dark:text-theme-first text-center items-center place-items-center cursor-pointer text-sm font-bold"
+        class="p-2 uppercase dark:text-theme-first-text text-center items-center place-items-center cursor-pointer text-sm font-bold"
       >
         <div
           class="hover:dark:bg-theme-first/20 rounded-full w-fit p-2 px-4"
@@ -269,7 +269,7 @@ function openActionModal(type: string, operation: string, tag: Tag) {
   switch (type) {
     case "tag":
       if (operation == "remove") {
-        actionModal.value.message = `<span class='font-bold text-lg'>Do you want to remove <b class='text-red-600'>${tag.name}</b> tag ?</span>`;
+        actionModal.value.message = `<span class='font-bold text-lg'>Do you want to remove <b class='dark:text-theme-danger dark:brightness-130'>${tag.name}</b> tag ?</span>`;
         actionModal.value.processName = "Remove";
         actionModal.value.title = "Remove Tag";
         actionModal.value.type = operation;
