@@ -117,7 +117,7 @@
         </div>
       </div>
       <div
-        class="p-2 uppercase dark:text-theme-first text-center items-center place-items-center cursor-pointer text-sm font-bold"
+        class="p-2 uppercase dark:text-theme-first-text text-center items-center place-items-center cursor-pointer text-sm font-bold"
       >
         <div
           class="hover:dark:bg-theme-first/20 rounded-full w-fit p-2 px-4"

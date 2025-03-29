@@ -94,7 +94,7 @@
           ></div>
           <div class="flex items-center w-full lg:w-fit">
             <div class="flex items-center ms-3 w-full lg:w-fit">
-              <div class="flex mr-5 items-center">
+              <div class="flex mr-5 lg:mr-2 items-center">
                 <button
                   id="tasksTypeButton"
                   data-dropdown-toggle="taskTypesDropdownIcon"
@@ -131,12 +131,12 @@
 
                 <div
                   id="taskTypesDropdown"
-                  class="z-10 hidden divide-y rounded-md shadow-sm w-44 dark:bg-theme-primary dark:brightness-125"
+                  class="z-10 hidden divide-y rounded-md shadow-sm w-44 dark:bg-theme-primary-secondary"
                 >
                   <ul class="py-2 text-sm dark:text-theme-primary-text-secondary">
                     <li v-for="(type, t) in taskTypes">
                       <a
-                        class="block px-4 py-2 dark:bg-theme-primary dark:hover:brightness-125 cursor-pointer"
+                        class="block px-4 py-2 dark:bg-theme-primary-secondary hover:dark:brightness-150 cursor-pointer"
                         @click="selectedTasksType = t"
                         >{{ type }}</a
                       >
@@ -146,12 +146,12 @@
 
                 <div
                   id="taskTypesDropdownIcon"
-                  class="z-10 hidden divide-y rounded-md shadow-sm w-44 dark:bg-theme-primary dark:brightness-125"
+                  class="z-10 hidden divide-y rounded-md shadow-sm w-44  dark:bg-theme-primary-secondary"
                 >
                   <ul class="py-2 text-sm dark:text-theme-primary-text-secondary">
                     <li v-for="(type, t) in taskTypes">
                       <a
-                        class="block px-4 py-2 dark:bg-theme-primary dark:hover:text-theme-primary-text dark:hover:brightness-125 cursor-pointer"
+                        class="block px-4 py-2 dark:bg-theme-primary-secondary hover:dark:brightness-150 dark:hover:text-theme-primary-text cursor-pointer"
                         @click="selectedTasksType = t"
                         >{{ type }}</a
                       >
