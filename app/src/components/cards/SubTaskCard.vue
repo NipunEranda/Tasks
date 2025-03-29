@@ -5,20 +5,20 @@
     :id="'subtask-' + props.subTask.id + '-id'"
   >
     <button
-      class="rounded-full bg-red-700 text-white hover:cursor-pointer text-xl flex p-4"
+      class="rounded-full dark:text-theme-primary-text dark:bg-theme-danger brightness-110 hover:brightness-125 hover:cursor-pointer text-xl flex p-4"
       @click="removeSubTask(subTask.id)"
     >
       <fai icon="fa-trash-can" />
     </button>
     <div
-      class="flex bg-theme-primary-secondary rounded-lg cursor-pointer transition-all duration-300 hover:brightness-110 mb-4 w-full"
+      class="flex bg-theme-primary-secondary/80 rounded-lg cursor-pointer transition-all duration-300 hover:brightness-110 mb-4 w-full"
     >
       <div class="w-[10px] dark:bg-theme-first rounded-l-lg py-10"></div>
       <div class="flex-grow flex">
         <div class="flex-grow p-3">
           <span class="flex mb-2 group">
             <div
-              class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-theme-first"
+              class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-200"
             >
               <fai icon="fa-list" />
             </div>
@@ -27,7 +27,7 @@
                 type="text"
                 :name="'subtask-name-' + props.subTask.id + '-name'"
                 :id="'subtask-name-' + props.subTask.id + '-id'"
-                class="block px-0 w-full text-md text-zinc-900 bg-transparent border-0 border-b-2 border-zinc-300 appearance-none dark:text-white dark:border-zinc-600 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first peer cursor-pointer"
+                class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
                 placeholder="Task Name"
                 required
                 autocomplete="off"
@@ -37,7 +37,7 @@
           </span>
           <span class="flex mb-2 group">
             <div
-              class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-theme-first"
+              class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-200"
             >
               <fai icon="fa-circle-info" />
             </div>
@@ -46,7 +46,7 @@
                 type="text"
                 :name="'subtask-description-' + props.subTask.id + '-name'"
                 :id="'subtask-description-' + props.subTask.id + '-name'"
-                class="block px-0 w-full text-md text-zinc-900 bg-transparent border-0 border-b-2 border-zinc-300 appearance-none dark:text-white dark:border-zinc-600 focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first cursor-pointer"
+                class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
                 placeholder="Task Description"
                 required
                 autocomplete="off"
@@ -55,7 +55,7 @@
             </div>
           </span>
           <div class="flex mb-2 group">
-            <div class="w-7 mr-2 place-content-center text-center">
+            <div class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-200">
               <fai icon="fa-circle-user" />
             </div>
             <div class="flex-grow">
@@ -63,7 +63,7 @@
                 type="text"
                 :name="'subtask-assignee-' + props.subTask.id + '-name'"
                 :id="'subtask-assignee-' + props.subTask.id + '-name'"
-                class="block px-0 w-full text-md text-zinc-900 bg-transparent border-0 border-b-2 border-zinc-300 appearance-none dark:text-white dark:border-zinc-600 focus:outline-none focus:ring-0"
+                class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
                 placeholder="Assignees"
                 required
                 autocomplete="off"
@@ -71,17 +71,17 @@
 
               <div
                 id="dropdown"
-                class="dropdown hidden absolute border dark:bg-theme-primary-secondary dark:border-zinc-700 shadow-md mt-1 rounded-md z-20 group-focus-within:flex"
+                class="dropdown hidden absolute border dark:bg-theme-primary-secondary dark:border-theme-primary-border shadow-md mt-1 rounded-md z-20 group-focus-within:flex"
               >
-                <div class="min-h-30 max-h-42 overflow-scroll" v-if="workspaceStore.team.length > 0">
+                <div class="min-h-30 max-h-42 overflow-scroll group" v-if="workspaceStore.team.length > 0">
                   <div
-                    class="flex w-full p-2 hover:dark:bg-zinc-700 pr-10"
+                    class="flex w-full p-2 hover:dark:bg-theme-primary-secondary hover:dark:brightness-125 pr-10"
                     v-for="member in workspaceStore.team"
                     :key="member.id"
                   >
-                    <div class="w-13">
+                    <div class="border-3 dark:border-theme-primary-border group-hover:dark:border-theme-first rounded-full transition-all duration-300 mr-2">
                       <img
-                        class="h-10 w-10 rounded-full border-2 border-zinc-400 dark:group-hover:border-theme-first dark:hover:border-theme-first"
+                        class="h-9 w-9 rounded-full dark:brightness-90"
                         :class="{
                           invert: member
                             ? member.picture

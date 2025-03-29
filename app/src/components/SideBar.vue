@@ -131,7 +131,7 @@
                                         <fai icon="fa-layer-group" class="mr-2" /> {{
                                             $t("app.sideBar.profieMenu.workspaces") }}
                                     </li>
-                                    <li class=" dark:bg-theme-primary-secondary dark:brightness-150 dark:hover:bg-red-500 dark:hover:brightness-100 p-3 px-4 cursor-pointer uppercase font-semibold rounded-bl-md rounded-br-md"
+                                    <li class=" dark:bg-theme-primary-secondary dark:brightness-150 dark:hover:bg-theme-danger dark:hover:brightness-110 p-3 px-4 cursor-pointer uppercase font-semibold rounded-bl-md rounded-br-md"
                                         @click="indexStore.logout">
                                         <fai icon="fa-power-off" class="mr-2" /> {{ $t("app.sideBar.profieMenu.signOut")
                                         }}

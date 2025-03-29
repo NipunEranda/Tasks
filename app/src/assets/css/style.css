@@ -38,6 +38,7 @@ select:-webkit-autofill:focus {
   --color-theme-primary-text: #FFFFFF; /* text-white */
   --color-theme-primary-text-secondary: #9f9fa9; /* text-zinc-400 */
   --color-theme-primary-text-icon: #9f9fa9;
+  --color-theme-danger: #991b1b; /* bg-red-800 */
   --color-theme-first: #115e59; /* bg-teal-800 */
   --color-theme-second: #5b21b6; /* bg-purple-800 */
   --color-theme-third: #ee855bcd;
