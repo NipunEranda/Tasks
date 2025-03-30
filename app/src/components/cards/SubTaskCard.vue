@@ -6,7 +6,7 @@
   >
     <button
       class="rounded-full dark:text-theme-primary-text dark:bg-theme-danger brightness-110 hover:brightness-125 hover:cursor-pointer text-xl flex p-4"
-      @click="removeSubTask(index)"
+      @click="removeSubTask(props.subTask.id)"
     >
       <fai icon="fa-trash-can" />
     </button>
@@ -150,7 +150,7 @@ function profileImage(member: _User) {
   } else return profile;
 }
 
-function addToAssignees(taskId: number, mid: string) {
+function addToAssignees(taskId: string, mid: string) {
   if (!props.subTask.assignees.includes(mid)) props.subTask.assignees.push(mid);
   toggleElement("subtask-assigneeDropdown-" + taskId, true);
 }

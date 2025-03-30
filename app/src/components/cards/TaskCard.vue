@@ -167,7 +167,7 @@
 import { useTasksStore } from "@/store/tasks";
 import { useIndexStore } from "@/store";
 import type { _Tag, Tag } from "@/types/Tag";
-import { SubTask, type Task } from "@/types/Task";
+import { type Task } from "@/types/Task";
 import { onMounted } from "vue";
 import { toggleElement } from "@/utils";
 
@@ -194,12 +194,6 @@ function removeTag(tag: Tag) {
   delete props.task.tags[props.task.tags.indexOf(tag.id)];
   props.task.tags = props.task.tags.map((t) => t);
 }
-
-onMounted(() => {
-  props.task.name = "Hello World";
-  props.task.description = "Hello World Description";
-  props.task.tags.push(taskStore.getTags[0].id);
-});
 
 // Close assignee dropdowns on outer click
 document.body.addEventListener("click", function (event) {

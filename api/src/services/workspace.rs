@@ -7,15 +7,19 @@ use rocket::{futures::{self, TryStreamExt}, http::Status, serde::json::Json, Sta
 use crate::{
     models::{
         response::Response, user::UserResponse, workspace::{Workspace, WorkspaceRequest, WorkspaceResponse}
-    }, utils::request_guard::HeaderGuard, AppState
+    }, utils::{request_guard::HeaderGuard, tools}, AppState
 };
 
 use super::user::get_user_by_id;
 
 pub async fn get_workspaces(_guard: HeaderGuard, state: &State<AppState>) -> (Status, String) {
-    let user_id = ObjectId::parse_str(_guard._get_id()).ok().unwrap();
+    let user_id = ObjectId::parse_str(_guard._get_id().unwrap().to_hex()).ok().unwrap();
     let mut workspaces: Vec<WorkspaceResponse> = Vec::new();
-    let collection: Collection<Workspace> = get_collection(state, "workspace").await;
+    let collection_result: Option<Collection<Workspace>> = tools::get_collection(state, "workspace").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Workspace> = collection_result.unwrap();
 
     let result = collection
         .find(doc! {"deleted": false, "is_active": true})
@@ -91,7 +95,13 @@ pub async fn create_workspace(
     owner: String,
 ) -> (Status, String) {
     let mut workspace_id = String::from("0");
-    let collection = get_collection(state, "workspace").await;
+
+    let collection_result: Option<Collection<Workspace>> = tools::get_collection(state, "workspace").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Workspace> = collection_result.unwrap();
+
     let mut workspace = Workspace::try_from(workspace_body.into_inner()).unwrap();
 
     workspace.owner = ObjectId::parse_str(owner).ok().unwrap_or_default();
@@ -118,7 +128,12 @@ pub async fn update_workspace(
 
     let workspace_id = ObjectId::parse_str(workspace_id).ok().unwrap_or_default();
 
-    let collection = get_collection(state, "workspace").await;
+    let collection_result: Option<Collection<Workspace>> = tools::get_collection(state, "workspace").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Workspace> = collection_result.unwrap();
+
     let existing_workspace_result = collection.find_one(doc! {"_id": workspace_id }).await;
 
     if existing_workspace_result.ok().unwrap().is_none() {
@@ -146,7 +161,12 @@ pub async fn delete_workspace(state: &State<AppState>, workspace_id: &str) -> (S
 
     let workspace_id = ObjectId::parse_str(workspace_id).ok().unwrap_or_default();
 
-    let collection = get_collection(state, "workspace").await;
+    let collection_result: Option<Collection<Workspace>> = tools::get_collection(state, "workspace").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Workspace> = collection_result.unwrap();
+
     let existing_workspace_result = collection.find_one(doc! {"_id": workspace_id }).await;
 
     if existing_workspace_result.ok().unwrap().is_none() {
@@ -167,14 +187,14 @@ pub async fn delete_workspace(state: &State<AppState>, workspace_id: &str) -> (S
 
 async fn get_workspace(state: &State<AppState>, id: &str) -> Option<Workspace> {
     let workspace_id = ObjectId::parse_str(id).ok().unwrap_or_default();
-    let collection = get_collection(&state, "workspace").await;
+    
+    let collection_result: Option<Collection<Workspace>> = tools::get_collection(state, "workspace").await;
+    if collection_result.is_none() {
+        return None;
+    }
+    let collection: Collection<Workspace> = collection_result.unwrap();
+
     let workspace_result = collection.find_one(doc! {"_id": workspace_id }).await;
 
     return workspace_result.ok().unwrap();
-}
-
-async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<Workspace> {
-    let client = state.mongo_client.lock().await;
-    let db: mongodb::Database = client.database("tasks");
-    db.collection::<Workspace>(collection)
 }

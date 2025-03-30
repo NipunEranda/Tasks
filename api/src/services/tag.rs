@@ -5,11 +5,11 @@ use mongodb::{
 use rocket::{State, futures::TryStreamExt, http::Status, serde::json::Json};
 
 use crate::{
-    models::{response::Response, tag::{Tag, TagRequest, TagResponse}}, utils::request_guard::HeaderGuard, AppState
+    models::{response::Response, tag::{Tag, TagRequest, TagResponse}}, utils::{request_guard::HeaderGuard, tools}, AppState
 };
 
 pub async fn get_tags(_guard: HeaderGuard, state: &State<AppState>, workspace_id: String) -> (Status, String) {
-    let user_id = ObjectId::parse_str(_guard._get_id()).ok().unwrap();
+    let user_id = ObjectId::parse_str(_guard._get_id().unwrap().to_hex()).ok().unwrap();
     let mut tags: Vec<TagResponse> = Vec::new();
 
     if !ObjectId::parse_str(&workspace_id).is_ok() {
@@ -18,7 +18,11 @@ pub async fn get_tags(_guard: HeaderGuard, state: &State<AppState>, workspace_id
 
     let workspace_id = ObjectId::parse_str(workspace_id).ok().unwrap_or_default();
 
-    let collection: Collection<Tag> = get_collection(state, "tag").await;
+    let collection_result: Option<Collection<Tag>> = tools::get_collection(state, "tag").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Tag> = collection_result.unwrap();
 
     let result = collection.find(doc! {"workspace": workspace_id, "deleted": false}).await;
     let cursor = match result {
@@ -45,7 +49,13 @@ pub async fn create_tag(
     owner: String,
 ) -> (Status, String) {
     let mut tag_id = String::from("0");
-    let collection = get_collection(state, "tag").await;
+
+    let collection_result: Option<Collection<Tag>> = tools::get_collection(state, "tag").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Tag> = collection_result.unwrap();
+
     let tag_result = Tag::try_from(tag_body.into_inner());
     
     if let Err(err) = tag_result {
@@ -73,7 +83,12 @@ pub async fn delete_tag(state: &State<AppState>, tag_id: &str) -> (Status, Strin
 
     let tag_id = ObjectId::parse_str(tag_id).ok().unwrap_or_default();
 
-    let collection = get_collection(state, "tag").await;
+    let collection_result: Option<Collection<Tag>> = tools::get_collection(state, "tag").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Tag> = collection_result.unwrap();
+
     let existing_tag_result = collection.find_one(doc! {"_id": tag_id }).await;
 
     if existing_tag_result.ok().unwrap().is_none() {
@@ -90,10 +105,4 @@ pub async fn delete_tag(state: &State<AppState>, tag_id: &str) -> (Status, Strin
         .unwrap();
 
     Response::ok(stringify!(true).to_string())
-}
-
-async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<Tag> {
-    let client = state.mongo_client.lock().await;
-    let db: mongodb::Database = client.database("tasks");
-    db.collection::<Tag>(collection)
 }

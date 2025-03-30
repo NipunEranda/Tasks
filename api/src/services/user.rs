@@ -1,9 +1,9 @@
 use std::env;
 
 use jsonwebtoken::{EncodingKey, Header, encode};
+use mongodb::Collection;
 use mongodb::bson::doc;
 use mongodb::bson::oid::ObjectId;
-use mongodb::Collection;
 use reqwest::StatusCode;
 use rocket::futures::TryStreamExt;
 use rocket::time::Duration;
@@ -15,6 +15,7 @@ use rocket::{
 
 use crate::models::response::Response;
 use crate::models::user::{User, UserResponse};
+use crate::utils::tools;
 use crate::{
     AppState,
     models::{claims::Claims, user::GoogleUser},
@@ -42,7 +43,8 @@ pub async fn login<'a>(
         .post("https://oauth2.googleapis.com/token")
         .form(&params)
         .send()
-        .await.ok();
+        .await
+        .ok();
 
     let response = response.unwrap();
 
@@ -54,10 +56,7 @@ pub async fn login<'a>(
 
         let user_response = client
             .get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json")
-            .header(
-                "Authorization",
-                "Bearer ".to_owned() + token,
-            )
+            .header("Authorization", "Bearer ".to_owned() + token)
             .send()
             .await
             .ok();
@@ -94,7 +93,11 @@ pub async fn login<'a>(
             cookie.set_path("/");
             cookie.set_same_site(None);
             cookie.set_expires(now);
-            cookie.set_domain(if domain == "" {String::from("localhost")} else {domain});
+            cookie.set_domain(if domain == "" {
+                String::from("localhost")
+            } else {
+                domain
+            });
             cookies.add(cookie);
 
             if response.0 == Status::Created {
@@ -109,7 +112,14 @@ pub async fn login<'a>(
 
 pub async fn get_users(state: &State<AppState>) -> (Status, String) {
     let mut users: Vec<UserResponse> = Vec::new();
-    let collection: Collection<User> = get_collection(state, "user").await;
+    // let collection: Collection<User> = get_collection(state, "user").await;
+
+    let collection_result: Option<Collection<User>> = tools::get_collection(state, "user").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<User> = collection_result.unwrap();
+
     let result = collection.find(doc! {}).await;
 
     let cursor = match result {
@@ -130,14 +140,18 @@ pub async fn get_users(state: &State<AppState>) -> (Status, String) {
 }
 
 pub async fn get_user_by_id(state: &State<AppState>, id: String) -> Option<UserResponse> {
-
     if !ObjectId::parse_str(&id).is_ok() {
         return None;
     }
 
     let user_id = ObjectId::parse_str(&id).ok().unwrap_or_default();
 
-    let collection: Collection<User> = get_collection(state, "user").await;
+    let collection_result: Option<Collection<User>> = tools::get_collection(state, "user").await;
+    if collection_result.is_none() {
+        return None;
+    }
+    let collection: Collection<User> = collection_result.unwrap();
+
     let user = collection
         .find_one(doc! {"_id": user_id})
         .await
@@ -157,7 +171,12 @@ pub async fn get_user_by_id(state: &State<AppState>, id: String) -> Option<UserR
 
 async fn create_user(state: &State<AppState>, google_user: &GoogleUser) -> (Status, Option<User>) {
     let mut user_id: String = String::from("0");
-    let collection: Collection<User> = get_collection(state, "user").await;
+
+    let collection_result: Option<Collection<User>> = tools::get_collection(state, "user").await;
+    if collection_result.is_none() {
+        return (Status::InternalServerError, None);
+    }
+    let collection: Collection<User> = collection_result.unwrap();
 
     let existing_user: Option<User> = collection
         .find_one(doc! {"email": &google_user.email })
@@ -180,13 +199,7 @@ async fn create_user(state: &State<AppState>, google_user: &GoogleUser) -> (Stat
 
     if user_id != "0" {
         return (Status::Created, Some(user));
-    }else {
+    } else {
         return (Status::Unauthorized, None);
     }
-}
-
-async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<User> {
-    let client = state.mongo_client.lock().await;
-    let db: mongodb::Database = client.database("tasks");
-    db.collection::<User>(collection)
 }
