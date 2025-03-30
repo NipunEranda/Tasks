@@ -131,7 +131,7 @@ import profile from "@/assets/img/profile.png";
 import { useWorkspaceStore } from "@/store/workspace";
 import type { _User } from "@/types/Auth";
 import { type _SubTask } from "@/types/Task";
-import { toggleElement, sleep } from "@/utils";
+import { toggleElement } from "@/utils";
 
 const workspaceStore = useWorkspaceStore();
 

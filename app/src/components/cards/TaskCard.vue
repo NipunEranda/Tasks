@@ -64,7 +64,7 @@
             <fai icon="fa-tags" />
           </div>
           <div class="flex-grow group">
-            <div class="relative">
+            <div class="relative" id="task-tagDropdown-container">
               <div
                 class="absolute inset-y-0 end-0 flex items-center pr-3.5 pointer-events-none dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-200"
               >
@@ -72,25 +72,28 @@
               </div>
               <input
                 type="text"
-                name="floating_email"
-                id="floating_email"
                 class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
                 placeholder="Select Tags"
                 required
                 autocomplete="off"
+                name="task-tag-name"
+                id="task-tag-id"
+                @click="toggleElement('task-tagDropdown', true)"
               />
 
               <div
-                id="dropdown"
-                class="p-3 dropdown hidden absolute w-full border dark:bg-theme-primary-secondary dark:border-theme-primary-border shadow-md mt-1 rounded-md z-20 group-focus-within:block"
+                id="task-tagDropdown"
+                class="task-tagDropdown p-3 dropdown hidden absolute w-full border dark:bg-theme-primary-secondary dark:border-theme-primary-border shadow-md mt-1 rounded-md z-20"
               >
                 <div class="w-full" v-if="taskStore.getTagsCount > 0">
                   <button
                     id="badge-dismiss-default"
                     class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-third hover:dark:brightness-110 cursor-pointer"
+                    :class="{ 'opacity-50': props.task.tags.includes(tag.id) }"
                     v-for="tag in taskStore.getTags"
                     :key="tag.id"
                     @click="addTagToTask(tag)"
+                    :disabled="props.task.tags.includes(tag.id)"
                   >
                     <fai
                       icon="fa-lock"
@@ -118,7 +121,7 @@
         <div class="ml-8 mt-3">
           <span
             v-for="tag in taskStore.getTags.filter((t: _Tag) => props.task.tags.includes(t.id))"
-            class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-first dark:brightness-120 dark:text-theme-primary-text"
+            class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-third/90 dark:hover:brightness-110 dark:text-theme-primary-text"
           >
             <fai
               icon="fa-lock"
@@ -166,6 +169,7 @@ import { useIndexStore } from "@/store";
 import type { _Tag, Tag } from "@/types/Tag";
 import { SubTask, type Task } from "@/types/Task";
 import { onMounted } from "vue";
+import { toggleElement } from "@/utils";
 
 const props = defineProps<{
   task: Task;
@@ -183,6 +187,7 @@ function openTagModal(type: string) {
 
 function addTagToTask(tag: Tag) {
   if (!props.task.tags.includes(tag.id)) props.task.tags.push(tag.id);
+  toggleElement("task-tagDropdown", true);
 }
 
 function removeTag(tag: Tag) {
@@ -194,5 +199,14 @@ onMounted(() => {
   props.task.name = "Hello World";
   props.task.description = "Hello World Description";
   props.task.tags.push(taskStore.getTags[0].id);
+});
+
+// Close assignee dropdowns on outer click
+document.body.addEventListener("click", function (event) {
+  if (event.target) {
+    if (!(event.target as HTMLElement).id.includes("task-")) {
+      toggleElement("task-tagDropdown", false);
+    }
+  }
 });
 </script>

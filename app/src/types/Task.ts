@@ -78,7 +78,7 @@ export class Task {
         "",
         workspaceId,
         false,
-        "",
+        userId ? userId : "",
         moment().toDate(),
         userId ? userId : "",
         false,
