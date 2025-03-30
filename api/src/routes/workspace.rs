@@ -27,7 +27,7 @@ pub async fn create_workspace(
     state: &State<AppState>,
     workspace: Json<WorkspaceRequest>,
 ) -> (Status, String) {
-    services::workspace::create_workspace(state, workspace, _guard._get_id()).await
+    services::workspace::create_workspace(state, workspace, _guard._get_id().unwrap().to_hex()).await
 }
 
 #[put("/workspace/<id>", data = "<workspace>")]

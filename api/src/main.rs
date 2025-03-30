@@ -51,7 +51,8 @@ async fn rocket() -> _ {
                 routes::workspace::delete_workspace,
                 routes::tag::get_tags,
                 routes::tag::create_tag,
-                routes::tag::delete_tag
+                routes::tag::delete_tag,
+                routes::task::create_template
             ],
         )
 }

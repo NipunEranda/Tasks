@@ -7,8 +7,9 @@
     <TaskCard :task="task" />
     <ul>
       <VueDraggableNext class="dragArea list-group w-full" v-model="sub_tasks">
-        <div v-for="(subTask, e) in task.sub_tasks" :key="e">
+        <div v-for="(subTask, st) in task.sub_tasks" :key="st">
           <SubTaskCard
+            :index="st"
             :task="task"
             :subTask="subTask"
             :removeSubTask="removeSubTask"
@@ -46,15 +47,21 @@ let sub_tasks: Ref<_SubTask[]> = ref([]),
   indexStore = useIndexStore(),
   workspaceStore = useWorkspaceStore(),
   count = ref(0),
-  user = computed(() => { return indexStore.currentUser }),
-  task = ref(Task.createEmptyObject(workspaceStore.activeWorkspace, user.value?.id));
+  user = computed(() => {
+    return indexStore.currentUser;
+  }),
+  task = ref(
+    Task.createEmptyObject(workspaceStore.activeWorkspace, user.value?.id)
+  );
 
 function addTask() {
-  task.value.sub_tasks.push(new SubTask((count.value++).toString(), "", "", "", false));
+  task.value.sub_tasks.push(
+    new SubTask((count.value++).toString(), "", "", [], false)
+  );
 }
 
 function removeSubTask(id: string) {
-  const subTask = task.value.sub_tasks.find((subTask) => subTask.id === id);
+  const subTask = task.value.sub_tasks.find((subTask) => subTask.id == id);
   if (subTask) {
     delete task.value.sub_tasks[task.value.sub_tasks.indexOf(subTask)];
     task.value.sub_tasks = task.value.sub_tasks.filter((subTask) => subTask);

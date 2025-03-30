@@ -22,7 +22,7 @@ pub async fn create_tag(
     state: &State<AppState>,
     tag: Json<TagRequest>,
 ) -> (Status, String) {
-    services::tag::create_tag(state, tag, _guard._get_id()).await
+    services::tag::create_tag(state, tag, _guard._get_id().unwrap().to_hex()).await
 }
 
 #[delete("/tag/<id>")]

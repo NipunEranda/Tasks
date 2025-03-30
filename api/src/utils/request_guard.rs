@@ -1,6 +1,7 @@
 use std::env;
 
 use jsonwebtoken::{DecodingKey, Validation, decode};
+use mongodb::bson::oid::ObjectId;
 use rocket::{Request, http::Status, outcome, request::FromRequest};
 use serde::{Deserialize, Serialize};
 
@@ -17,8 +18,13 @@ pub struct HeaderGuard {
 }
 
 impl HeaderGuard {
-    pub fn _get_id(&self) -> String {
-        return String::from(&self.id);
+    pub fn _get_id(&self) -> Option<ObjectId> {
+        if !ObjectId::parse_str(&self.id).is_ok() {
+            return None
+        }
+    
+        let user_id = ObjectId::parse_str(&self.id).ok().unwrap_or_default();
+        return Some(user_id);
     }
 
     pub fn _get_username(&self) -> String {

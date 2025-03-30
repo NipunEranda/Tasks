@@ -19,7 +19,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5 space-y-4 dark:bg-theme-primary">
+                <div class="p-4 md:p-5 space-y-4 dark:bg-theme-primary dark:brightness-120">
                     <div class="flex group">
                         <span
                             class="inline-flex items-center px-3 text-sm border-1 rounded-s-md dark:bg-theme-primary dark:brightness-150 dark:text-theme-primary-text-secondary dark:border-theme-primary-border/40 dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-150">
@@ -32,7 +32,7 @@
                     <div class="flex group">
                         <span
                         class="inline-flex items-center px-3 text-sm border-1 rounded-s-md dark:bg-theme-primary dark:brightness-150 dark:text-theme-primary-text-secondary dark:border-theme-primary-border/40 dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-150">
-                            <fai :icon="workspace.is_private == 'true' ? 'fa-eye-slash' : 'fa-eye'" />
+                            <fai :icon="workspace.is_private ? 'fa-eye-slash' : 'fa-eye'" />
                         </span>
                         <select id="small"
                         class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-theme-primary dark:brightness-150 dark:border-theme-primary-border/40 dark:text-theme-primary-text dark:focus:ring-theme-first dark:focus:border-theme-first dark:group-focus-within:border-theme-first  focus:outline-none cursor-pointer" v-model="workspace.is_private">

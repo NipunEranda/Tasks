@@ -1,6 +1,5 @@
 import moment from "moment";
 import type { _Workspace } from "./Workspace";
-import type { Tag } from "./Tag";
 
 export interface _Task {
   id: string;
@@ -8,9 +7,9 @@ export interface _Task {
   description: string;
   workspace: string;
   sub_tasks: Array<_SubTask>;
-  tags: Array<Tag>;
+  tags: Array<string>;
   completed: boolean;
-  assign_to: string;
+  created_by: string;
   last_update: Date;
   updated_by: string;
   is_private: boolean;
@@ -22,9 +21,9 @@ export class Task {
   description: string;
   workspace: string;
   sub_tasks: Array<_SubTask>;
-  tags: Array<Tag>;
+  tags: Array<string>;
   completed: boolean;
-  assign_to: string;
+  created_by: string;
   last_update: Date;
   updated_by: string;
   is_private: boolean;
@@ -35,12 +34,12 @@ export class Task {
     title: string,
     workspace: string,
     completed: boolean,
-    assign_to: string,
+    created_by: string,
     last_update: Date,
     updated_by: string,
     is_private: boolean,
     sub_tasks: Array<_SubTask>,
-    tags: Array<Tag>
+    tags: Array<string>
   ) {
     this.id = id;
     this.name = name;
@@ -49,7 +48,7 @@ export class Task {
     this.sub_tasks = sub_tasks ? (sub_tasks.length > 0 ? sub_tasks : []) : [];
     this.tags = tags ? (tags.length > 0 ? tags : []) : [];
     this.completed = completed;
-    this.assign_to = assign_to;
+    this.created_by = created_by;
     this.last_update = last_update;
     this.updated_by = updated_by;
     this.is_private = is_private;
@@ -62,7 +61,7 @@ export class Task {
       obj.description,
       obj.workspace,
       obj.completed,
-      obj.assign_to,
+      obj.created_by,
       obj.last_update,
       obj.updated_by,
       obj.is_private,
@@ -79,7 +78,7 @@ export class Task {
         "",
         workspaceId,
         false,
-        "",
+        userId ? userId : "",
         moment().toDate(),
         userId ? userId : "",
         false,
@@ -107,7 +106,7 @@ export interface _SubTask {
   id: string;
   name: string;
   description: string;
-  assign_to: string;
+  assignees: Array<string>;
   completed: boolean;
 }
 
@@ -115,20 +114,20 @@ export class SubTask {
   id: string;
   name: string;
   description: string;
-  assign_to: string;
+  assignees: Array<string>;
   completed: boolean;
 
   constructor(
     id: string,
     name: string,
     description: string,
-    assign_to: string,
+    assignees: Array<string>,
     completed: boolean
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
-    this.assign_to = assign_to;
+    this.assignees = assignees;
     this.completed = completed;
   }
 
@@ -137,12 +136,12 @@ export class SubTask {
       obj.id,
       obj.name,
       obj.description,
-      obj.assign_to,
+      obj.assignees,
       false
     );
   }
 
   static createEmptyObject() {
-    return new SubTask("", "", "", "", false);
+    return new SubTask("", "", "", [], false);
   }
 }

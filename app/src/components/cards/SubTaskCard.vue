@@ -6,7 +6,7 @@
   >
     <button
       class="rounded-full dark:text-theme-primary-text dark:bg-theme-danger brightness-110 hover:brightness-125 hover:cursor-pointer text-xl flex p-4"
-      @click="removeSubTask(subTask.id)"
+      @click="removeSubTask(props.subTask.id)"
     >
       <fai icon="fa-trash-can" />
     </button>
@@ -25,10 +25,8 @@
             <div class="flex-grow">
               <input
                 type="text"
-                :name="'subtask-name-' + props.subTask.id + '-name'"
-                :id="'subtask-name-' + props.subTask.id + '-id'"
                 class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
-                placeholder="Task Name"
+                placeholder="Sub Task Name"
                 required
                 autocomplete="off"
                 v-model="subTask.name"
@@ -44,10 +42,8 @@
             <div class="flex-grow">
               <input
                 type="text"
-                :name="'subtask-description-' + props.subTask.id + '-name'"
-                :id="'subtask-description-' + props.subTask.id + '-name'"
                 class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
-                placeholder="Task Description"
+                placeholder="Sub Task Description"
                 required
                 autocomplete="off"
                 v-model="subTask.description"
@@ -55,10 +51,15 @@
             </div>
           </span>
           <div class="flex mb-2 group">
-            <div class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-200">
+            <div
+              class="w-7 mr-2 place-content-center text-center dark:group-focus-within:text-theme-first dark:group-focus-within:brightness-200"
+            >
               <fai icon="fa-circle-user" />
             </div>
-            <div class="flex-grow">
+            <div
+              class="flex-grow relative"
+              :id="'subtask-assigneeDropdown-' + props.subTask.id + '-container'"
+            >
               <input
                 type="text"
                 :name="'subtask-assignee-' + props.subTask.id + '-name'"
@@ -67,38 +68,57 @@
                 placeholder="Assignees"
                 required
                 autocomplete="off"
+                @click="
+                  toggleElement('subtask-assigneeDropdown-' + props.subTask.id, true)
+                "
               />
 
               <div
-                id="dropdown"
-                class="dropdown hidden absolute border dark:bg-theme-primary-secondary dark:border-theme-primary-border shadow-md mt-1 rounded-md z-20 group-focus-within:flex"
+                :id="'subtask-assigneeDropdown-' + props.subTask.id"
+                class="subtask-assigneeDropdown p-3 dropdown hidden absolute w-full border dark:bg-theme-primary-secondary dark:border-theme-primary-border shadow-md mt-1 rounded-md z-20"
               >
-                <div class="min-h-30 max-h-42 overflow-scroll group" v-if="workspaceStore.team.length > 0">
-                  <div
-                    class="flex w-full p-2 hover:dark:bg-theme-primary-secondary hover:dark:brightness-125 pr-10"
-                    v-for="member in workspaceStore.team"
-                    :key="member.id"
-                  >
-                    <div class="border-3 dark:border-theme-primary-border group-hover:dark:border-theme-first rounded-full transition-all duration-300 mr-2">
-                      <img
-                        class="h-9 w-9 rounded-full dark:brightness-90"
-                        :class="{
-                          invert: member
-                            ? member.picture
-                              ? false
-                              : true
-                            : true,
-                        }"
-                        :src="profileImage(member)"
-                        alt=""
-                        referrerpolicy="no-referrer"
-                      />
-                    </div>
-                    <div class="self-center">{{ member.name }}</div>
-                  </div>
-                </div>
+                <button
+                  id="member"
+                  class="inline-flex items-center me-2 text-sm font-medium rounded-sm dark:bg-theme-primary-secondary dark:brightness-120 hover:dark:brightness-150 cursor-pointer border-2 border-theme-primary-border/20"
+                  :class="{ 'opacity-50': props.subTask.assignees.includes(member.id) }"
+                  v-for="member in workspaceStore.team"
+                  :key="member.id"
+                  @click="addToAssignees(props.subTask.id, member.id)"
+                  :disabled="props.subTask.assignees.includes(member.id)"
+                >
+                  <img
+                    class="h-9 w-9 dark:brightness-90 group-hover:dark:brightness-70 rounded-sm"
+                    :class="{
+                      invert: member ? (member.picture ? false : true) : true,
+                    }"
+                    :src="profileImage(member)"
+                    alt=""
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="text-sm m-1 mx-3">{{ member.name }}</span>
+                </button>
               </div>
             </div>
+          </div>
+
+          <div class="ml-8 mt-5">
+            <button
+              class="inline-flex items-center me-2 text-sm font-medium rounded-sm dark:bg-theme-primary-secondary dark:brightness-120 hover:dark:brightness-150 cursor-pointer border-2 border-theme-primary-border/20 pr-2"
+              v-for="member in workspaceStore.team.filter((t: _User) => props.subTask.assignees.includes(t.id))"
+              :key="member.id"
+            >
+              <img
+                class="h-9 w-9 dark:brightness-90 group-hover:dark:brightness-70 rounded-sm"
+                :class="{
+                  invert: member ? (member.picture ? false : true) : true,
+                }"
+                :src="profileImage(member)"
+                alt=""
+                referrerpolicy="no-referrer"
+              />
+              <span class="text-sm m-1 ml-3">{{ member.name }}</span>
+              <fai icon="fa-xmark" class="ml-2 self-center dark:text-theme-primary-text-secondary" @click="removeAssignee(member.id)"/>
+            </button>
           </div>
         </div>
       </div>
@@ -110,13 +130,15 @@
 import profile from "@/assets/img/profile.png";
 import { useWorkspaceStore } from "@/store/workspace";
 import type { _User } from "@/types/Auth";
-import type { _SubTask } from "@/types/Task";
+import { type _SubTask } from "@/types/Task";
+import { toggleElement } from "@/utils";
 
 const workspaceStore = useWorkspaceStore();
 
 const props = defineProps<{
-  subTask: _SubTask,
-  removeSubTask: Function
+  index: number;
+  subTask: _SubTask;
+  removeSubTask: Function;
 }>();
 
 function profileImage(member: _User) {
@@ -127,4 +149,26 @@ function profileImage(member: _User) {
     return profile;
   } else return profile;
 }
+
+function addToAssignees(taskId: string, mid: string) {
+  if (!props.subTask.assignees.includes(mid)) props.subTask.assignees.push(mid);
+  toggleElement("subtask-assigneeDropdown-" + taskId, true);
+}
+
+function removeAssignee(id: string) {
+  delete props.subTask.assignees[props.subTask.assignees.indexOf(id)];
+  props.subTask.assignees = props.subTask.assignees.filter(a => a);
+}
+
+// Close assignee dropdowns on outer click
+document.body.addEventListener("click", function (event) {
+  if (event.target) {
+    if (!(event.target as HTMLElement).id.includes("subtask-")) {
+      Array.from(document.getElementsByClassName("subtask-assigneeDropdown")).forEach((element) => {
+        if (!(event.target as HTMLElement).id.includes("subtask-assignee-"))
+          toggleElement(element.id, false);
+      });
+    }
+  }
+});
 </script>
