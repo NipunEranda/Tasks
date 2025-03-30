@@ -177,7 +177,7 @@
                 >
                 <div class="relative dark:brightness-110">
                   <div
-                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                    class="absolute inset-y-0 start-0 flex items-center ps-3"
                   >
                     <fai icon="fa-search" class="dark:text-theme-primary-placeholder"/>
                   </div>

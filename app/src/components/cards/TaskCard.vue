@@ -23,7 +23,7 @@
                 name="name"
                 id="name"
                 class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
-                placeholder="Template Name"
+                placeholder="Task Name"
                 required
                 autocomplete="off"
                 v-model="props.task.name"
@@ -49,6 +49,7 @@
                 name="description"
                 id="description"
                 class="block px-0 w-full text-md bg-transparent border-0 border-b-2 appearance-none dark:text-theme-primary-text-secondary dark:border-theme-primary-border dark:group-focus:brightness-200 dark:focus:border-theme-first focus:outline-none focus:ring-0 dark:group-focus-within:border-theme-first dark:group-focus-within:brightness-200"
+                placeholder="Task Description"
                 required
                 autocomplete="off"
                 v-model="props.task.description"
@@ -116,7 +117,7 @@
         </div>
         <div class="ml-8 mt-3">
           <span
-            v-for="tag in props.task.tags.filter((tag) => tag)"
+            v-for="tag in taskStore.getTags.filter((t: _Tag) => props.task.tags.includes(t.id))"
             class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium rounded-sm dark:bg-theme-first dark:brightness-120 dark:text-theme-primary-text"
           >
             <fai
@@ -147,7 +148,8 @@
               <div
                 class="relative w-11 h-6 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-theme-primary-border peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-theme-primary-border after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-theme-primary-border dark:peer-checked:bg-theme-first dark:peer-checked:brightness-150"
               ></div>
-              <span class="ms-3 text-sm font-medium dark:text-theme-primary-text-secondary"
+              <span
+                class="ms-3 text-sm font-medium dark:text-theme-primary-text-secondary"
                 >Private</span
               >
             </label>
@@ -162,7 +164,8 @@
 import { useTasksStore } from "@/store/tasks";
 import { useIndexStore } from "@/store";
 import type { _Tag, Tag } from "@/types/Tag";
-import type { Task } from "@/types/Task";
+import { SubTask, type Task } from "@/types/Task";
+import { onMounted } from "vue";
 
 const props = defineProps<{
   task: Task;
@@ -179,13 +182,17 @@ function openTagModal(type: string) {
 }
 
 function addTagToTask(tag: Tag) {
-  props.task.tags.push(tag);
+  if (!props.task.tags.includes(tag.id)) props.task.tags.push(tag.id);
 }
 
 function removeTag(tag: Tag) {
-  delete props.task.tags[
-    props.task.tags.indexOf(props.task.tags.filter((t) => t == tag)[0])
-  ];
+  delete props.task.tags[props.task.tags.indexOf(tag.id)];
   props.task.tags = props.task.tags.map((t) => t);
 }
+
+onMounted(() => {
+  props.task.name = "Hello World";
+  props.task.description = "Hello World Description";
+  props.task.tags.push(taskStore.getTags[0].id);
+});
 </script>
