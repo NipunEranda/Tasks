@@ -15,6 +15,7 @@ pub struct Task {
     pub updated_by: ObjectId,
     pub is_private: bool,
     pub deleted: bool,
+    pub template_id: Option<ObjectId>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -22,7 +23,7 @@ pub struct SubTask {
     pub _id: ObjectId,
     pub name: String,
     pub description: String,
-    pub assignees: Vec<ObjectId>,
+    pub assignees: Option<Vec<ObjectId>>,
     pub completed: bool,
     pub deleted: bool,
 }
@@ -34,14 +35,14 @@ pub struct TaskRequest {
     pub workspace: String,
     pub sub_tasks: Vec<SubTaskRequest>,
     pub tags: Vec<String>,
-    pub is_private: bool,
+    pub is_private: bool
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SubTaskRequest {
     pub name: String,
     pub description: String,
-    pub assignees: Vec<String>,
+    pub assignees: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -58,6 +59,7 @@ pub struct TaskResponse {
     pub updated_by: String,
     pub is_private: bool,
     pub deleted: bool,
+    pub template_id: Option<ObjectId>,
 }
 
 impl TryFrom<TaskRequest> for Task {
@@ -96,6 +98,7 @@ impl TryFrom<TaskRequest> for Task {
             last_update: DateTime::now(),
             updated_by: user_id,
             deleted: false,
+            template_id: None,
         })
     }
 }
@@ -110,9 +113,12 @@ impl TryFrom<SubTaskRequest> for SubTask {
             description: item.description,
             assignees: item
                 .assignees
-                .into_iter()
-                .filter_map(|assignee| ObjectId::parse_str(&assignee).ok())
-                .collect(),
+                .map(|assignees| 
+                    assignees
+                        .into_iter()
+                        .filter_map(|assignee| ObjectId::parse_str(&assignee).ok())
+                        .collect()
+                ),
             completed: false,
             deleted: false,
         })
@@ -133,7 +139,8 @@ impl TaskResponse {
             last_update: obj.last_update,
             updated_by: obj.updated_by.to_hex(),
             is_private: obj.is_private,
-            deleted: obj.deleted
+            deleted: obj.deleted,
+            template_id: obj.template_id
         }
     }
 }
