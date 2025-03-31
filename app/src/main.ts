@@ -35,6 +35,7 @@ import {
   faLayerGroup,
   faList,
   faLock,
+  faLockOpen,
   faPen,
   faPlus,
   faPowerOff,
@@ -76,7 +77,8 @@ library.add(
   faCircleUser,
   faSave,
   faSearch,
-  faLock
+  faLock,
+  faLockOpen
 );
 
 createApp(App)
