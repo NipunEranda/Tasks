@@ -256,6 +256,7 @@ async function headerButtonOperation() {
     router.push("/templates?type=new");
   } else if (route.name == "templates" && route.query.type == "new") {
     await tasksStore.createTemplate();
+    router.push("/templates");
   }
 }
 

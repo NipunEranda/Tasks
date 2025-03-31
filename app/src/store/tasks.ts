@@ -13,6 +13,7 @@ export const useTasksStore = defineStore("tasks", {
     updatedDate: moment().format("MMMM DD, YYYY"),
     selectedTag: undefined as _Tag | undefined,
     newTask: undefined as unknown as Task,
+    templates: [] as Array<_Task>,
   }),
   getters: {
     getTags: (state) => state.tags,
@@ -31,6 +32,13 @@ export const useTasksStore = defineStore("tasks", {
         credentials: "include",
       });
       if (tagsReq.status == 200) this.tags = await tagsReq.json();
+    },
+    async loadTemplates(workspaceId: string) {
+      const templatesReq = await fetch(`/api/v1/task/template/${workspaceId}`, {
+        credentials: "include",
+      });
+
+      if (templatesReq.status == 200) this.templates = await templatesReq.json();
     },
     async createTag(tag: Tag, modal: _Modal) {
       await fetch(`/api/v1/tag`, {

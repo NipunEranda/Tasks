@@ -1,15 +1,28 @@
-use mongodb::{bson::doc, Collection};
-use rocket::{futures::TryStreamExt, http::Status, serde::json::Json, State};
+use mongodb::{bson::{doc, oid::ObjectId}, Collection};
+use rocket::{State, futures::TryStreamExt, http::Status, serde::json::Json};
 
 use crate::{
+    AppState,
     models::{
         response::Response,
         task::{Task, TaskRequest, TaskResponse},
-    }, utils::{request_guard::HeaderGuard, tools}, AppState
+    },
+    utils::{request_guard::HeaderGuard, tools},
 };
 
-pub async fn get_task_template(_guard: HeaderGuard, state: &State<AppState>) -> (Status, String) {
+pub async fn get_task_template(
+    _guard: HeaderGuard,
+    state: &State<AppState>,
+    workspace_id: &str,
+) -> (Status, String) {
     let mut templates: Vec<TaskResponse> = Vec::new();
+
+    if !ObjectId::parse_str(&workspace_id).is_ok() {
+        return Response::bad_request(None);
+    }
+
+    let workspace_id = ObjectId::parse_str(workspace_id).ok().unwrap_or_default();
+
     let collection_result: Option<Collection<Task>> =
         tools::get_collection(state, "templates").await;
     if collection_result.is_none() {
@@ -17,8 +30,9 @@ pub async fn get_task_template(_guard: HeaderGuard, state: &State<AppState>) -> 
     }
     let collection: Collection<Task> = collection_result.unwrap();
 
-    let result = collection.find(doc! {"deleted": false}).await;
-
+    let result = collection
+        .find(doc! {"deleted": false, "workspace": workspace_id})
+        .await;
     let cursor = match result {
         Ok(cursor) => cursor,
         Err(_) => return Response::bad_request(None),

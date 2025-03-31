@@ -4,12 +4,13 @@ use crate::{
     models::task::TaskRequest, services, utils::request_guard::HeaderGuard, AppState
 };
 
-#[get("/task/template")]
+#[get("/task/template/<workspace_id>")]
 pub async fn get_template(
     _guard: HeaderGuard,
     state: &State<AppState>,
+    workspace_id: &str,
 ) -> (Status, String) {
-    services::task::get_task_template(_guard, state).await
+    services::task::get_task_template(_guard, state, workspace_id).await
 }
 
 #[post("/task/template", data = "<template>")]
