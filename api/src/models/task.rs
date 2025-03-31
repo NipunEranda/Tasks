@@ -14,6 +14,7 @@ pub struct Task {
     pub last_update: DateTime,
     pub updated_by: ObjectId,
     pub is_private: bool,
+    pub deleted: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -23,6 +24,7 @@ pub struct SubTask {
     pub description: String,
     pub assignees: Vec<ObjectId>,
     pub completed: bool,
+    pub deleted: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -55,6 +57,7 @@ pub struct TaskResponse {
     pub last_update: DateTime,
     pub updated_by: String,
     pub is_private: bool,
+    pub deleted: bool,
 }
 
 impl TryFrom<TaskRequest> for Task {
@@ -92,6 +95,7 @@ impl TryFrom<TaskRequest> for Task {
             completed: false,
             last_update: DateTime::now(),
             updated_by: user_id,
+            deleted: false,
         })
     }
 }
@@ -110,6 +114,7 @@ impl TryFrom<SubTaskRequest> for SubTask {
                 .filter_map(|assignee| ObjectId::parse_str(&assignee).ok())
                 .collect(),
             completed: false,
+            deleted: false,
         })
     }
 }
@@ -128,6 +133,7 @@ impl TaskResponse {
             last_update: obj.last_update,
             updated_by: obj.updated_by.to_hex(),
             is_private: obj.is_private,
+            deleted: obj.deleted
         }
     }
 }
