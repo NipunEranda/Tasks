@@ -55,7 +55,11 @@ export const useTasksStore = defineStore("tasks", {
       modal.modalEl?.hide();
     },
     async createTemplate() {
-      console.log(this.newTask);
+      await fetch(`/api/v1/task/template`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(this.newTask),
+      });
     },
   },
   persist: [

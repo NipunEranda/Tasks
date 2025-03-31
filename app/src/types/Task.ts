@@ -13,6 +13,7 @@ export interface _Task {
   last_update: Date;
   updated_by: string;
   is_private: boolean;
+  deleted: boolean;
 }
 
 export class Task {
@@ -27,6 +28,7 @@ export class Task {
   last_update: Date;
   updated_by: string;
   is_private: boolean;
+  deleted: boolean;
 
   constructor(
     id: string,
@@ -37,7 +39,6 @@ export class Task {
     created_by: string,
     last_update: Date,
     updated_by: string,
-    is_private: boolean,
     sub_tasks: Array<_SubTask>,
     tags: Array<string>
   ) {
@@ -51,7 +52,8 @@ export class Task {
     this.created_by = created_by;
     this.last_update = last_update;
     this.updated_by = updated_by;
-    this.is_private = is_private;
+    this.is_private = false;
+    this.deleted = false;
   }
 
   static createObject(obj: _Task) {
@@ -64,7 +66,6 @@ export class Task {
       obj.created_by,
       obj.last_update,
       obj.updated_by,
-      obj.is_private,
       obj.sub_tasks,
       obj.tags
     );
@@ -81,7 +82,6 @@ export class Task {
         userId ? userId : "",
         moment().toDate(),
         userId ? userId : "",
-        false,
         [],
         []
       );
@@ -95,7 +95,6 @@ export class Task {
         "",
         moment().toDate(),
         userId ? userId : "",
-        false,
         [],
         []
       );
@@ -108,6 +107,7 @@ export interface _SubTask {
   description: string;
   assignees: Array<string>;
   completed: boolean;
+  deleted: boolean;
 }
 
 export class SubTask {
@@ -116,19 +116,21 @@ export class SubTask {
   description: string;
   assignees: Array<string>;
   completed: boolean;
+  deleted: boolean;
 
   constructor(
     id: string,
     name: string,
     description: string,
     assignees: Array<string>,
-    completed: boolean
+    completed: boolean,
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.assignees = assignees;
     this.completed = completed;
+    this.deleted = false;
   }
 
   static createObject(obj: _SubTask) {

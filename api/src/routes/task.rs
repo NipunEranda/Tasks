@@ -1,8 +1,16 @@
-use rocket::{State, http::Status, post, serde::json::Json};
+use rocket::{get, http::Status, post, serde::json::Json, State};
 
 use crate::{
     models::task::TaskRequest, services, utils::request_guard::HeaderGuard, AppState
 };
+
+#[get("/task/template")]
+pub async fn get_template(
+    _guard: HeaderGuard,
+    state: &State<AppState>,
+) -> (Status, String) {
+    services::task::get_task_template(_guard, state).await
+}
 
 #[post("/task/template", data = "<template>")]
 pub async fn create_template(

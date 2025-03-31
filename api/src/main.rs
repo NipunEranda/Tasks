@@ -52,7 +52,8 @@ async fn rocket() -> _ {
                 routes::tag::get_tags,
                 routes::tag::create_tag,
                 routes::tag::delete_tag,
-                routes::task::create_template
+                routes::task::create_template,
+                routes::task::get_template
             ],
         )
 }

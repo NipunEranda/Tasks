@@ -1,7 +1,41 @@
-use mongodb::Collection;
-use rocket::{State, http::Status, serde::json::Json};
+use mongodb::{bson::doc, Collection};
+use rocket::{futures::TryStreamExt, http::Status, serde::json::Json, State};
 
-use crate::{models::{response::Response, task::{Task, TaskRequest}}, utils::request_guard::HeaderGuard, AppState};
+use crate::{
+    models::{
+        response::Response,
+        task::{Task, TaskRequest, TaskResponse},
+    }, utils::{request_guard::HeaderGuard, tools}, AppState
+};
+
+pub async fn get_task_template(_guard: HeaderGuard, state: &State<AppState>) -> (Status, String) {
+    let mut templates: Vec<TaskResponse> = Vec::new();
+    let collection_result: Option<Collection<Task>> =
+        tools::get_collection(state, "templates").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Task> = collection_result.unwrap();
+
+    let result = collection.find(doc! {"deleted": false}).await;
+
+    let cursor = match result {
+        Ok(cursor) => cursor,
+        Err(_) => return Response::bad_request(None),
+    };
+
+    cursor
+        .try_collect()
+        .await
+        .unwrap_or(vec![])
+        .iter()
+        .filter(|template: &&Task| !template.deleted)
+        .for_each(|template| {
+            templates.push(TaskResponse::copy(template));
+        });
+
+    Response::ok(serde_json::to_string(&templates).unwrap())
+}
 
 pub async fn create_task_template(
     _guard: HeaderGuard,
@@ -9,7 +43,14 @@ pub async fn create_task_template(
     task_body: Json<TaskRequest>,
 ) -> (Status, String) {
     let mut task_id = String::from("0");
-    let collection: Collection<Task> = get_collection(state, "templates").await;
+
+    let collection_result: Option<Collection<Task>> =
+        tools::get_collection(state, "templates").await;
+    if collection_result.is_none() {
+        return Response::internal_server_error(None);
+    }
+    let collection: Collection<Task> = collection_result.unwrap();
+
     let task_request = Task::try_from(task_body.into_inner());
 
     if let Err(err) = task_request {
@@ -27,12 +68,6 @@ pub async fn create_task_template(
     if let Some(inserted_id) = result.unwrap().inserted_id.as_object_id() {
         task_id = inserted_id.to_hex();
     }
-    
-    Response::ok(task_id)
-}
 
-async fn get_collection(state: &State<AppState>, collection: &str) -> Collection<Task> {
-    let client = state.mongo_client.lock().await;
-    let db: mongodb::Database = client.database("tasks");
-    db.collection::<Task>(collection)
+    Response::ok(task_id)
 }
