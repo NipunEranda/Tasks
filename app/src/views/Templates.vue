@@ -113,7 +113,7 @@ async function getTemplates() {
 }
 
 watch(
-  () => route.path,
+  () => route.query,
   async () => {
     initFlowbite();
     await getTemplates();

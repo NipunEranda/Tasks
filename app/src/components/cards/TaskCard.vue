@@ -192,7 +192,7 @@ function addTagToTask(tag: Tag) {
 
 function removeTag(tag: Tag) {
   delete props.task.tags[props.task.tags.indexOf(tag.id)];
-  props.task.tags = props.task.tags.map((t) => t);
+  props.task.tags = props.task.tags.map((t) => t).filter(Boolean);
 }
 
 // Close assignee dropdowns on outer click
