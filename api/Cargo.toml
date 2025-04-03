@@ -3,6 +3,9 @@ name = "tasks"
 version = "0.1.0"
 edition = "2024"
 
+[profile.release]
+lto = "off"
+
 [[bin]]
 name = "tasks"
 path = "src/main.rs"
@@ -13,7 +16,7 @@ base64 = "0.22.1"
 chrono = "0.4.40"
 dotenv = "0.15.0"
 jsonwebtoken = "9.3.1"
-mongodb = "3.2.2"
+mongodb = "3.2.3"
 reqwest = { version = "0.12.14" , features = ["json"] }
 rocket = { version = "0.5.1", features = ["json"] }
 rocket_db_pools = { version = "0.2.0", features = ["mongodb"] }

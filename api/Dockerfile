@@ -1,5 +1,5 @@
 # Use the official Rust image to build the application
-FROM rust:latest AS builder
+FROM rust:1.85.0 AS builder
 
 # Set the working directory to the "api" subfolder (adjust as needed)
 WORKDIR /app
@@ -7,10 +7,10 @@ WORKDIR /app
 # Set up the application structure (copy the entire api folder)
 COPY src ./src
 
-COPY rocket.toml Cargo.toml Cargo.lock ./
+COPY rocket.toml Cargo.toml ./
 
 # Build the release version of the application
-RUN cargo build --release
+RUN cargo build --release -j 1
 
 # Create a smaller image based on a minimal Linux distribution
 FROM ubuntu:latest
@@ -19,6 +19,8 @@ FROM ubuntu:latest
 RUN apt update && apt full-upgrade -y && apt-get install -y \
     ca-certificates \
     curl \
+    pkg-config \
+    libssl-dev \
     && update-ca-certificates -y
 
 # Set the working directory for the app
